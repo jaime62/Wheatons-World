@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BINGO Payout Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f0f8ff;
+      max-width: 600px;
+      margin: auto;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    .result {
+      margin-top: 2rem;
+      background: #e0ffff;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+
+    .result div {
+      margin-bottom: 0.5rem;
+    }
+
+    .confetti {
+      position: fixed;
+      top: 0;
+      z-index: 9999;
+      pointer-events: none;
+      animation: fall 5s linear forwards;
+    }
+
+    .confetti img {
+      width: 45px;
+      height: auto;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(150vh) rotate(1080deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div align="center">
+    <img src="https://gulfwatersrvresorttx.com//wp-content/uploads/2018/03/gulfwaterslogo7.png" style="width:50%; height:auto;">
+    <br><br>
+    <h2>BINGO Payout Calculator</h2>
+    <label>Total Purse:
+      <input id="purseDisplay" type="text" style="width:100px;height:40px; font-size:18px; text-align:center;" placeholder="$0.00" />
+      <input id="purseRaw" type="hidden" />
+    </label>
+    <label>Number of Game Cards:
+      <input style="width:100px; height:40px; font-size:18px; text-align:center;" value="6" type="number" id="cards" step="1" min="2" max="20" />
+    </label>
+    <button id="calculateBtn" style="width:auto;">Calculate Payouts</button>
+    <div id="result" class="result"></div>
+
+    <!-- Cha-ching sound -->
+    <audio id="cashSound" preload="auto">
+      <source src="https://assets.mixkit.co/sfx/download/mixkit-cash-register-cha-ching-810.wav" type="audio/wav">
+    </audio>
+<BR>
+<a href="https://letsplaybingo.io/" target=_blank>
+<IMG SRC="https://classic.letsplaybingo.io/static/media/logo.49b09049bf8d9cedbf314d2b1a0dfcd3.svg" style="width:35%; height:auto;">
+</a>
+  </div>
+
+  <script>
+    const purseDisplay = document.getElementById("purseDisplay");
+    const purseRaw = document.getElementById("purseRaw");
+    const cardsInput = document.getElementById("cards");
+    const calculateBtn = document.getElementById("calculateBtn");
+    const cashSound = document.getElementById("cashSound");
+
+    purseDisplay.addEventListener("blur", formatCurrencyInput);
+    purseDisplay.addEventListener("focus", () => {
+      purseDisplay.value = purseRaw.value || "";
+    });
+
+    purseDisplay.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        formatCurrencyInput();
+        calculatePayouts();
+      }
+    });
+
+    cardsInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") calculatePayouts();
+    });
+
+    calculateBtn.addEventListener("click", () => {
+      formatCurrencyInput();
+      playSound();
+      throwConfetti();
+      calculatePayouts();
+    });
+
+    function formatCurrencyInput() {
+      const raw = purseDisplay.value.replace(/[^0-9.]/g, "");
+      const num = parseFloat(raw);
+      if (!isNaN(num)) {
+        purseRaw.value = num;
+        purseDisplay.value = `$${num.toFixed(2)}`;
+      } else {
+        purseRaw.value = "";
+        purseDisplay.value = "$0.00";
+      }
+    }
+
+    function roundToFive(value) {
+      return Math.floor(value / 5) * 5;
+    }
+
+    function calculatePayouts() {
+      const purse = parseFloat(purseRaw.value);
+      const cards = parseInt(cardsInput.value);
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "";
+
+      if (isNaN(purse) || isNaN(cards) || purse < 50 || cards < 2) {
+        resultDiv.innerHTML = "<div>Please enter a purse of at least $50 and at least 2 game cards.</div>";
+        return;
+      }
+
+      const finalGameIndex = cards - 1;
+      const targetFinalGame = roundToFive(purse * 0.5);
+      const baseGamePayout = roundToFive((purse - targetFinalGame) / finalGameIndex);
+      const gamePayouts = Array(finalGameIndex).fill(baseGamePayout);
+      const leftover = roundToFive(purse - (baseGamePayout * finalGameIndex + targetFinalGame));
+      gamePayouts.push(targetFinalGame + leftover);
+
+      const adjustedTotal = gamePayouts.reduce((a, b) => a + b, 0);
+
+      for (let i = 0; i < cards; i++) {
+        resultDiv.innerHTML += `<div><strong>Game ${i + 1} Total Payout:</strong> $${gamePayouts[i].toFixed(2)}</div>`;
+      }
+      resultDiv.innerHTML += `<div><strong>Total Payout:</strong> $${adjustedTotal.toFixed(2)}</div>`;
+    }
+
+    function playSound() {
+      try {
+        cashSound.currentTime = 0;
+        cashSound.play().catch(err => console.warn("Sound playback blocked:", err));
+      } catch (e) {
+        console.warn("Playback failed:", e);
+      }
+    }
+
+    function throwConfetti() {
+      const dollarImg = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/One_US_dollar_note_2009_obverse.jpg/120px-One_US_dollar_note_2009_obverse.jpg";
+
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = 4.5 + Math.random() * 1.5 + "s";
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+        const isBill = Math.random() < 0.3;
+        if (isBill) {
+          const img = document.createElement("img");
+          img.src = dollarImg;
+          img.alt = "$";
+          confetti.appendChild(img);
+        } else {
+          confetti.textContent = getRandomSymbol();
+          confetti.style.color = getMutedColor();
+          confetti.style.fontSize = Math.random() * 15 + 27 + "px";
+        }
+
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 6000);
+      }
+    }
+
+    function getMutedColor() {
+      const colors = [
+        "rgba(255, 0, 0, 0.5)",    // semi-transparent red
+        "rgba(0, 255, 0, 0.5)",    // semi-transparent green
+        "rgba(0, 0, 255, 0.5)",    // semi-transparent blue
+        "rgba(255, 215, 0, 0.5)",  // semi-transparent gold
+        "rgba(0, 206, 209, 0.5)",  // semi-transparent teal
+        "rgba(255, 105, 180, 0.5)" // semi-transparent pink
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function getRandomSymbol() {
+      const symbols = ["$", "★", "♦", "●", "■"];
+      return symbols[Math.floor(Math.random() * symbols.length)];
+    }
+  </script>
+</body>
+</html>
