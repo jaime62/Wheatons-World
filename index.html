@@ -50,12 +50,15 @@ body::before {
       background-color: #005fa3;
     }
 
-    .result {
-      margin-top: 2rem;
-      background: #e0ffff;
-      padding: 1rem;
-      border-radius: 5px;
-    }
+.result {
+  display: inline-block;
+  margin-top: 2rem;
+  background: #e0ffff;
+  padding: 1rem;
+  border-radius: 5px;
+  width: fit-content;
+  max-width: 100%; /* Prevent overflow on narrow screens */
+}
 
     .result div {
       margin-bottom: 0.5rem;
