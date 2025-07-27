@@ -19,7 +19,6 @@ body::before {
   z-index: -1;
 }
 
-
     body {
       font-family: Arial, sans-serif;
       padding: 2rem;
@@ -57,7 +56,7 @@ body::before {
   padding: 1rem;
   border-radius: 5px;
   width: fit-content;
-  max-width: 100%; /* Prevent overflow on narrow screens */
+  max-width: 100%;
 }
 
     .result div {
@@ -103,7 +102,7 @@ body::before {
   <br><br>
     <h2><font color="#007acc">BINGO Payout Calculator</h2></font>
     <label>Total Purse:
-      <input id="purseDisplay" type="number" style="width:100px;height:40px; font-size:18px; text-align:center;" placeholder="$0.00" />
+      <input id="purseDisplay" type="text" inputmode="decimal" pattern="[0-9]*" style="width:100px;height:40px; font-size:18px; text-align:center;" placeholder="$0.00" />
       <input id="purseRaw" type="hidden" />
     </label>
     <label>Number of Game Cards:
@@ -130,20 +129,12 @@ body::before {
     const calculateBtn = document.getElementById("calculateBtn");
     const cashSound = document.getElementById("cashSound");
 
-purseDisplay.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    formatCurrencyInput();
-    calculatePayouts();
-  }
-});
-
-
-<!--    
-    purseDisplay.addEventListener("blur", formatCurrencyInput);
     purseDisplay.addEventListener("focus", () => {
-      purseDisplay.value = purseRaw.value || "";
+      purseDisplay.value = "";
+      purseRaw.value = "";
     });
--->
+
+    purseDisplay.addEventListener("blur", formatCurrencyInput);
 
     purseDisplay.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
@@ -163,17 +154,17 @@ purseDisplay.addEventListener("keypress", (e) => {
       calculatePayouts();
     });
 
-function formatCurrencyInput() {
-  let num = parseFloat(purseDisplay.value);
-  if (!isNaN(num) && num >= 0) {
-    num = Math.floor(num * 100) / 100;
-    purseRaw.value = num.toFixed(2);
-    purseDisplay.value = `$${num.toFixed(2)}`;
-  } else {
-    purseRaw.value = "";
-    purseDisplay.value = "$0.00";
-  }
-}
+    function formatCurrencyInput() {
+      let raw = purseDisplay.value.replace(/[^0-9.]/g, "");
+      let num = parseFloat(raw);
+      if (!isNaN(num) && num >= 0) {
+        purseRaw.value = num.toFixed(2);
+        purseDisplay.value = `$${num.toFixed(2)}`;
+      } else {
+        purseRaw.value = "";
+        purseDisplay.value = "$0.00";
+      }
+    }
 
     function roundToFive(value) {
       return Math.floor(value / 5) * 5;
@@ -243,12 +234,12 @@ function formatCurrencyInput() {
 
     function getMutedColor() {
       const colors = [
-        "rgba(255, 0, 0, 0.5)",    // semi-transparent red
-        "rgba(0, 255, 0, 0.5)",    // semi-transparent green
-        "rgba(0, 0, 255, 0.5)",    // semi-transparent blue
-        "rgba(255, 215, 0, 0.5)",  // semi-transparent gold
-        "rgba(0, 206, 209, 0.5)",  // semi-transparent teal
-        "rgba(255, 105, 180, 0.5)" // semi-transparent pink
+        "rgba(255, 0, 0, 0.5)",
+        "rgba(0, 255, 0, 0.5)",
+        "rgba(0, 0, 255, 0.5)",
+        "rgba(255, 215, 0, 0.5)",
+        "rgba(0, 206, 209, 0.5)",
+        "rgba(255, 105, 180, 0.5)"
       ];
       return colors[Math.floor(Math.random() * colors.length)];
     }
