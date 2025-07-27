@@ -254,5 +254,89 @@ body::before {
       return symbols[Math.floor(Math.random() * symbols.length)];
     }
   </script>
+
+<!-- ✅ Add this near the bottom of your HTML body -->
+<button id="openCalc" style="margin-top: 30px; background-color: #007acc; color: white; font-size: 1rem; padding: 0.75rem; border: none; cursor: pointer; border-radius: 5px;">Open Calculator</button>
+
+<!-- ✅ Calculator Modal -->
+<div id="calcModal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5);">
+  <div style="background:white; max-width: 300px; margin: 100px auto; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.25);">
+    <h3 style="text-align:center; color:#007acc; margin-top:0;">Standard Calculator</h3>
+    <input type="text" id="calc-display" style="width:100%; font-size: 1.5rem; text-align:right; margin-bottom: 10px;" disabled>
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;">
+      <button onclick="calcPress('7')">7</button>
+      <button onclick="calcPress('8')">8</button>
+      <button onclick="calcPress('9')">9</button>
+      <button onclick="calcPress('/')">&#247;</button>
+      <button onclick="calcPress('4')">4</button>
+      <button onclick="calcPress('5')">5</button>
+      <button onclick="calcPress('6')">6</button>
+      <button onclick="calcPress('*')">&#215;</button>
+      <button onclick="calcPress('1')">1</button>
+      <button onclick="calcPress('2')">2</button>
+      <button onclick="calcPress('3')">3</button>
+      <button onclick="calcPress('-')">&#8722;</button>
+      <button onclick="calcPress('0')">0</button>
+      <button onclick="calcPress('.')">.</button>
+      <button onclick="calculateResult()">=</button>
+      <button onclick="calcPress('+')">&#43;</button>
+      <button onclick="clearCalc()" style="grid-column: span 4; background-color: #f44336; color: white;">Clear</button>
+    </div>
+    <button onclick="closeCalcModal()" style="margin-top:10px; width:100%; background-color:#007acc; color:white; font-size:1rem; padding:0.5rem; border:none; border-radius:5px;">Close</button>
+  </div>
+</div>
+
+<!-- ✅ Calculator JS (can go in your existing <script> tag) -->
+<script>
+  let calcInput = "";
+
+  function calcPress(value) {
+    calcInput += value;
+    document.getElementById("calc-display").value = calcInput;
+  }
+
+  function calculateResult() {
+    try {
+      calcInput = eval(calcInput).toString();
+      document.getElementById("calc-display").value = calcInput;
+    } catch {
+      document.getElementById("calc-display").value = "Error";
+      calcInput = "";
+    }
+  }
+
+  function clearCalc() {
+    calcInput = "";
+    document.getElementById("calc-display").value = "";
+  }
+
+  function closeCalcModal() {
+    document.getElementById("calcModal").style.display = "none";
+  }
+
+  document.getElementById("openCalc").addEventListener("click", () => {
+    document.getElementById("calcModal").style.display = "block";
+    clearCalc();
+  });
+</script>
+
+<!-- ✅ Optional: Style calculator buttons to match theme -->
+<style>
+  #calcModal button {
+    padding: 12px;
+    font-size: 1.1rem;
+    border: none;
+    background-color: #e0ffff;
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+  }
+
+  #calcModal button:hover {
+    background-color: #d0f0f0;
+  }
+</style>
+
+  
 </body>
 </html>
