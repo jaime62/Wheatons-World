@@ -130,10 +130,13 @@ body::before {
     const calculateBtn = document.getElementById("calculateBtn");
     const cashSound = document.getElementById("cashSound");
 
-purseDisplay.addEventListener("focus", () => {
-  purseDisplay.value = "";
-  purseRaw.value = "";
+purseDisplay.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    formatCurrencyInput();
+    calculatePayouts();
+  }
 });
+
 
 <!--    
     purseDisplay.addEventListener("blur", formatCurrencyInput);
