@@ -193,7 +193,7 @@ body::before {
       for (let i = 0; i < cards; i++) {
         resultDiv.innerHTML += `<div><strong>Game ${i + 1} Total Payout:</strong> $${gamePayouts[i].toFixed(2)}</div>`;
       }
-      resultDiv.innerHTML += `<div><strong>Total Payout:</strong> $${adjustedTotal.toFixed(2)}</div>`;
+    resultDiv.innerHTML += `<br><div><strong>Total Payout:</strong> $${adjustedTotal.toFixed(2)}</div>`;
     }
 
     function playSound() {
