@@ -160,17 +160,17 @@ purseDisplay.addEventListener("focus", () => {
       calculatePayouts();
     });
 
-    function formatCurrencyInput() {
-      const raw = purseDisplay.value.replace(/[^0-9.]/g, "");
-      const num = parseFloat(raw);
-      if (!isNaN(num)) {
-        purseRaw.value = num;
-        purseDisplay.value = `$${num.toFixed(2)}`;
-      } else {
-        purseRaw.value = "";
-        purseDisplay.value = "$0.00";
-      }
-    }
+function formatCurrencyInput() {
+  let num = parseFloat(purseDisplay.value);
+  if (!isNaN(num) && num >= 0) {
+    num = Math.floor(num * 100) / 100;
+    purseRaw.value = num.toFixed(2);
+    purseDisplay.value = `$${num.toFixed(2)}`;
+  } else {
+    purseRaw.value = "";
+    purseDisplay.value = "$0.00";
+  }
+}
 
     function roundToFive(value) {
       return Math.floor(value / 5) * 5;
