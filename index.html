@@ -126,7 +126,9 @@ body::before {
     <label>Game Cards
       <input style="width:100px; height:40px; font-size:18px; text-align:center;" value="6" type="number" id="cards" step="1" min="2" max="20" />
     </label>
-    <button onclick="formatCurrencyInput(); calculatePayouts();" id="calculateBtn" style="width:auto;">Calculate Payouts</button>
+<!--    <button onclick="formatCurrencyInput(); calculatePayouts();" id="calculateBtn" style="width:auto;">Calculate Payouts</button> -->
+    <button onclick="formatCurrencyInput(); calculatePayouts(); playAudio();" id="calculateBtn" style="width:auto;">Calculate Payouts</button>
+
     <BR><BR>
 <button id="helpButton" onclick="openHelpModal()" style="width:auto;">Help & Features</button>
 <BR><BR>
@@ -415,7 +417,20 @@ function openHelpModal() {
   function closeHelpModal() {
     document.getElementById('helpModal').style.display = 'none';
   }
+
+  function playAudio() {
+  const sound = document.getElementById("mySound");
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(e => console.warn("Audio playback failed:", e));
+  }
+}
+
 </script>
 
 </body>
+  <audio id="mySound" preload="auto">
+  <source src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/mixkit-magical-coin-win-1936.wav" type="audio/wav">
+</audio>
+
 </html>
