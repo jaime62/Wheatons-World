@@ -194,7 +194,7 @@ body::before {
       const purse = parseFloat(purseRaw.value);
       const cards = parseInt(cardsInput.value);
       const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = "<h3 style='margin-top: 0;'>Suggested Payouts:</h3><BR>";
+      resultDiv.innerHTML = "<h3 style='margin-top: 0;'><font color="blue">Suggested Payouts:</font></h3><BR>";
 
       if (isNaN(purse) || isNaN(cards) || purse < 50 || cards < 2) {
         resultDiv.innerHTML = "<div>Please enter a purse of at least $50 and at least 2 game cards.</div>";
