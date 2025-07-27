@@ -121,6 +121,8 @@ body::before {
     </label>
     <button onclick="formatCurrencyInput(); calculatePayouts();" id="calculateBtn" style="width:auto;">Calculate Payouts</button>
     <BR><BR>
+    <button onclick="openHelpModal()" style="width:auto;">Help & Features</button>
+<BR><BR>
 <div id="result" class="result">Enter an amount above and click the button for payout details!</div>
 
     <!-- Cha-ching sound -->
@@ -346,6 +348,39 @@ body::before {
 
 
 <DIV align="center"><a href="https://jaime62.github.io/GulfWaters-BINGO/BINGO%20Patterns.html" target=_blank><H3><font color="aqua"><u>View BINGO game patterns!</u></font></H3></a>
-  
+
+  <!-- HELP modal popup -->
+  <div id="helpModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; overflow:auto;">
+  <div style="background:white; max-width:600px; margin:5% auto; padding:2rem; border-radius:10px; position:relative; box-shadow: 0 0 20px rgba(0,0,0,0.2);">
+    <button onclick="closeHelpModal()" style="position:absolute; top:10px; right:10px; font-size:18px; background:none; border:none; cursor:pointer;">✖</button>
+    <h2 style="color:#007acc;">🎯 BINGO Payout Calculator Help</h2>
+    
+    <h3>💡 How It Works:</h3>
+    <ul>
+      <li><strong>Enter the Total Purse</strong><br>
+        Type the <u>total dollar amount collected from players</u> (e.g., $215.00).<br>
+        ⚠️ <strong>Do NOT include the starting till of $50.00</strong>.
+      </li>
+      <li><strong>Enter Number of Game Cards</strong><br>
+        Choose how many games will be played (2–20).
+      </li>
+      <li><strong>Click “Calculate Payouts”</strong><br>
+        Each game payout appears below, rounded to the nearest $5.00. Game 6 gets the biggest payout!</li>
+    </ul>
+
+    <h3>🎉 Special Features:</h3>
+    <ul>
+      <li><strong>Confetti Celebration</strong><br>
+        Colorful confetti (including dollar bills, beach items, and bingo balls) rains across the screen when you calculate.</li>
+      <li><strong>Let's Play Bingo App</strong><br>
+        Use the <a href="https://letsplaybingo.io/" target="_blank">Let’s Play Bingo website</a> to display BINGO calls on a projector screen as an alternative to a physical ball roller.</li>
+      <li><strong>Bingo Pattern Gallery</strong><br>
+        Link at the bottom of the page shows <u>20 popular BINGO patterns</u> with thumbnails that expand on click. The Let’s Play Bingo app offers even more patterns.</li>
+      <li><strong>Mobile-Friendly</strong><br>
+        Works on phones and tablets. Add it to your iPhone home screen via Safari’s <strong>“Add to Home Screen”</strong> option.</li>
+    </ul>
+  </div>
+</div>
+
 </body>
 </html>
