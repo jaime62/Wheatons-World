@@ -200,7 +200,6 @@ body::before {
         resultDiv.innerHTML = "<div>Please enter a purse of at least $50 and at least 2 game cards.</div>";
         return;
       }
-<div>Suggested Payouts</div>
       const finalGameIndex = cards - 1;
       const targetFinalGame = roundToFive(purse * 0.5);
       const baseGamePayout = roundToFive((purse - targetFinalGame) / finalGameIndex);
