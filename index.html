@@ -101,11 +101,11 @@ body::before {
 </a>
   <br><br>
     <h2><font color="#007acc">BINGO Payout Calculator</h2></font>
-    <label>Total Purse:
+ <b> <label>Total Purse:</b>
       <input id="purseDisplay" type="text" inputmode="decimal" pattern="[0-9]*" style="width:100px;height:40px; font-size:18px; text-align:center;" placeholder="$0.00" />
       <input id="purseRaw" type="hidden" />
     </label>
-    <label>Game Cards:
+<b>    <label>Game Cards:</b>
       <input style="width:100px; height:40px; font-size:18px; text-align:center;" value="6" type="number" id="cards" step="1" min="2" max="20" />
     </label>
     <button onclick="formatCurrencyInput(); calculatePayouts();" id="calculateBtn" style="width:auto;">Calculate Payouts</button>
