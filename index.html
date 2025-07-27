@@ -11,7 +11,14 @@
 
   <title>BINGO Payout Calculator</title>
   <style>
+#helpButton {
+  background-color: teal;
+}
 
+#helpButton:hover {
+  background-color: #006666; /* darker teal on hover */
+}
+    
 label {
   font-weight: bold;
 }
@@ -121,7 +128,7 @@ body::before {
     </label>
     <button onclick="formatCurrencyInput(); calculatePayouts();" id="calculateBtn" style="width:auto;">Calculate Payouts</button>
     <BR><BR>
-    <button onclick="openHelpModal()" style="width:auto;">Help & Features</button>
+<button id="helpButton" onclick="openHelpModal()" style="width:auto;">Help & Features</button>
 <BR><BR>
 <div id="result" class="result">Enter an amount above and click the button for payout details!</div>
 
