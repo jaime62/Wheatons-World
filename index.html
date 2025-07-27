@@ -337,6 +337,90 @@ body::before {
   }
 </style>
 
+<!-- REFERENCE BINGO PATTERNS -->
+
+  <h3 style="color:#007acc; text-align:center;">Popular Bingo Patterns</h3>
+<div id="bingoGallery" style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">
+
+  <!-- Thumbnail Images -->
+  <img src="https://i.imgur.com/0n9bpuA.png" alt="Four Corners" class="thumb" onclick="showPattern(this)">
+  <img src="https://i.imgur.com/Cz5F3jS.png" alt="Diagonal" class="thumb" onclick="showPattern(this)">
+  <img src="https://i.imgur.com/eIfXoSY.png" alt="X Pattern" class="thumb" onclick="showPattern(this)">
+  <img src="https://i.imgur.com/NJTeoxF.png" alt="Coverall" class="thumb" onclick="showPattern(this)">
+  <img src="https://i.imgur.com/ZX4HZb4.png" alt="Letter T" class="thumb" onclick="showPattern(this)">
+
+</div>
+
+<!-- Modal for Enlarged Image -->
+<div id="patternModal" class="modal" onclick="this.style.display='none'">
+  <span class="close" onclick="document.getElementById('patternModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="largePattern">
+  <div id="caption"></div>
+</div>
+
+<style>
+  .thumb {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid #007acc;
+    transition: transform 0.2s ease;
+  }
+  .thumb:hover {
+    transform: scale(1.1);
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 60px;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+  }
+
+  .modal-content {
+    display: block;
+    margin: auto;
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #007acc;
+  }
+
+  .close {
+    position: absolute;
+    top: 20px; right: 30px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  #caption {
+    text-align: center;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+  }
+</style>
+
+<script>
+  function showPattern(img) {
+    const modal = document.getElementById("patternModal");
+    const modalImg = document.getElementById("largePattern");
+    const caption = document.getElementById("caption");
+    modal.style.display = "block";
+    modalImg.src = img.src;
+    caption.innerText = img.alt;
+  }
+</script>
+
+<!-- END OF REFERENCE BINGO PATTERNS -->
   
 </body>
 </html>
