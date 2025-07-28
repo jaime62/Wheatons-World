@@ -9,108 +9,73 @@
       text-align: center;
       padding: 50px;
     }
-    h1 {
+
+    .slogan-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .slogan {
+      position: relative;
+      display: inline-block;
+      font-size: 2rem;
       color: #0070C0;
-      cursor: pointer;
+      cursor: default;
     }
-    .modal {
+
+    .slogan::after {
+      content: "|";
+      margin-left: 20px;
+      color: #999;
+    }
+
+    .slogan:last-child::after {
+      content: "";
+    }
+
+    .popup {
       display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.6);
-    }
-    .modal-content {
-      background-color: #fff;
-      margin: 15% auto;
-      padding: 20px;
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      background: white;
       border: 1px solid #ccc;
-      width: 80%;
-      max-width: 600px;
-      border-radius: 12px; /* or any radius you prefer */
-
-    }
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 10;
+      font-size: 1rem;
+      text-align: left;
     }
 
-.slogan-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.slogan-row h1 {
-  margin: 0;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.slogan-row span {
-  font-size: 2rem;
-  user-select: none;
-}
-
-    
+    .slogan:hover .popup {
+      display: block;
+    }
   </style>
 </head>
 <body>
 
 <div class="slogan-row">
-  <h1 onclick="openModal('inspireModal')">Inspire</h1>
-  <span>|</span>
-  <h1 onclick="openModal('respectModal')">Respect</h1>
-  <span>|</span>
-  <h1 onclick="openModal('createModal')">Create</h1>
+  <div class="slogan">Inspire
+    <div class="popup">
+      We chase the “what ifs,” the “why nots,” and occasionally the “wait, can we even do that?” Our ideas spark apps that bring smiles, solutions, or at least a raised eyebrow and a curious tap.
+    </div>
+  </div>
+  <div class="slogan">Respect
+    <div class="popup">
+      We build with heart — honoring users, ideas, and teammates (even the one who still uses dark mode in broad daylight). We even treat bugs with kindness… before squashing them gently.
+    </div>
+  </div>
+  <div class="slogan">Create
+    <div class="popup">
+      We roll up our sleeves (unless they’re hoodies) and make cool stuff. For fun. For friends. For filling those weird little gaps that make you go, “Why doesn’t this exist already?”
+    </div>
+  </div>
 </div>
-
-
-  <div id="inspireModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('inspireModal')">&times;</span>
-      <p>We chase the “what ifs,” the “why nots,” and occasionally the “wait, can we even do that?” Our ideas spark apps that bring smiles, solutions, or at least a raised eyebrow and a curious tap.</p>
-    </div>
-  </div>
-
-  <div id="respectModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('respectModal')">&times;</span>
-      <p>We build with heart — honoring users, ideas, and teammates (even the one who still uses dark mode in broad daylight). We even treat bugs with kindness… before squashing them gently.</p>
-    </div>
-  </div>
-
-  <div id="createModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('createModal')">&times;</span>
-      <p>We roll up our sleeves (unless they’re hoodies) and make cool stuff. For fun. For friends. For filling those weird little gaps that make you go, “Why doesn’t this exist already?”</p>
-    </div>
-  </div>
-
-  <script>
-    function openModal(id) {
-      document.getElementById(id).style.display = 'block';
-    }
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-    window.onclick = function(event) {
-      ['inspireModal','respectModal','createModal'].forEach(function(id) {
-        const modal = document.getElementById(id);
-        if (event.target === modal) {
-          modal.style.display = "none";
-        }
-      });
-    };
-  </script>
 
 </body>
 </html>
