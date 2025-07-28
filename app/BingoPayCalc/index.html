@@ -1,1 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicon for desktop browser tab -->
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/BINGO%20Ball.png">
 
+<!-- Apple Touch Icon for iPhone Home Screen -->
+<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/BINGO%20Ball.png">
+
+  <title>BINGO Payout Calculator</title>
+  <style>
+#helpButton {
+  background-color: teal;
+}
+
+#helpButton:hover {
+  background-color: #006666; /* darker teal on hover */
+}
+    
+label {
+  font-weight: bold;
+}
+    
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/photo-1507525428034-b723cf961d3e.jpeg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  opacity: 0.8;
+  z-index: -1;
+}
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f0f8ff;
+      max-width: 600px;
+      margin: auto;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+.result {
+  display: inline-block;
+  margin-top: 2rem;
+  background: rgba(224, 255, 255, 0.6);
+  padding: 1rem;
+  border-radius: 5px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+    .result div {
+      margin-bottom: 0.5rem;
+    }
+
+    .confetti {
+      position: fixed;
+      top: 0;
+      z-index: 9999;
+      pointer-events: none;
+      animation: fall 5s linear forwards;
+    }
+
+    .confetti img {
+      width: 45px;
+      height: auto;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(150vh) rotate(1080deg);
+        opacity: 0;
+      }
+    }
+    @media screen and (max-width: 768px) {
+  #gw_logo {
+    width: 60% !important;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div align="center">
+<a href="https://gulfwaters.com" target="_blank">
+    <img id="gw_logo" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/gulfwaterslogo.png" style="width:40%; height:auto;">
+</a>
+  <br><br>
+    <h2><font color="#007acc">BINGO Payout Calculator</h2></font>
+  <label>Total Purse
+      <input id="purseDisplay" type="text" inputmode="decimal" pattern="[0-9]*" style="width:100px;height:40px; font-size:18px; text-align:center;" placeholder="$0.00" />
+      <input id="purseRaw" type="hidden" />
+    </label>
+    <label>Game Cards
+      <input style="width:100px; height:40px; font-size:18px; text-align:center;" value="6" type="number" id="cards" step="1" min="2" max="20" />
+    </label>
+<!--    <button onclick="formatCurrencyInput(); calculatePayouts();" id="calculateBtn" style="width:auto;">Calculate Payouts</button> -->
+    <button onclick="formatCurrencyInput(); calculatePayouts(); playAudio();" id="calculateBtn" style="width:auto;">Calculate Payouts</button>
+
+    <BR><BR>
+<button id="helpButton" onclick="openHelpModal()" style="width:auto;">Help & Features</button>
+<BR><BR>
+<div id="result" class="result">Enter an amount above and click the button for payout details!</div>
+
+    <!-- Cha-ching sound -->
+    <audio id="cashSound" preload="auto">
+      <source src="https://assets.mixkit.co/sfx/download/mixkit-cash-register-cha-ching-810.wav" type="audio/wav">
+    </audio>
+<BR>
+<a href="https://letsplaybingo.io/" target=_blank>
+<IMG SRC="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/letsplaybingologo.svg" style="width:35%; height:auto; margin-top: 50px;">
+</a><BR><br>
+  </div>
+
+  <script>
+    const purseDisplay = document.getElementById("purseDisplay");
+    const purseRaw = document.getElementById("purseRaw");
+    const cardsInput = document.getElementById("cards");
+    const calculateBtn = document.getElementById("calculateBtn");
+    const cashSound = document.getElementById("cashSound");
+
+    purseDisplay.addEventListener("focus", () => {
+      purseDisplay.value = "";
+      purseRaw.value = "";
+    });
+
+    purseDisplay.addEventListener("blur", formatCurrencyInput);
+
+    purseDisplay.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        formatCurrencyInput();
+        calculatePayouts();
+      }
+    });
+
+    cardsInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") calculatePayouts();
+    });
+
+    calculateBtn.addEventListener("click", () => {
+      formatCurrencyInput();
+      playSound();
+      throwConfetti();
+      calculatePayouts();
+    });
+
+    function formatCurrencyInput() {
+      let raw = purseDisplay.value.replace(/[^0-9.]/g, "");
+      let num = parseFloat(raw);
+      if (!isNaN(num) && num >= 0) {
+        purseRaw.value = num.toFixed(2);
+        purseDisplay.value = `$${num.toFixed(2)}`;
+      } else {
+        purseRaw.value = "";
+        purseDisplay.value = "$0.00";
+      }
+    }
+
+    function roundToFive(value) {
+      return Math.floor(value / 5) * 5;
+    }
+
+    function calculatePayouts() {
+      const purse = parseFloat(purseRaw.value);
+      const cards = parseInt(cardsInput.value);
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "<h3 style='margin-top: 0;'><font color='blue'>Suggested Payouts:</font></h3><BR>";
+
+      if (isNaN(purse) || isNaN(cards) || purse < 50 || cards < 2) {
+        resultDiv.innerHTML = "<div>Please enter a purse of at least $50 and at least 2 game cards.</div>";
+        return;
+      }
+      const finalGameIndex = cards - 1;
+      const targetFinalGame = roundToFive(purse * 0.5);
+      const baseGamePayout = roundToFive((purse - targetFinalGame) / finalGameIndex);
+      const gamePayouts = Array(finalGameIndex).fill(baseGamePayout);
+      const leftover = roundToFive(purse - (baseGamePayout * finalGameIndex + targetFinalGame));
+      gamePayouts.push(targetFinalGame + leftover);
+
+      const adjustedTotal = gamePayouts.reduce((a, b) => a + b, 0);
+
+      for (let i = 0; i < cards; i++) {
+        resultDiv.innerHTML += `<div><strong>Game ${i + 1} Total Payout:</strong> $${gamePayouts[i].toFixed(2)}</div>`;
+      }
+    resultDiv.innerHTML += `<br><div><strong>Total Payout:</strong> $${adjustedTotal.toFixed(2)}</div>`;
+    }
+
+    function playSound() {
+      try {
+        cashSound.currentTime = 0;
+        cashSound.play().catch(err => console.warn("Sound playback blocked:", err));
+      } catch (e) {
+        console.warn("Playback failed:", e);
+      }
+    }
+
+    function throwConfetti() {
+      const dollarImg = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/One_US_dollar_note_2009_obverse.jpg/120px-One_US_dollar_note_2009_obverse.jpg";
+
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = 4.5 + Math.random() * 1.5 + "s";
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+        const isBill = Math.random() < 0.3;
+        if (isBill) {
+          const img = document.createElement("img");
+          img.src = dollarImg;
+          img.alt = "$";
+          confetti.appendChild(img);
+        } else {
+          confetti.textContent = getRandomSymbol();
+          confetti.style.color = getMutedColor();
+          confetti.style.fontSize = Math.random() * 15 + 27 + "px";
+        }
+
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 6000);
+      }
+    }
+
+    function getMutedColor() {
+      const colors = [
+        "rgba(255, 0, 0, 0.5)",
+        "rgba(0, 255, 0, 0.5)",
+        "rgba(0, 0, 255, 0.5)",
+        "rgba(255, 215, 0, 0.5)",
+        "rgba(0, 206, 209, 0.5)",
+        "rgba(255, 105, 180, 0.5)"
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function getRandomSymbol() {
+      const symbols = ["$", "★", "♦", "●", "■"];
+      return symbols[Math.floor(Math.random() * symbols.length)];
+    }
+  </script>
+
+<!-- ✅ Add this near the bottom of your HTML body -->
+<div align="center"><button id="openCalc" style="width:auto; margin-top; 30px;" background-color: #007acc; color: white; font-size: 1rem; padding: 0.75rem; border: none; cursor: pointer; border-radius: 5px;">Basic Calculator</button></div>
+
+<!-- ✅ Calculator Modal -->
+<div id="calcModal" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5);">
+  <div style="background:white; max-width: 300px; margin: 100px auto; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.25);">
+    <h3 style="text-align:center; color:#007acc; margin-top:0;">Standard Calculator</h3>
+    <input type="text" id="calc-display" style="width:100%; font-size: 1.5rem; text-align:right; margin-bottom: 10px;" disabled>
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;">
+      <button onclick="calcPress('7')">7</button>
+      <button onclick="calcPress('8')">8</button>
+      <button onclick="calcPress('9')">9</button>
+      <button onclick="calcPress('/')">&#247;</button>
+      <button onclick="calcPress('4')">4</button>
+      <button onclick="calcPress('5')">5</button>
+      <button onclick="calcPress('6')">6</button>
+      <button onclick="calcPress('*')">&#215;</button>
+      <button onclick="calcPress('1')">1</button>
+      <button onclick="calcPress('2')">2</button>
+      <button onclick="calcPress('3')">3</button>
+      <button onclick="calcPress('-')">&#8722;</button>
+      <button onclick="calcPress('0')">0</button>
+      <button onclick="calcPress('.')">.</button>
+      <button onclick="calculateResult()">=</button>
+      <button onclick="calcPress('+')">&#43;</button>
+      <button onclick="clearCalc()" style="grid-column: span 4; background-color: #f44336; color: white;">Clear</button>
+    </div>
+    <button onclick="closeCalcModal()" style="margin-top:10px; width:100%; background-color:#007acc; color:white; font-size:1rem; padding:0.5rem; border:none; border-radius:5px;">Close</button>
+  </div>
+</div>
+
+<!-- ✅ Calculator JS (can go in your existing <script> tag) -->
+<script>
+  let calcInput = "";
+
+  function calcPress(value) {
+    calcInput += value;
+    document.getElementById("calc-display").value = calcInput;
+  }
+
+  function calculateResult() {
+    try {
+      calcInput = eval(calcInput).toString();
+      document.getElementById("calc-display").value = calcInput;
+    } catch {
+      document.getElementById("calc-display").value = "Error";
+      calcInput = "";
+    }
+  }
+
+  function clearCalc() {
+    calcInput = "";
+    document.getElementById("calc-display").value = "";
+  }
+
+  function closeCalcModal() {
+    document.getElementById("calcModal").style.display = "none";
+  }
+
+  document.getElementById("openCalc").addEventListener("click", () => {
+    document.getElementById("calcModal").style.display = "block";
+    clearCalc();
+  });
+</script>
+
+<!-- ✅ Optional: Style calculator buttons to match theme -->
+<style>
+  #calcModal button {
+    padding: 12px;
+    font-size: 1.1rem;
+    border: none;
+    background-color: #e0ffff;
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+  }
+
+  #calcModal button:hover {
+    background-color: #d0f0f0;
+  }
+</style>
+
+
+
+<DIV align="center"><a href="https://jaime62.github.io/GulfWaters-BINGO/BINGO%20Patterns.html" target=_blank><H3><font color="aqua"><u>View BINGO game patterns!</u></font></H3></a>
+
+  <!-- HELP modal popup -->
+
+  <div id="helpModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; overflow:auto;">
+  <div style="background:white; max-width:650px; margin: auto; padding:2rem; border-radius:10px; position:relative; box-shadow: 0 0 20px rgba(0,0,0,0.2);">
+<br>Close&nbsp;&nbsp;
+    <!-- X Close Button -->
+<button onclick="closeHelpModal()" style="
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  line-height: 1;
+  text-shadow: none;
+">X</button>
+
+    <BR>
+ <!--   <button onclick="closeHelpModal()" style="position:absolute; top:10px; right:10px; font-size:18px; background:none; border:none; cursor:pointer;">✖</button>
+-->
+    <h2 style="color:#007acc;">BINGO Payout Calculator Help</h2>
+    
+    <h3>How It Works:</h3>
+
+      <strong>Enter the Total Purse</strong><br>
+        Type the <u>total dollar amount collected from all players</u> (e.g., $215.00).<br>
+        ⚠️ <font color="red">Do NOT include the starting till!</font>.<br><br>
+      
+      <strong>Enter Number of Game Cards</strong><br>
+        Choose how many games will be played (2–20).<br><br>
+      
+      <strong>Click “Calculate Payouts”</strong><br>
+        Each game payout appears below, rounded to the<br>nearest $5.00. Game 6 gets the biggest payout!<br>
+  
+
+    <h3>🎉 Special Features:</h3>
+
+      <strong>Confetti Celebration</strong><br>
+        Colorful confetti (including dollar bills, beach items, and bingo balls)<br>rains across the screen when you calculate.<br><br>
+      <strong>Let's Play Bingo App</strong><br>
+        Use the <a href="https://letsplaybingo.io/" target="_blank">Let’s Play Bingo website</a> to display BINGO calls on<br>a projector screen as an alternative to a physical ball roller.<br><br>
+      <strong>Bingo Pattern Gallery</strong><br>
+        Link at the bottom of the page shows <u>20 popular BINGO patterns</u> with thumbnails that expand on click. The Let’s Play Bingo app offers even more patterns.<br><br>
+      <strong>Mobile-Friendly</strong><br>
+        Works on phones and tablets. Add it to your iPhone home<br>screen via Safari’s share and <strong>“Add to Home Screen”</strong> option.
+
+  </div>
+</div>
+<script>
+function openHelpModal() {
+  document.getElementById('helpModal').style.display = 'block';
+}
+
+  function closeHelpModal() {
+    document.getElementById('helpModal').style.display = 'none';
+  }
+
+  function playAudio() {
+  const sound = document.getElementById("mySound");
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(e => console.warn("Audio playback failed:", e));
+  }
+}
+
+</script>
+
+</body>
+  <audio id="mySound" preload="auto">
+  <source src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/mixkit-magical-coin-win-1936.wav" type="audio/wav">
+</audio>
+
+</html>
