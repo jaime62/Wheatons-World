@@ -39,13 +39,38 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+.slogan-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.slogan-row h1 {
+  margin: 0;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.slogan-row span {
+  font-size: 2rem;
+  user-select: none;
+}
+
+    
   </style>
 </head>
 <body>
 
-  <h1 onclick="openModal('inspireModal')">Inspire</h1>    |    
-  <h1 onclick="openModal('respectModal')">Respect</h1>    |    
+<div class="slogan-row">
+  <h1 onclick="openModal('inspireModal')">Inspire</h1>
+  <span>|</span>
+  <h1 onclick="openModal('respectModal')">Respect</h1>
+  <span>|</span>
   <h1 onclick="openModal('createModal')">Create</h1>
+</div>
+
 
   <div id="inspireModal" class="modal">
     <div class="modal-content">
