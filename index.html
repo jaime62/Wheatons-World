@@ -23,19 +23,18 @@
       font-family: 'Libre Baskerville', serif;
     }
 
-.center-logo {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  padding: 0;
-}
+    .center-logo {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      padding: 0;
+    }
 
-.logo-img {
-  width: 300px;        /* or any exact pixel size you want */
-  height: auto;
-  display: inline-block;
-}
-
+    .logo-img {
+      width: 300px;
+      height: auto;
+      display: inline-block;
+    }
 
     .stylish-w {
       font-family: 'Dancing Script', cursive;
@@ -45,33 +44,31 @@
     }
 
     .rest-text-norm {
-      font-size: 1.0rem;           /* smaller font */
-      color: #003366;              /* dark blue */
+      font-size: 1.0rem;
+      color: #003366;
       display: inline;
     }
+
     .rest-text-med {
-      font-size: 1.2rem;           /* smaller font */
-      color: #003366;              /* dark blue */
+      font-size: 1.2rem;
+      color: #003366;
       display: inline;
     }
 
-.small-bingo-ball {
-  width: 5%;
-  height: auto;
-  vertical-align: middle;
-}
-
-}
+    .small-bingo-ball {
+      width: 5%;
+      height: auto;
+      vertical-align: middle;
+    }
 
     .site-footer {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #666;
-  padding: 1rem;
-  margin-top: 4rem;
-  border-top: 1px solid #ddd;
-}
-
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      padding: 1rem;
+      margin-top: 4rem;
+      border-top: 1px solid #ddd;
+    }
   </style>
 </head>
 <body>
@@ -81,24 +78,35 @@
     <img class="logo-img" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_logo_blue.png" alt="Wheaton's World Logo">
   </div>
 
-  <!-- Centered Text Immediately Below -->
-  <p>
-    <span class="stylish-w">W</span><span class="rest-text-med">e're new, so come back and see what unfolds as we learn and create for fun!</span><BR>
-    <BR><BR>
+  <!-- Intro Text -->
+  <div>
+    <span class="stylish-w">W</span>
+    <span class="rest-text-med">e're new, so come back and see what unfolds as we learn and create for fun!</span>
+  </div>
 
-<iframe src="WW_slogan.html" 
-        style="border: none; width: 100%; height: 75vh; margin: 0; padding: 0; display: block;" 
-        scrolling="no" 
-        frameborder="0">
-</iframe>
-    
-    <span class="rest-text-norm">What we've done so far...</span><BR><BR>
-<a href="https://www.wheatonsworld.com/app/BingoPayCalc/" target=_blank>
-  <img class="small-bingo-ball" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png">
-    <BR><span class="rest-text-norm">Bingo Payout Calculator</span></a>
-<BR><BR><BR><BR> </p>
-<footer class="site-footer">
-  <p><i>Wheaton's World&#8482;&nbsp;&nbsp;&#124;&nbsp;&nbsp;All rights reserved.</i></p>
-</footer>
+  <!-- Slogan iFrame -->
+  <div style="margin: 2rem 0;">
+    <iframe src="WW_slogan.html" 
+            style="border: none; width: 100%; height: 75vh; margin: 0; padding: 0; display: block;" 
+            scrolling="no" 
+            frameborder="0">
+    </iframe>
+  </div>
+
+  <!-- Bingo App Link -->
+  <div style="margin-top: 1rem;">
+    <span class="rest-text-norm">What we've done so far...</span><br><br>
+
+    <a href="https://www.wheatonsworld.com/app/BingoPayCalc/" target="_blank">
+      <img class="small-bingo-ball" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png"><br>
+      <span class="rest-text-norm">Bingo Payout Calculator</span>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p><i>Wheaton's World&#8482;&nbsp;&nbsp;&#124;&nbsp;&nbsp;All rights reserved.</i></p>
+  </footer>
+
 </body>
 </html>
