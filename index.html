@@ -10,17 +10,27 @@
 <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_favicon.png">
 
   <title>Welcome to Wheaton's World!</title>
-  <style>
+<style>
+    body {
+      margin: 0;
+    }
+
     .center-container {
       display: flex;
-      justify-content: center;  /* centers horizontally */
+      justify-content: center; /* centers horizontally */
+      width: 100vw;            /* full viewport width */
+    }
+
+    img {
+      max-width: 100%;         /* makes it responsive */
+      height: auto;
     }
   </style>
 </head>
 <body>
   <div class="center-container">
-<img src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_logo.png" alt="Wheaton's World Logo" style="transform: scale(.5); transform-origin: top left;">
-
+    <img src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_logo.png" alt="WW logo">
+  </div>
   </div>
 </body>
 </html>
