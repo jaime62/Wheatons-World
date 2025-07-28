@@ -13,24 +13,29 @@
 <style>
     body {
       margin: 0;
+      padding: 0;
     }
 
-    .center-container {
+    .center-logo {
       display: flex;
-      justify-content: center; /* centers horizontally */
-      width: 50vw;            /* full viewport width */
+      justify-content: center;       /* horizontal centering */
+      align-items: center;           /* vertical centering (optional) */
+      height: 100vh;                 /* full height to center vertically */
     }
 
-    img {
-      max-width: 100%;         /* makes it responsive */
+    .logo-img {
+      transform: scale(1.5);         /* 50% larger */
+      transform-origin: center;      /* scale from center */
+      max-width: 100%;               /* keep responsive */
       height: auto;
     }
   </style>
 </head>
 <body>
-  <div class="center-container">
-    <img src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_logo.png" alt="WW logo">
+
+  <div class="center-logo">
+    <img class="logo-img" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_logo_blue.png" alt="Wheaton's World Logo">
   </div>
-  </div>
+
 </body>
 </html>
