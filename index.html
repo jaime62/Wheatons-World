@@ -142,29 +142,37 @@
   color: white;
 }
 
-.link-nav {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1rem;
-  font-family: 'Libre Baskerville', serif;
-  margin-top: 1rem; /* optional spacing */
-}
+  <style>
+    /* ... existing styles ... */
 
-.link-nav a {
-  text-decoration: none;
-  color: #0074e8;
-  font-weight: bold;
-  border: 1px solid transparent;
-  padding: 6px 12px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
+    .link-nav-wrapper {
+      text-align: center;
+      width: 100%;
+    }
 
-.link-nav a:hover {
-  background-color: #0074e8;
-  color: white;
-}
+    .link-nav {
+      display: inline-block;
+      font-size: 1rem;
+      font-family: 'Libre Baskerville', serif;
+      margin-top: 1rem;
+    }
+
+    .link-nav a {
+      text-decoration: none;
+      color: #0074e8;
+      font-weight: bold;
+      border: 1px solid transparent;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .link-nav a:hover {
+      background-color: #0074e8;
+      color: white;
+    }
+  </style>
+
   </style>
 </head>
 <body>
@@ -199,19 +207,18 @@
   </div>
 <BR><BR>
   <!-- Intro Text -->
-  <div>
-<!--    <span class="stylish-w">W</span> -->
-    <span class="rest-text-norm"><i>We're just getting started, so come back to see what unfolds as we learn and create for fun!</i></span>
-  </div>
-
-  <div style="margin-top: 4rem;">
+ <div style="margin-top: 4rem;">
     <span class="rest-text-norm">Here's what we've done so far...</span><br><br>
     <a href="https://www.wheatonsworld.com/app/BingoPayCalc/" target="_blank">
       <img class="small-bingo-ball" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png"><br>
-        </div>
-    <div class="link-nav">
-  <a href="https://www.wheatonsworld.com/app/BingoPayCalc/" target="_blank">Bingo Payout Calculator</a><BR><BR>
+    </a>
+    
+    <div class="link-nav-wrapper">
+      <div class="link-nav">
+        <a href="https://www.wheatonsworld.com/app/BingoPayCalc/" target="_blank">Bingo Payout Calculator</a>
+      </div>
     </div>
+  </div>
 
 
 
