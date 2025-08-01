@@ -11,25 +11,35 @@
       color: white;
       background: url('https://images.unsplash.com/photo-1570813092281-b8fd3c7e7f02') no-repeat center center fixed;
       background-size: cover;
-      text-align: center; /* Center all text horizontally */
+      text-align: center;
     }
 
     header {
       background: rgba(0, 0, 0, 0.6);
-      padding: 2rem;
+      padding: 1rem 2rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      width: 33%;
+      max-width: 100px;
+      height: auto;
+      flex-shrink: 0;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin: 0;
       color: #FFD700;
       text-shadow: 2px 2px 5px #000;
-    }
-
-    iframe {
-      width: 100%;
-      height: 800px;
-      border: none;
+      text-align: left;
     }
 
     nav {
@@ -56,6 +66,15 @@
     }
 
     @media (max-width: 600px) {
+      .header-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
       nav {
         flex-direction: column;
       }
@@ -65,22 +84,17 @@
         text-align: center;
       }
     }
-    .logo {
-  width: 33%;
-  height: auto;
-  max-width: 150px; /* Optional: restrict it from getting too large on big screens */
-}
-
   </style>
 </head>
 <body>
-<header>
-  <a href="https://wheatonsworld.com">
-    <img class="logo" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/WheatonsWorld-Globe.png?raw=true" alt="Wheaton's World Logo">
-  </a>
-  <h1>Wheaton's Tech Tackle Box</h1>
-</header>
-
+  <header>
+    <div class="header-content">
+      <a href="https://wheatonsworld.com">
+        <img class="logo" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/WheatonsWorld-globe.png?raw=true" alt="Wheaton's World Logo">
+      </a>
+      <h1>Wheaton's Tech Tackle Box</h1>
+    </div>
+  </header>
 
   <nav>
     <a href="https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing/bag-length-limits" target="myframe">Bag & Length</a>
@@ -94,8 +108,8 @@
     <h2 style="color: blue;">Welcome Port Aransas Saltwater Anglers!</h2>
     <span style="color: black;">Use the menu buttons above to navigate to the various tools that we have in our "tackle box".</span>
   </p>
-   <p>
-     <span style="color: black;"><i>(Each will open in a separate window)</i></span>
-   </p>
+  <p>
+    <span style="color: black;"><i>(Each will open in a separate window)</i></span>
+  </p>
 </body>
 </html>
