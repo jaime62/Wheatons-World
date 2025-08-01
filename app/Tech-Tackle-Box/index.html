@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wheaton's Tech Tackle Box</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      background: url('https://images.unsplash.com/photo-1570813092281-b8fd3c7e7f02') no-repeat center center fixed;
+      background-size: cover;
+    }
 
+    header {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin: 0;
+      color: #FFD700;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 1rem;
+    }
+
+    nav a {
+      color: white;
+      background-color: #1E90FF;
+      text-decoration: none;
+      margin: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      background-color: #00BFFF;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        width: 90%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Wheaton's Tech Tackle Box</h1>
+  </header>
+
+  <iframe src="https://tpwd.texas.gov/gis/ris/artificialreefs/"></iframe>
+
+  <nav>
+    <a href="https://tpwd.texas.gov/gis/ris/artificialreefs/" target="_blank">TPWD Artificial Reefs Interactive Mapping</a>
+    <a href="https://sfs.saltstrong.com/?lat=27.73447113880205&lng=-97.16033439480708&zoom=10" target="_blank">Smart Fishing Spots WebApp</a>
+    <a href="https://www.windfinder.com/" target="_blank">Windfinder - Wind, Waves, Weather & Tide Forecast</a>
+    <a href="https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing/bag-length-limits" target="_blank">TPWD Bag & Length Limits by Species</a>
+  </nav>
+</body>
+</html>
