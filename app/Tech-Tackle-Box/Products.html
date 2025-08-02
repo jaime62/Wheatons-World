@@ -67,6 +67,15 @@
     body {
       background-color: transparent;
     }
+    .subcategory-container {
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.subcategory-container.show {
+  display: block;
+}
+
   </style>
 </head>
 <body>
@@ -288,6 +297,33 @@
     attributes: true,
     characterData: true
   });
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggles = document.querySelectorAll('.category-toggle');
+
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const currentlyOpen = document.querySelector('.subcategory-container.show');
+
+        // Collapse any open one
+        if (currentlyOpen && currentlyOpen !== toggle.nextElementSibling) {
+          currentlyOpen.classList.remove('show');
+        }
+
+        // Toggle the clicked one
+        toggle.nextElementSibling.classList.toggle('show');
+
+        // Trigger iframe resize in parent
+        setTimeout(() => {
+          const height = document.body.offsetHeight;
+          window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+        }, 250); // wait for animation/layout shift
+      });
+    });
+  });
+</script>
+
 </script>
 </body>
 </html>
