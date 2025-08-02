@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fishing Gear by Category</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    .category {
+      background: #3b9c9c;
+      color: white;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .subcategory {
+      display: none;
+      background: #e6fafa;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+      border-left: 4px solid #3b9c9c;
+    }
+
+    .subcategory a {
+      display: block;
+      padding: 0.25rem 0;
+      color: #004c4c;
+      text-decoration: none;
+    }
+
+    .subcategory a:hover {
+      text-decoration: underline;
+    }
+
+    @media (min-width: 600px) {
+      body {
+        max-width: 600px;
+        margin: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Fishing Gear by Category</h2>
+
+  <!-- Apparel & Protection -->
+  <div class="category" onclick="toggle(this)">🧢 Apparel & Protection</div>
+  <div class="subcategory">
+    <a href="https://www.amazon.com/s?k=fishing+gloves&tag=yourid-20" target="_blank">Gloves</a>
+    <a href="https://www.amazon.com/s?k=polarized+sunglasses&tag=yourid-20" target="_blank">Sunglasses</a>
+    <a href="https://www.amazon.com/s?k=fishing+sun+shirt&tag=yourid-20" target="_blank">Sun Shirts</a>
+    <a href="https://www.amazon.com/s?k=fishing+waders&tag=yourid-20" target="_blank">Waders</a>
+  </div>
+
+  <!-- Boating Accessories -->
+  <div class="category" onclick="toggle(this)">🛥️ Boating Accessories</div>
+  <div class="subcategory">
+    <a href="https://www.amazon.com/s?k=boat+anchor&tag=yourid-20" target="_blank">Anchors</a>
+    <a href="https://www.amazon.com/s?k=bilge+pump&tag=yourid-20" target="_blank">Bilge Pumps</a>
+    <a href="https://www.amazon.com/s?k=marine+battery+box&tag=yourid-20" target="_blank">Battery Boxes</a>
+  </div>
+
+  <!-- Electronics -->
+  <div class="category" onclick="toggle(this)">📡 Electronics</div>
+  <div class="subcategory">
+    <a href="https://www.amazon.com/s?k=fish+finder&tag=yourid-20" target="_blank">Fish Finders</a>
+    <a href="https://www.amazon.com/s?k=gps+chartplotter&tag=yourid-20" target="_blank">GPS Chartplotters</a>
+    <a href="https://www.amazon.com/s?k=marine+radio&tag=yourid-20" target="_blank">Marine Radios</a>
+  </div>
+
+  <!-- Rods & Reels -->
+  <div class="category" onclick="toggle(this)">🎣 Rods & Reels</div>
+  <div class="subcategory">
+    <a href="https://www.amazon.com/s?k=rod+reel+combo&tag=yourid-20" target="_blank">Combo Kits</a>
+    <a href="https://www.amazon.com/s?k=baitcasting+rods&tag=yourid-20" target="_blank">Baitcasting Rods</a>
+    <a href="https://www.amazon.com/s?k=spinning+reels&tag=yourid-20" target="_blank">Spinning Reels</a>
+  </div>
+
+  <!-- Tackle & Storage -->
+  <div class="category" onclick="toggle(this)">🧰 Tackle & Storage</div>
+  <div class="subcategory">
+    <a href="https://www.amazon.com/s?k=fishing+hooks&tag=yourid-20" target="_blank">Hooks</a>
+    <a href="https://www.amazon.com/s?k=soft+plastic+fishing+lures&tag=yourid-20" target="_blank">Soft Plastics</a>
+    <a href="https://www.amazon.com/s?k=tackle+boxes&tag=yourid-20" target="_blank">Tackle Boxes</a>
+  </div>
+
+  <!-- Tools & Maintenance -->
+  <div class="category" onclick="toggle(this)">🔧 Tools & Maintenance</div>
+  <div class="subcategory">
+    <a href="https://www.amazon.com/s?k=fishing+pliers&tag=yourid-20" target="_blank">Pliers</a>
+    <a href="https://www.amazon.com/s?k=fishing+scale&tag=yourid-20" target="_blank">Scales</a>
+    <a href="https://www.amazon.com/s?k=line+cutter&tag=yourid-20" target="_blank">Line Cutters</a>
+    <a href="https://www.amazon.com/s?k=reel+oil&tag=yourid-20" target="_blank">Reel Oil</a>
+  </div>
+
+  <script>
+    function toggle(element) {
+      const next = element.nextElementSibling;
+      const isVisible = next.style.display === 'block';
+      next.style.display = isVisible ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>
