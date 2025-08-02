@@ -225,52 +225,35 @@
     </div>
   </div>
 
-  <script>
-    function toggle(element) {
-      const all = document.querySelectorAll('.subcategory');
-      all.forEach(sub => {
-        if (sub !== element.nextElementSibling) {
-          sub.style.display = 'none';
-        }
-      });
+<script>
+  function toggle(element) {
+    const all = document.querySelectorAll('.subcategory');
+    all.forEach(sub => {
+      if (sub !== element.nextElementSibling) {
+        sub.style.display = 'none';
+      }
+    });
 
-      const next = element.nextElementSibling;
-      const isVisible = next.style.display === 'block';
-      next.style.display = isVisible ? 'none' : 'block';
+    const next = element.nextElementSibling;
+    const isVisible = next.style.display === 'block';
+    next.style.display = isVisible ? 'none' : 'block';
+  }
 
-setTimeout(() => {
-  const height = document.documentElement.scrollHeight;
-  window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-
-  // Recheck after a longer delay to catch layout settling
-  setTimeout(() => {
-    const newHeight = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'resize-iframe', height: newHeight }, '*');
-  }, 500);
-}, 200);
-
-    }
-
-    function debouncedResize(delay = 150) {
-      clearTimeout(window.__resizeTimeout);
-      window.__resizeTimeout = setTimeout(() => {
-        const height = document.documentElement.scrollHeight;
-        window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-      }, delay);
-    }
-
-   <!-- window.addEventListener('load', () => debouncedResize(300)); -->
-     window.addEventListener('load', () => {
-  setTimeout(() => {
+  function sendHeightToParent() {
     const height = document.documentElement.scrollHeight;
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-  }, 100); // slight delay allows layout to settle
-});
+  }
 
-    window.addEventListener('resize', () => debouncedResize(300));
+  window.addEventListener('load', sendHeightToParent);
+  window.addEventListener('resize', sendHeightToParent);
 
-    const resizeObserver = new ResizeObserver(() => debouncedResize(200));
-    resizeObserver.observe(document.body);
-  </script>
+  // ResizeObserver to detect DOM changes like expanding/collapsing
+  const resizeObserver = new ResizeObserver(() => {
+    sendHeightToParent();
+  });
+
+  resizeObserver.observe(document.body);
+</script>
+
 </body>
 </html>
