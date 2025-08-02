@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fishing Gear by Category</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    .category {
+      background: #3b9c9c;
+      color: white;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .subcategory {
+      display: none;
+      background: #e6fafa;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+      border-left: 4px solid #3b9c9c;
+    }
+
+    .sub-subcategory {
+      margin-left: 1rem;
+      padding: 0.25rem 0;
+    }
+
+    .sub-subcategory h4 {
+      margin: 0.5rem 0 0.25rem;
+      color: #006666;
+    }
+
+    .sub-subcategory ul {
+      padding-left: 1rem;
+      margin: 0;
+    }
+
+    .sub-subcategory li {
+      margin: 0.25rem 0;
+    }
+
+    .sub-subcategory a {
+      color: #003333;
+      text-decoration: none;
+    }
+
+    .sub-subcategory a:hover {
+      text-decoration: underline;
+    }
+
+    @media (min-width: 600px) {
+      body {
+        max-width: 600px;
+        margin: auto;
+      }
+    }
+
+    body {
+      background-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Fishing Gear by Category</h2>
+
+
+  <div class="category" onclick="toggle(this)">BAY FISHING</div>
+  <div class="subcategory">
+      <ul>
+<li></li>
+<li></li>
+<li></li>
+      </ul>
+
+    </div>
+
+ <div class="category" onclick="toggle(this)">DEEP SEA FISHING</div>
+  <div class="subcategory">
+      <ul>
+<li></li>
+<li></li>
+<li></li>
+      </ul>
+
+    </div> <div class="category" onclick="toggle(this)">FLOUNDER GIGGING</div>
+  <div class="subcategory">
+      <ul>
+<li></li>
+<li></li>
+<li></li>
+      </ul>
+
+    </div>
+  <script>
+    function toggle(element) {
+      const next = element.nextElementSibling;
+      const isVisible = next.style.display === 'block';
+      next.style.display = isVisible ? 'none' : 'block';
+      sendHeightToParent();
+    }
+
+    function sendHeightToParent() {
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+    }
+
+    window.addEventListener('load', sendHeightToParent);
+    window.addEventListener('resize', sendHeightToParent);
+  </script>
+</body>
+</html>
