@@ -17,7 +17,7 @@
 
     .header {
       width: 100vw;
-      height: 200px; /* responsive height */
+      height: 200px;
       background-image: url('https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/Underwater%20Ocean%20scene.png?raw=true');
       background-size: cover;
       background-position: center;
@@ -25,7 +25,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden; /* prevents header from growing with margin */
+      overflow: hidden;
     }
 
     .title-row {
@@ -57,28 +57,83 @@
       gap: 1rem;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 1.4rem; /* space above buttons, doesn't affect header height */
+      margin-top: 1.4rem;
       position: relative;
     }
 
-.nav button {
-  background-color: #2196f3;
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* subtle drop shadow */
-}
+    .nav button {
+      background-color: #2196f3;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
 
-.nav button:hover {
-  background-color: #1976d2;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* stronger shadow on hover */
-}
+    .nav button:hover {
+      background-color: #1976d2;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
 
+    /* Custom Tooltip Styles */
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .custom-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      background-color: #BBFAE5;
+      color: black;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      padding: 8px 10px;
+      position: absolute;
+      bottom: 120%;
+      left: 60%;
+      transform: translateX(-50%) translateY(0);
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: opacity 0.3s ease;
+      z-index: 100;
+    }
+
+    .custom-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -6px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: #BBFAE5 transparent transparent transparent;
+    }
+
+    .tooltip-container:hover .custom-tooltip {
+      visibility: visible;
+      opacity: 1;
+      animation: fadeBounce 0.6s ease forwards;
+    }
+
+    @keyframes fadeBounce {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+      }
+      60% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px);
+      }
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+    }
 
     @media (max-width: 600px) {
       .title-row h1 {
@@ -110,17 +165,43 @@
       <img class="logo" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/WheatonsWorld-Globe.png?raw=true" alt="Wheaton's World Logo">
       &nbsp;<h1>Tech Tackle Box</h1>
     </div>
-    <div class="nav"><BR><BR>
-    <a href="https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing/bag-length-limits" target="myframe">
-      <button title="Check TPWD for saltwater current regulations by species!">Bag & Length</button></a>
-  <a href="https://g1.ipcamlive.com/player/player.php?alias=portafishrack&#038;autoplay=1&#038;mute=1" target="myframe">
-      <button title="See what flags Deep Sea HQ has flying - LIVE!">Bait Cam</button></a>
-      <a href="https://tpwd.texas.gov/gis/ris/artificialreefs/" target="myframe">
-      <button title="Get reef information to try different fishing structures!">Reef Map</button></a>
-      <a href="https://sfs.saltstrong.com/?lat=27.73447113880205&lng=-97.16033439480708&zoom=10" target="myframe">
-      <button title="Make your plans based off this awesome Salt Strong tool!">SmartSpots</button></a>
-      <a href="https://www.windfinder.com/forecast/mustang_island_port_aransas" target="myframe">
-      <button title="Check out wave, wind, and tidal conditions!">Windfinder</button></a>
+    <div class="nav"><br><br>
+
+      <div class="tooltip-container">
+        <a href="https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing/bag-length-limits" target="myframe">
+          <button>Bag & Length</button>
+        </a>
+        <div class="custom-tooltip">Check TPWD for saltwater regulations</div>
+      </div>
+
+      <div class="tooltip-container">
+        <a href="https://g1.ipcamlive.com/player/player.php?alias=portafishrack&#038;autoplay=1&#038;mute=1" target="myframe">
+          <button>Bait Cam</button>
+        </a>
+        <div class="custom-tooltip">See Deep Sea HQ flags live</div>
+      </div>
+
+      <div class="tooltip-container">
+        <a href="https://tpwd.texas.gov/gis/ris/artificialreefs/" target="myframe">
+          <button>Reef Map</button>
+        </a>
+        <div class="custom-tooltip">Try fishing artificial reef structures</div>
+      </div>
+
+      <div class="tooltip-container">
+        <a href="https://sfs.saltstrong.com/?lat=27.73447113880205&lng=-97.16033439480708&zoom=10" target="myframe">
+          <button>SmartSpots</button>
+        </a>
+        <div class="custom-tooltip">Use Salt Strong's planning tool</div>
+      </div>
+
+      <div class="tooltip-container">
+        <a href="https://www.windfinder.com/forecast/mustang_island_port_aransas" target="myframe">
+          <button>Windfinder</button>
+        </a>
+        <div class="custom-tooltip">Check wind, wave & tide conditions</div>
+      </div>
+
     </div>
   </div>
 
@@ -135,26 +216,27 @@
   </div>
 
   <!-- Amazon Affiliate Placeholder -->
-<div id="amazon-ads" style="margin: 3rem auto; padding: 3rem; background-color: #f0f8ff; border-top: 3px solid #2196f3; max-width: 900px; text-align: center;">
-  <h2 style="color: #1a237e; margin-bottom: 1rem;">Recommended Fishing Gear (Coming Soon)</h2>
-  <p style="color: #555;">
-    Our favorite saltwater rods, reels, and gadgets will be featured here soon — all available through Amazon.
-  </p>
-  <p style="color: #888; font-style: italic;">
-    (Affiliate links will appear here once we're approved)
-  </p>
-</div>
-<script>
-  // Make all links inside the Amazon ad section open in a new tab
-  document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll("#amazon-ads a");
-    links.forEach(link => link.setAttribute("target", "_blank"));
-  });
-</script>
-<div style="text-align: center;">
-  <p>
-  <i>As an Amazon Associate (once approved), I earn from qualifying purchases.</i>
-</p>
+  <div id="amazon-ads" style="margin: 3rem auto; padding: 3rem; background-color: #f0f8ff; border-top: 3px solid #2196f3; max-width: 900px; text-align: center;">
+    <h2 style="color: #1a237e; margin-bottom: 1rem;">Recommended Fishing Gear (Coming Soon)</h2>
+    <p style="color: #555;">
+      Our favorite saltwater rods, reels, and gadgets will be featured here soon — all available through Amazon.
+    </p>
+    <p style="color: #888; font-style: italic;">
+      (Affiliate links will appear here once we're approved)
+    </p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const links = document.querySelectorAll("#amazon-ads a");
+      links.forEach(link => link.setAttribute("target", "_blank"));
+    });
+  </script>
+
+  <div style="text-align: center;">
+    <p>
+      <i>As an Amazon Associate (once approved), I earn from qualifying purchases.</i>
+    </p>
   </div>
 
 </body>
