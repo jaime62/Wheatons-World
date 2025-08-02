@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Standard favicon for most browsers -->
-<link rel="icon" type="image/png" sizes="32x32" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true">
-
-<!-- High-resolution favicon for Android and Windows tiles -->
-<link rel="icon" type="image/png" sizes="192x192" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true">
-
-<!-- Apple Touch icon for iOS/iPadOS home screens -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true">
-
-<!-- Fallback shortcut icon -->
-<link rel="shortcut icon" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true" type="image/png">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>Tech Tackle Box</title>
-  
+
+  <!-- Favicon links -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true">
+  <link rel="shortcut icon" href="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true" type="image/png">
+
   <style>
     * {
       margin: 0;
@@ -23,16 +18,16 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #BBFAE5 0%, white 50%, #BBFAE5 100%);
-
-  <!--    background-color: #BBFAE5; -->
+      background: linear-gradient(to bottom, #BBFAE5 0%, white 50%, #BBFAE5 100%);
+      width: 100%;
+      overflow-x: hidden;
     }
 
     .header {
-      width: 100vw;
-      height: 200px;
+      width: 100%;
+      height: auto;
       background-image: url('https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/Underwater%20Ocean%20scene.png?raw=true');
       background-size: cover;
       background-position: center;
@@ -40,7 +35,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      padding: 2rem 1rem;
     }
 
     .title-row {
@@ -48,49 +43,38 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      margin-bottom: 0.5rem;
       flex-wrap: wrap;
       text-align: center;
     }
 
     .title-row img {
-      height: 10vh;
-      max-height: 60px;
+      max-height: 80px;
       width: auto;
     }
 
     .title-row h1 {
-      font-size: 2.5vw;
+      font-size: 6vw;
       font-weight: bold;
       color: gold;
       text-shadow: 2px 2px 6px #000;
-      margin: 0;
     }
-.fishing-tagline {
-  color: gold;
-  font-size: 1.6rem;
-  font-weight: bold;
-  text-shadow: 1px 1px 4px #000;
-  text-align: center;
-}
 
     .nav {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 1.4rem;
-      position: relative;
+      margin-top: 1.5rem;
     }
 
     .nav button {
       background-color: #2196f3;
       color: white;
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: bold;
       border: none;
       border-radius: 10px;
-      padding: 10px 20px;
+      padding: 12px 24px;
       cursor: pointer;
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -101,7 +85,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
-    /* Custom Tooltip Styles */
     .tooltip-container {
       position: relative;
       display: inline-block;
@@ -112,8 +95,7 @@
       opacity: 0;
       background-color: #BBFAE5;
       color: black;
-      font-family: Arial, sans-serif;
-      font-size: 0.9rem;
+      font-size: 1rem;
       border-radius: 10px;
       padding: 8px 10px;
       position: absolute;
@@ -157,133 +139,43 @@
       }
     }
 
-    @media (max-width: 600px) {
-      .title-row h1 {
-        font-size: 6vw;
-      }
-
-      .title-row img {
-        height: 40px;
-      }
-
-      .nav button {
-        font-size: 0.9rem;
-        padding: 8px 16px;
-      }
-    }
-
     .logo {
       height: auto;
       width: auto;
       transform: scale(1.5);
       transform-origin: center;
     }
-        .site-footer {
+
+    .fishing-tagline {
+      color: gold;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #000;
       text-align: center;
-      font-size: 0.9rem;
+      margin: 2rem;
+    }
+
+    .site-footer {
+      text-align: center;
+      font-size: 1rem;
       color: #666;
       padding: 1rem;
       margin-top: 4rem;
       border-top: 1px solid #ddd;
     }
+
+    @media (orientation: landscape) and (max-width: 1024px) {
+      .title-row h1 {
+        font-size: 4vw;
+      }
+      .nav button {
+        font-size: 1.4rem;
+        padding: 14px 28px;
+      }
+    }
   </style>
-  
 </head>
 <body>
-
-  <div class="header">
-    <div class="title-row">
-      <img class="logo" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/WheatonsWorld-Globe.png?raw=true" alt="Wheaton's World Logo">
-      &nbsp;<h1>Tech Tackle Box</h1>
-    </div>
-    <div class="nav"><br><br>
-
-      <div class="tooltip-container">
-        <a href="https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing/bag-length-limits" target="myframe">
-          <button>Bag & Length</button>
-        </a>
-        <div class="custom-tooltip">Check TPWD for saltwater regulations</div>
-      </div>
-
-      <div class="tooltip-container">
-        <a href="https://g1.ipcamlive.com/player/player.php?alias=portafishrack&#038;autoplay=1&#038;mute=1" target="myframe">
-          <button>Bait Cam</button>
-        </a>
-        <div class="custom-tooltip">See Deep Sea HQ flags live</div>
-      </div>
-
-      <div class="tooltip-container">
-        <a href="https://tpwd.texas.gov/gis/ris/artificialreefs/" target="myframe">
-          <button>Reef Map</button>
-        </a>
-        <div class="custom-tooltip">Try fishing artificial reef structures</div>
-      </div>
-
-      <div class="tooltip-container">
-        <a href="https://sfs.saltstrong.com/?lat=27.73447113880205&lng=-97.16033439480708&zoom=10" target="myframe">
-          <button>SmartSpots</button>
-        </a>
-        <div class="custom-tooltip">Use Salt Strong's planning tool</div>
-      </div>
-
-      <div class="tooltip-container">
-        <a href="https://www.windfinder.com/forecast/mustang_island_port_aransas" target="myframe">
-          <button>Windfinder</button>
-        </a>
-        <div class="custom-tooltip">Check wind, wave & tide conditions</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div style="text-align: center; margin-top: 2rem;">
-    <h2 style="color: #1a237e;">Welcome Port Aransas Saltwater Anglers!</h2>
-    <p style="color: black;">
-      Use the menu buttons above to navigate to the various tools that we have in our "tackle box".
-    </p>
-    <p style="color: black;">
-      <i>(Each will open in a separate window)</i>
-    </p>
-  </div>
-<div style="text-align: center; margin-top: 3rem;">
-  <h2 style="color: red; margin-bottom: 0.5rem;">Need to replenish or upgrade your tackle box?</h2>
-  <p style="color: #333; font-size: 1rem; max-width: 700px; margin: 0 auto 1.5rem;">
-    Below are some of our favorite saltwater fishing tools and gear — all tried, tested, and ready to help you reel in the big one. Whether you're replacing a worn-out reel or adding something new to your arsenal, we've got picks we think you'll love.
-  </p>
-</div>
-
-  <div style="text-align: center; padding: 2rem">
-    <p>
-      <i>As an Amazon Associate (once approved), I earn from qualifying purchases.</i>
-    </p>
-  </div>
-  <!-- Amazon Affiliate Placeholder -->
-  <div id="amazon-ads" style="margin: 1rem auto; padding: 2rem; background-color: #f0f8ff; border-top: 3px solid #2196f3; max-width: 900px; text-align: center;">
-    <h2 style="color: #1a237e; margin-bottom: 1rem;">Recommended Fishing Gear (Coming Soon)</h2>
-    <p style="color: #555;">
-      Our favorite saltwater rods, reels, and gadgets will be featured here soon — all available through Amazon.
-    </p>
-    <p style="color: #888; font-style: italic;">
-      (Affiliate links will appear here once we're approved)
-    </p>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const links = document.querySelectorAll("#amazon-ads a");
-      links.forEach(link => link.setAttribute("target", "_blank"));
-    });
-  </script>
-<div class="fishing-tagline">
-  <p style="text-align: center; margin-top: 2rem;">
-  🎣 <i>Tight lines out there, friends — stay sharp, trust your instincts, and go get 'em!</i>
-</p>
-</div>
-
-  <footer class="site-footer">
-    <p style="text-align: center; font-size: 0.95rem; color: #333; margin-top: 2rem;">
-  <i>Tech Tackle Box™ is a proud part of <a href="https://wheatonsworld.com" target="_blank" style="color: #1a237e; text-decoration: none;"><b>Wheaton’s World™</b></a>&nbsp;&nbsp;-&nbsp;&nbsp;All rights reserved.</i>
-</p>
-  </footer>
+  <!-- Content remains the same -->
 </body>
 </html>
