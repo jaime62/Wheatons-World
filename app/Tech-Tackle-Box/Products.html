@@ -257,16 +257,26 @@
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
-  // Call once on page load
+  // Send once on load
   window.addEventListener('load', sendHeightToParent);
 
-  // Watch for visual size changes
+  // Watch visual size changes
   const resizeObserver = new ResizeObserver(() => {
     sendHeightToParent();
   });
+  resizeObserver.observe(document.documentElement);
 
-  resizeObserver.observe(document.documentElement); // make sure you're observing the right element
+  // Watch DOM changes (especially when collapsing elements)
+  const mutationObserver = new MutationObserver(() => {
+    setTimeout(sendHeightToParent, 50); // short delay for animation/layout settle
+  });
+  mutationObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+  });
 </script>
+
 
 
 </body>
