@@ -2,112 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tech Tackle Box</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
-      background: url('https://images.unsplash.com/photo-1570813092281-b8fd3c7e7f02') no-repeat center center fixed;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      width: 2000px;
+      height: 400px;
+      background-image: url('https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/Underwater%20Ocean%20scene.png?raw=true');
       background-size: cover;
-      text-align: center;
-    }
-
-    header {
-      background: rgba(70, 199, 199);
-      padding: 1rem 2rem;
-    }
-
-    .header-content {
+      background-position: center;
       display: flex;
-      align-items: center;         /* Vertically align logo and heading */
-      justify-content: center;     /* Center them horizontally as a unit */
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .logo {
-      height: 90px;                /* Adjust to desired visual size */
-      width: auto;
-      flex-shrink: 0;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin: 0;
-      color: #FFD700;
-      text-shadow: 2px 2px 5px #000;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
-      background-color: rgba(59,156,156);
-      padding: 1rem;
-    }
-
-    nav a {
+      text-align: center;
       color: white;
-      background-color: #1E90FF;
-      text-decoration: none;
-      margin: 0.5rem;
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      transition: background-color 0.3s;
+    }
+
+    .header h1 {
+      font-size: 64px;
       font-weight: bold;
-    }
-
-    nav a:hover {
-      background-color: #00BFFF;
-    }
-
-    @media (max-width: 600px) {
-      .header-content {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      h1 {
-        text-align: center;
-      }
-
-      nav {
-        flex-direction: column;
-      }
-
-      nav a {
-        width: 90%;
-        text-align: center;
-      }
+      color: gold;
+      text-shadow: 3px 3px 8px #000;
+      margin: 0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-content">
-      <a href="https://wheatonsworld.com">
-        <img class="logo" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/WheatonsWorld-Globe.png?raw=true" alt="Wheaton's World Logo">
-      </a>
-      <h1>Tech Tackle Box</h1>
-    </div>
-  </header>
 
-  <nav>
-    <a href="https://tpwd.texas.gov/regulations/outdoor-annual/fishing/saltwater-fishing/bag-length-limits" target="myframe">Bag & Length</a>
-    <a href="https://g1.ipcamlive.com/player/player.php?alias=portafishrack&#038;autoplay=1&#038;mute=1" target="myframe">Bait Cam</a>
-    <a href="https://tpwd.texas.gov/gis/ris/artificialreefs/" target="myframe">Reef Map</a>
-    <a href="https://sfs.saltstrong.com/?lat=27.73447113880205&lng=-97.16033439480708&zoom=10" target="myframe">SmartSpots</a>
-    <a href="https://www.windfinder.com/forecast/mustang_island_port_aransas" target="myframe">Windfinder</a>
-  </nav>
+  <div class="header">
+    <h1>Tech Tackle Box</h1>
+  </div>
 
-  <p>
-    <h2 style="color: blue;">Welcome Port Aransas Saltwater Anglers!</h2>
-    <span style="color: black;">Use the menu buttons above to navigate to the various tools that we have in our "tackle box".</span>
-  </p>
-  <p>
-    <span style="color: black;"><i>(Each will open in a separate window)</i></span>
-  </p>
 </body>
 </html>
