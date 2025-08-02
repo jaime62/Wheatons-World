@@ -10,31 +10,77 @@
     }
 
     .header {
+      position: relative;
       width: 2000px;
       height: 400px;
       background-image: url('https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/Underwater%20Ocean%20scene.png?raw=true');
       background-size: cover;
       background-position: center;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
+      justify-content: start;
+      padding-top: 40px;
     }
 
-    .header h1 {
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .title-row img {
+      height: 100px;
+      width: auto;
+    }
+
+    .title-row h1 {
       font-size: 64px;
       font-weight: bold;
       color: gold;
       text-shadow: 3px 3px 8px #000;
       margin: 0;
     }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .nav button {
+      background-color: #2196f3;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .nav button:hover {
+      background-color: #1976d2;
+    }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>Tech Tackle Box</h1>
+    <div class="title-row">
+      <img src="https://raw.githubusercontent.com/jaime62/Wheatons-World/main/app/Tech-Tackle-Box/WW-Logo.png" alt="Wheaton's World Logo">
+      <h1>Tech Tackle Box</h1>
+    </div>
+    <div class="nav">
+      <button>Bag & Length</button>
+      <button>Bait Cam</button>
+      <button>Reef Map</button>
+      <button>SmartSpots</button>
+      <button>Windfinder</button>
+    </div>
   </div>
 
 </body>
