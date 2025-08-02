@@ -107,12 +107,28 @@
   </div>
 
   <script>
-    function toggle(element) {
-      const next = element.nextElementSibling;
-      const isVisible = next.style.display === 'block';
-      next.style.display = isVisible ? 'none' : 'block';
-    }
+function toggle(element) {
+  const next = element.nextElementSibling;
+  const isVisible = next.style.display === 'block';
+  next.style.display = isVisible ? 'none' : 'block';
+  sendHeightToParent(); // <-- Call after toggle
+}
+
   </script>
+<script>
+  function sendHeightToParent() {
+    const height = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+  }
+
+  // Send initial height
+  window.addEventListener('load', sendHeightToParent);
+
+  // Optionally update on resize or interaction
+  window.addEventListener('resize', sendHeightToParent);
+
+  // You can also call sendHeightToParent() in your category toggle function
+</script>
 
 </body>
 </html>
