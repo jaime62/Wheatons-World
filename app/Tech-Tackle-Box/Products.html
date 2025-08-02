@@ -252,7 +252,14 @@
       }, delay);
     }
 
-    window.addEventListener('load', () => debouncedResize(300));
+   <!-- window.addEventListener('load', () => debouncedResize(300)); -->
+     window.addEventListener('load', () => {
+  setTimeout(() => {
+    const height = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+  }, 100); // slight delay allows layout to settle
+});
+
     window.addEventListener('resize', () => debouncedResize(300));
 
     const resizeObserver = new ResizeObserver(() => debouncedResize(200));
