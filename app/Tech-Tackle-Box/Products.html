@@ -10,6 +10,7 @@
       background: #f0f8ff;
       margin: 0;
       padding: 1rem;
+      background-color: transparent;
     }
 
     .category {
@@ -63,31 +64,17 @@
         margin: auto;
       }
     }
-
-    body {
-      background-color: transparent;
-    }
-    .subcategory-container {
-  display: none;
-  transition: all 0.3s ease;
-}
-
-.subcategory-container.show {
-  display: block;
-}
-
   </style>
 </head>
 <body>
   <h2>Fishing Gear by Category</h2>
 
-  <!-- Apparel & Protection -->
+  <!-- Categories and Subcategories -->
   <div class="category" onclick="toggle(this)">🧢 Apparel & Protection</div>
   <div class="subcategory">
     <div class="sub-subcategory">
       <h4>Gloves</h4>
       <ul>
-        
         <li><a href="https://amzn.to/450YJk7" target="_blank">Palmyth UV Protection Fishing Gloves</a></li>
         <li><a href="https://amzn.to/47baEgs" target="_blank">KastKing Mountain Mist Gloves</a></li>
       </ul>
@@ -115,7 +102,6 @@
     </div>
   </div>
 
-  <!-- Boating Accessories -->
   <div class="category" onclick="toggle(this)">🛥️ Boating Accessories</div>
   <div class="subcategory">
     <div class="sub-subcategory">
@@ -141,7 +127,6 @@
     </div>
   </div>
 
-  <!-- Electronics -->
   <div class="category" onclick="toggle(this)">📡 Electronics</div>
   <div class="subcategory">
     <div class="sub-subcategory">
@@ -155,7 +140,7 @@
     <div class="sub-subcategory">
       <h4>GPS Chartplotters</h4>
       <ul>
-        <li><a href="https://amzn.to/45btLVe" target="_blank">Garmin GPSMAP 86i, Floating Handheld GPS</a></li>
+        <li><a href="https://amzn.to/45btLVe" target="_blank">Garmin GPSMAP 86i</a></li>
       </ul>
     </div>
     <div class="sub-subcategory">
@@ -166,7 +151,6 @@
     </div>
   </div>
 
-  <!-- Rods & Reels -->
   <div class="category" onclick="toggle(this)">🎣 Rods & Reels</div>
   <div class="subcategory">
     <div class="sub-subcategory">
@@ -191,7 +175,6 @@
     </div>
   </div>
 
-  <!-- Tackle & Storage -->
   <div class="category" onclick="toggle(this)">🧰 Tackle & Storage</div>
   <div class="subcategory">
     <div class="sub-subcategory">
@@ -214,7 +197,6 @@
     </div>
   </div>
 
-  <!-- Tools & Maintenance -->
   <div class="category" onclick="toggle(this)">🔧 Tools & Maintenance</div>
   <div class="subcategory">
     <div class="sub-subcategory">
@@ -245,85 +227,36 @@
 
   <script>
     function toggle(element) {
+      const all = document.querySelectorAll('.subcategory');
+      all.forEach(sub => {
+        if (sub !== element.nextElementSibling) {
+          sub.style.display = 'none';
+        }
+      });
+
       const next = element.nextElementSibling;
       const isVisible = next.style.display === 'block';
       next.style.display = isVisible ? 'none' : 'block';
-      sendHeightToParent();
+
+      setTimeout(() => {
+        const height = document.documentElement.scrollHeight;
+        window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+      }, 250);
     }
 
-    function sendHeightToParent() {
-      const height = document.documentElement.scrollHeight;
-      window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+    function debouncedResize(delay = 150) {
+      clearTimeout(window.__resizeTimeout);
+      window.__resizeTimeout = setTimeout(() => {
+        const height = document.documentElement.scrollHeight;
+        window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+      }, delay);
     }
 
-    window.addEventListener('load', sendHeightToParent);
-    window.addEventListener('resize', sendHeightToParent);
+    window.addEventListener('load', () => debouncedResize(300));
+    window.addEventListener('resize', () => debouncedResize(300));
+
+    const resizeObserver = new ResizeObserver(() => debouncedResize(200));
+    resizeObserver.observe(document.body);
   </script>
-
-<script>
-  let resizeTimeout;
-  let lastSentHeight = 0;
-
-  function sendHeightToParent() {
-    const currentHeight = document.body.offsetHeight;
-    if (currentHeight !== lastSentHeight) {
-      window.parent.postMessage({ type: 'resize-iframe', height: currentHeight }, '*');
-      lastSentHeight = currentHeight;
-    }
-  }
-
-  function debouncedResize(delay = 150) {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(sendHeightToParent, delay);
-  }
-
-  // On load
-  window.addEventListener('load', () => {
-    debouncedResize(300);
-  });
-
-  // Watch for layout changes
-  const resizeObserver = new ResizeObserver(debouncedResize);
-  resizeObserver.observe(document.body);
-
-  // Also listen for content or style changes
-  const mutationObserver = new MutationObserver(() => {
-    debouncedResize(200);
-  });
-
-  mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    characterData: true
-  });
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggles = document.querySelectorAll('.category-toggle');
-
-    toggles.forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        const currentlyOpen = document.querySelector('.subcategory-container.show');
-
-        // Collapse any open one
-        if (currentlyOpen && currentlyOpen !== toggle.nextElementSibling) {
-          currentlyOpen.classList.remove('show');
-        }
-
-        // Toggle the clicked one
-        toggle.nextElementSibling.classList.toggle('show');
-
-        // Trigger iframe resize in parent
-        setTimeout(() => {
-          const height = document.body.offsetHeight;
-          window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-        }, 250); // wait for animation/layout shift
-      });
-    });
-  });
-</script>
-
-</script>
 </body>
 </html>
