@@ -224,28 +224,44 @@
 }
 
 
-#affiliate-section {
-  background: #f0f8ff;
-  padding: 1rem;
-  margin: 1rem auto;
-  max-width: 600px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+<!-- Updated style block -->
+<style>
+  /* ... all your existing styles ... */
 
-#affiliate-section h2 {
-  color: #004c4c;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
+  /* New Amazon Affiliate Section Styles */
+  #amazon-ads {
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f0f8ff;
+    border-top: 3px solid #2196f3;
+    width: 95%;
+    max-width: 1400px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  }
 
-#affiliate-section iframe {
-  width: 100%;
-  height: 800px; /* match typical accordion section height */
-  border: none;
-  border-radius: 5px;
-  background-color: #ffffff;
-}
+  #amazon-ads h2 {
+    color: #1a237e;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+
+  #amazon-ads p {
+    color: #444;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  #amazon-ads iframe {
+    width: 100%;
+    height: 800px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+</style>
+
 
 
   </style>
@@ -315,23 +331,17 @@
 
   <div style="text-align: center; padding: 0 0 0.2rem;">
     <p font-size: .8rem;>
-      <i>As an Amazon Associate (once approved), I earn from qualifying purchases.</i>
+      <i>As an Amazon Associate, I earn from qualifying purchases.</i>
     </p>
   </div>
 
-  <!-- STORE EMBED -->
-  <!-- Amazon Affiliate Placeholder -->
-  <div id="amazon-ads" style="margin: 1rem auto; padding: 2rem; background-color: #f0f8ff; border-top: 3px solid #2196f3; max-width: 900px; text-align: center;">
-    <h2 style="color: #1a237e; margin-bottom: 1rem;">Recommended Fishing Gear (Coming Soon)</h2>
-    <p style="color: #555;">
-      Our favorite saltwater rods, reels, and gadgets will be featured here soon — all available through Amazon.
-    </p>
-    <p style="color: #888; font-style: italic;">
-      (Affiliate links will appear here once we're approved)
-    </p>
-  </div>
+ <!-- STORE EMBED -->
+<div id="amazon-ads">
+  <h2>Shop Fishing Gear</h2>
+  <iframe src="products.html" title="Fishing Products" loading="lazy"></iframe>
+</div>
+<!-- STORE END -->
 
-  <!-- STORE END -->
   
   <script>
     document.addEventListener("DOMContentLoaded", function () {
