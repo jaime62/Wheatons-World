@@ -29,14 +29,31 @@
       border-left: 4px solid #3b9c9c;
     }
 
-    .subcategory a {
-      display: block;
+    .sub-subcategory {
+      margin-left: 1rem;
       padding: 0.25rem 0;
-      color: #004c4c;
+    }
+
+    .sub-subcategory h4 {
+      margin: 0.5rem 0 0.25rem;
+      color: #006666;
+    }
+
+    .sub-subcategory ul {
+      padding-left: 1rem;
+      margin: 0;
+    }
+
+    .sub-subcategory li {
+      margin: 0.25rem 0;
+    }
+
+    .sub-subcategory a {
+      color: #003333;
       text-decoration: none;
     }
 
-    .subcategory a:hover {
+    .sub-subcategory a:hover {
       text-decoration: underline;
     }
 
@@ -46,89 +63,191 @@
         margin: auto;
       }
     }
-    body {
-  background-color: transparent;
-}
 
+    body {
+      background-color: transparent;
+    }
   </style>
 </head>
-<body style="background-color: transparent;">
+<body>
 
   <h2>Fishing Gear by Category</h2>
 
   <!-- Apparel & Protection -->
   <div class="category" onclick="toggle(this)">🧢 Apparel & Protection</div>
   <div class="subcategory">
-    <a href="https://www.amazon.com/s?k=fishing+gloves&tag=yourid-20" target="_blank">Gloves</a>
-    <a href="https://www.amazon.com/s?k=polarized+sunglasses&tag=yourid-20" target="_blank">Sunglasses</a>
-    <a href="https://www.amazon.com/s?k=fishing+sun+shirt&tag=yourid-20" target="_blank">Sun Shirts</a>
-    <a href="https://www.amazon.com/s?k=fishing+waders&tag=yourid-20" target="_blank">Waders</a>
+    <div class="sub-subcategory">
+      <h4>Gloves</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B07R7F7TYH?tag=wheatonstecht-20" target="_blank">Palmyth UV Protection Fishing Gloves</a></li>
+        <li><a href="https://www.amazon.com/dp/B0743F3FSY?tag=wheatonstecht-20" target="_blank">KastKing Mountain Mist Gloves</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Sunglasses</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B01M13FU7N?tag=wheatonstecht-20" target="_blank">KastKing Skidaway Polarized Sunglasses</a></li>
+        <li><a href="https://www.amazon.com/dp/B00AF4ABV6?tag=wheatonstecht-20" target="_blank">Fishoholic Polarized Fishing Sunglasses</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Sun Shirts</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B08XYM7X63?tag=wheatonstecht-20" target="_blank">Huk Men's Icon X Fishing Shirt</a></li>
+        <li><a href="https://www.amazon.com/dp/B07P97WZVJ?tag=wheatonstecht-20" target="_blank">Columbia Terminal Tackle Shirt</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Waders</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B01MRZSC9Z?tag=wheatonstecht-20" target="_blank">Frogg Toggs Amphib Waders</a></li>
+        <li><a href="https://www.amazon.com/dp/B07GBH9YWN?tag=wheatonstecht-20" target="_blank">Foxelli Neoprene Chest Waders</a></li>
+      </ul>
+    </div>
   </div>
 
   <!-- Boating Accessories -->
   <div class="category" onclick="toggle(this)">🛥️ Boating Accessories</div>
   <div class="subcategory">
-    <a href="https://www.amazon.com/s?k=boat+anchor&tag=yourid-20" target="_blank">Anchors</a>
-    <a href="https://www.amazon.com/s?k=bilge+pump&tag=yourid-20" target="_blank">Bilge Pumps</a>
-    <a href="https://www.amazon.com/s?k=marine+battery+box&tag=yourid-20" target="_blank">Battery Boxes</a>
+    <div class="sub-subcategory">
+      <h4>Anchors</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B000NVW1LM?tag=wheatonstecht-20" target="_blank">Seachoice Utility Anchor</a></li>
+        <li><a href="https://www.amazon.com/dp/B01LZDV6H4?tag=wheatonstecht-20" target="_blank">Extreme Max Grapnel Anchor Kit</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Bilge Pumps</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B000O8B7R8?tag=wheatonstecht-20" target="_blank">Shoreline Marine Bilge Pump</a></li>
+        <li><a href="https://www.amazon.com/dp/B003E77OG4?tag=wheatonstecht-20" target="_blank">Attwood Sahara Automatic Bilge Pump</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Battery Boxes</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B000MT94QA?tag=wheatonstecht-20" target="_blank">Minn Kota Trolling Motor Power Center</a></li>
+        <li><a href="https://www.amazon.com/dp/B0000AXR8W?tag=wheatonstecht-20" target="_blank">NOCO Snap-Top Battery Box</a></li>
+      </ul>
+    </div>
   </div>
 
   <!-- Electronics -->
   <div class="category" onclick="toggle(this)">📡 Electronics</div>
   <div class="subcategory">
-    <a href="https://www.amazon.com/s?k=fish+finder&tag=yourid-20" target="_blank">Fish Finders</a>
-    <a href="https://www.amazon.com/s?k=gps+chartplotter&tag=yourid-20" target="_blank">GPS Chartplotters</a>
-    <a href="https://www.amazon.com/s?k=marine+radio&tag=yourid-20" target="_blank">Marine Radios</a>
+    <div class="sub-subcategory">
+      <h4>Fish Finders</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B082XFWFDP?tag=wheatonstecht-20" target="_blank">Garmin Striker 4</a></li>
+        <li><a href="https://www.amazon.com/dp/B07Q4K1VXL?tag=wheatonstecht-20" target="_blank">Lowrance HOOK Reveal 5</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>GPS Chartplotters</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B00L4K1D80?tag=wheatonstecht-20" target="_blank">Garmin GPSMAP 78sc</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Marine Radios</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B00E1XW1ZC?tag=wheatonstecht-20" target="_blank">Uniden MHS75 Handheld Radio</a></li>
+      </ul>
+    </div>
   </div>
 
   <!-- Rods & Reels -->
   <div class="category" onclick="toggle(this)">🎣 Rods & Reels</div>
   <div class="subcategory">
-    <a href="https://www.amazon.com/s?k=rod+reel+combo&tag=yourid-20" target="_blank">Combo Kits</a>
-    <a href="https://www.amazon.com/s?k=baitcasting+rods&tag=yourid-20" target="_blank">Baitcasting Rods</a>
-    <a href="https://www.amazon.com/s?k=spinning+reels&tag=yourid-20" target="_blank">Spinning Reels</a>
+    <div class="sub-subcategory">
+      <h4>Combo Kits</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B00F0L1F18?tag=wheatonstecht-20" target="_blank">KastKing Centron Combo</a></li>
+        <li><a href="https://www.amazon.com/dp/B07D3S1XFS?tag=wheatonstecht-20" target="_blank">Ugly Stik GX2 Combo</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Baitcasting Rods</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B07F8X8K3S?tag=wheatonstecht-20" target="_blank">Abu Garcia Vengeance</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Spinning Reels</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B08FXYWQHZ?tag=wheatonstecht-20" target="_blank">Shimano Sedona FI</a></li>
+        <li><a href="https://www.amazon.com/dp/B000FGE8C8?tag=wheatonstecht-20" target="_blank">Pflueger President</a></li>
+      </ul>
+    </div>
   </div>
 
   <!-- Tackle & Storage -->
   <div class="category" onclick="toggle(this)">🧰 Tackle & Storage</div>
   <div class="subcategory">
-    <a href="https://www.amazon.com/s?k=fishing+hooks&tag=yourid-20" target="_blank">Hooks</a>
-    <a href="https://www.amazon.com/s?k=soft+plastic+fishing+lures&tag=yourid-20" target="_blank">Soft Plastics</a>
-    <a href="https://www.amazon.com/s?k=tackle+boxes&tag=yourid-20" target="_blank">Tackle Boxes</a>
+    <div class="sub-subcategory">
+      <h4>Hooks</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B00FPQQKG0?tag=wheatonstecht-20" target="_blank">Eagle Claw Assortment</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Soft Plastics</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B001LAXH2M?tag=wheatonstecht-20" target="_blank">Zoom Bait Brush Hog</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Tackle Boxes</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B000E3F1IA?tag=wheatonstecht-20" target="_blank">Plano 3700 Series Stowaway</a></li>
+      </ul>
+    </div>
   </div>
 
   <!-- Tools & Maintenance -->
   <div class="category" onclick="toggle(this)">🔧 Tools & Maintenance</div>
   <div class="subcategory">
-    <a href="https://www.amazon.com/s?k=fishing+pliers&tag=yourid-20" target="_blank">Pliers</a>
-    <a href="https://www.amazon.com/s?k=fishing+scale&tag=yourid-20" target="_blank">Scales</a>
-    <a href="https://www.amazon.com/s?k=line+cutter&tag=yourid-20" target="_blank">Line Cutters</a>
-    <a href="https://www.amazon.com/s?k=reel+oil&tag=yourid-20" target="_blank">Reel Oil</a>
+    <div class="sub-subcategory">
+      <h4>Pliers</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B07N3XLYJ8?tag=wheatonstecht-20" target="_blank">Piscifun Fishing Pliers</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Scales</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B001DIE9BO?tag=wheatonstecht-20" target="_blank">Rapala Digital Scale</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Line Cutters</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B07T7FT3NJ?tag=wheatonstecht-20" target="_blank">Booms Fishing Line Cutter</a></li>
+      </ul>
+    </div>
+    <div class="sub-subcategory">
+      <h4>Reel Oil</h4>
+      <ul>
+        <li><a href="https://www.amazon.com/dp/B003ZZWXV6?tag=wheatonstecht-20" target="_blank">Ardent Reel Butter</a></li>
+      </ul>
+    </div>
   </div>
 
   <script>
-function toggle(element) {
-  const next = element.nextElementSibling;
-  const isVisible = next.style.display === 'block';
-  next.style.display = isVisible ? 'none' : 'block';
-  sendHeightToParent(); // <-- Call after toggle
-}
+    function toggle(element) {
+      const next = element.nextElementSibling;
+      const isVisible = next.style.display === 'block';
+      next.style.display = isVisible ? 'none' : 'block';
+      sendHeightToParent();
+    }
 
+    function sendHeightToParent() {
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+    }
+
+    window.addEventListener('load', sendHeightToParent);
+    window.addEventListener('resize', sendHeightToParent);
   </script>
-<script>
-  function sendHeightToParent() {
-    const height = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-  }
-
-  // Send initial height
-  window.addEventListener('load', sendHeightToParent);
-
-  // Optionally update on resize or interaction
-  window.addEventListener('resize', sendHeightToParent);
-
-  // You can also call sendHeightToParent() in your category toggle function
-</script>
-
 </body>
 </html>
