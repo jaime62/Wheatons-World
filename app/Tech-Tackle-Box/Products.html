@@ -253,10 +253,14 @@
 
 <script>
   let resizeTimeout;
+  let lastSentHeight = 0;
 
   function sendHeightToParent() {
-    const height = document.body.offsetHeight;
-    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+    const currentHeight = document.body.offsetHeight;
+    if (currentHeight !== lastSentHeight) {
+      window.parent.postMessage({ type: 'resize-iframe', height: currentHeight }, '*');
+      lastSentHeight = currentHeight;
+    }
   }
 
   function debouncedResize(delay = 150) {
@@ -264,12 +268,16 @@
     resizeTimeout = setTimeout(sendHeightToParent, delay);
   }
 
-  // Call once after full load
+  // On load
   window.addEventListener('load', () => {
-    debouncedResize(250);
+    debouncedResize(300);
   });
 
-  // Watch for DOM mutations
+  // Watch for layout changes
+  const resizeObserver = new ResizeObserver(debouncedResize);
+  resizeObserver.observe(document.body);
+
+  // Also listen for content or style changes
   const mutationObserver = new MutationObserver(() => {
     debouncedResize(200);
   });
@@ -278,19 +286,8 @@
     childList: true,
     subtree: true,
     attributes: true,
+    characterData: true
   });
-
-  // Also react to resizes (font scaling, etc.)
-  const resizeObserver = new ResizeObserver(() => {
-    debouncedResize(150);
-  });
-
-  resizeObserver.observe(document.body);
 </script>
-
-
-
-
-
 </body>
 </html>
