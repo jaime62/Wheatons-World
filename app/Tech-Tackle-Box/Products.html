@@ -257,16 +257,17 @@
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
-  // Call initially when the page loads
+  // Call once on page load
   window.addEventListener('load', sendHeightToParent);
 
-  // Monitor changes in visible size using ResizeObserver
+  // Watch for visual size changes
   const resizeObserver = new ResizeObserver(() => {
     sendHeightToParent();
   });
 
-  resizeObserver.observe(document.body);
+  resizeObserver.observe(document.documentElement); // make sure you're observing the right element
 </script>
+
 
 </body>
 </html>
