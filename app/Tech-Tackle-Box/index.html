@@ -199,6 +199,28 @@
     overflow: hidden;
   }
 }
+@media (max-width: 850px) and (orientation: landscape) {
+  .nav {
+    gap: 0.25rem;
+    padding: 0 0.3rem;
+    flex-wrap: nowrap;
+  }
+
+  .tooltip-container {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav button {
+    font-size: 0.6rem;
+    padding: 5px 8px;
+    max-width: 72px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 
 
   </style>
