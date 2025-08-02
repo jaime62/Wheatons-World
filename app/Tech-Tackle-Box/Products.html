@@ -251,18 +251,21 @@
     window.addEventListener('resize', sendHeightToParent);
   </script>
 
-  <script>
+<script>
   function sendHeightToParent() {
     const height = document.documentElement.scrollHeight;
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
-  // Call once when the page loads
+  // Call initially when the page loads
   window.addEventListener('load', sendHeightToParent);
 
-  // Optionally, call again after interactions (e.g. accordion expands)
-  const observer = new MutationObserver(sendHeightToParent);
-  observer.observe(document.body, { childList: true, subtree: true });
+  // Monitor changes in visible size using ResizeObserver
+  const resizeObserver = new ResizeObserver(() => {
+    sendHeightToParent();
+  });
+
+  resizeObserver.observe(document.body);
 </script>
 
 </body>
