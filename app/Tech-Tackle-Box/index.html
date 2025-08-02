@@ -17,7 +17,7 @@
 
     .header {
       width: 100vw;
-      height: 25vh; /* responsive height based on viewport */
+      height: 25vh; /* responsive height */
       background-image: url('https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/Underwater%20Ocean%20scene.png?raw=true');
       background-size: cover;
       background-position: center;
@@ -25,6 +25,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow: hidden; /* prevents header from growing with margin */
     }
 
     .title-row {
@@ -32,7 +33,7 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       flex-wrap: wrap;
       text-align: center;
     }
@@ -51,14 +52,14 @@
       margin: 0;
     }
 
-.nav {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 2rem; /* <- This adds space above the buttons */
-}
-
+    .nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1.2rem; /* space above buttons, doesn't affect header height */
+      position: relative;
+    }
 
     .nav button {
       background-color: #2196f3;
@@ -105,9 +106,9 @@
   <div class="header">
     <div class="title-row">
       <img class="logo" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/WheatonsWorld-Globe.png?raw=true" alt="Wheaton's World Logo">
-      <h1>Tech Tackle Box</h1><BR><BR>
+      <h1>Tech Tackle Box</h1>
     </div>
-<div class="nav" style="padding-top: 1rem;">
+    <div class="nav">
       <button>Bag & Length</button>
       <button>Bait Cam</button>
       <button>Reef Map</button>
@@ -115,15 +116,16 @@
       <button>Windfinder</button>
     </div>
   </div>
-<div style="text-align: center; margin-top: 2rem;">
-  <h2 style="color: blue;">Welcome Port Aransas Saltwater Anglers!</h2><BR><BR>
-  <p style="color: black;">
-    Use the menu buttons above to navigate to the various tools that we have in our "tackle box".
-  </p>
-  <p style="color: black;">
-    <i>(Each will open in a separate window)</i>
-  </p>
-</div>
+
+  <div style="text-align: center; margin-top: 2rem;">
+    <h2 style="color: blue;">Welcome Port Aransas Saltwater Anglers!</h2>
+    <p style="color: black;">
+      Use the menu buttons above to navigate to the various tools that we have in our "tackle box".
+    </p>
+    <p style="color: black;">
+      <i>(Each will open in a separate window)</i>
+    </p>
+  </div>
 
 </body>
 </html>
