@@ -168,23 +168,35 @@
       .title-row h1 {
         font-size: 4vw;
       }
-      .nav button {
-        font-size: 1.4rem;
-        padding: 14px 28px;
+    }
+
+    @media (min-width: 768px) {
+      .title-row h1 {
+        font-size: 3vw;
       }
     }
-    @media (min-width: 768px) {
-  .title-row h1 {
-    font-size: 3vw;
-  }
-}
-@media (max-width: 600px) {
-  .nav button {
-    font-size: 0.9rem;
-    padding: 8px 14px;
-  }
-}
 
+    @media (max-width: 600px) {
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .nav .tooltip-container {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+      }
+
+      .nav button {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+        width: 100%;
+        max-width: 120px;
+        white-space: nowrap;
+      }
+    }
   </style>
 </head>
 <body>
