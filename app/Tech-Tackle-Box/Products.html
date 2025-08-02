@@ -250,5 +250,20 @@
     window.addEventListener('load', sendHeightToParent);
     window.addEventListener('resize', sendHeightToParent);
   </script>
+
+  <script>
+  function sendHeightToParent() {
+    const height = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+  }
+
+  // Call once when the page loads
+  window.addEventListener('load', sendHeightToParent);
+
+  // Optionally, call again after interactions (e.g. accordion expands)
+  const observer = new MutationObserver(sendHeightToParent);
+  observer.observe(document.body, { childList: true, subtree: true });
+</script>
+
 </body>
 </html>
