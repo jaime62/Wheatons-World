@@ -51,12 +51,14 @@
       margin: 0;
     }
 
-    .nav {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+.nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 1rem; /* <- This adds space above the buttons */
+}
+
 
     .nav button {
       background-color: #2196f3;
@@ -105,7 +107,7 @@
       <img class="logo" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/WheatonsWorld-Globe.png?raw=true" alt="Wheaton's World Logo">
       <h1>Tech Tackle Box</h1><BR><BR>
     </div>
-    <div class="nav">
+<div class="nav" style="padding-top: 1rem;">
       <button>Bag & Length</button>
       <button>Bait Cam</button>
       <button>Reef Map</button>
