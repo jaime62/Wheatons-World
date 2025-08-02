@@ -391,12 +391,17 @@
 </script>
 
   
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const links = document.querySelectorAll("#amazon-ads a");
-      links.forEach(link => link.setAttribute("target", "_blank"));
-    });
-  </script>
+<script>
+  window.addEventListener('message', function (event) {
+    if (event.data.type === 'resize-iframe') {
+      const iframe = document.querySelector('#amazon-ads iframe');
+      if (iframe) {
+        iframe.style.height = event.data.height + 'px';
+      }
+    }
+  });
+</script>
+
 <div class="fishing-tagline">
   <p style="text-align: center; margin-top: 2rem;">
   🎣 <i>Tight lines out there, friends — stay sharp, trust your instincts, and go get 'em!</i>
