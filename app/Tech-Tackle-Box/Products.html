@@ -238,10 +238,17 @@
       const isVisible = next.style.display === 'block';
       next.style.display = isVisible ? 'none' : 'block';
 
-      setTimeout(() => {
-        const height = document.documentElement.scrollHeight;
-        window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-      }, 250);
+setTimeout(() => {
+  const height = document.documentElement.scrollHeight;
+  window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+
+  // Recheck after a longer delay to catch layout settling
+  setTimeout(() => {
+    const newHeight = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'resize-iframe', height: newHeight }, '*');
+  }, 500);
+}, 200);
+
     }
 
     function debouncedResize(delay = 150) {
