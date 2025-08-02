@@ -252,17 +252,26 @@
   </script>
 
 <script>
+  let resizeTimeout;
+
   function sendHeightToParent() {
     const height = document.body.offsetHeight;
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
-  // Send once on load
-  window.addEventListener('load', sendHeightToParent);
+  function debouncedResize(delay = 150) {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(sendHeightToParent, delay);
+  }
 
-  // Watch for layout/visibility changes
+  // Call once after full load
+  window.addEventListener('load', () => {
+    debouncedResize(250);
+  });
+
+  // Watch for DOM mutations
   const mutationObserver = new MutationObserver(() => {
-    setTimeout(sendHeightToParent, 100); // give time for animation/layout
+    debouncedResize(200);
   });
 
   mutationObserver.observe(document.body, {
@@ -271,10 +280,14 @@
     attributes: true,
   });
 
-  // Fallback in case of direct height changes
-  const resizeObserver = new ResizeObserver(sendHeightToParent);
+  // Also react to resizes (font scaling, etc.)
+  const resizeObserver = new ResizeObserver(() => {
+    debouncedResize(150);
+  });
+
   resizeObserver.observe(document.body);
 </script>
+
 
 
 
