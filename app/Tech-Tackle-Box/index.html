@@ -390,17 +390,6 @@
   });
 </script>
 
-  
-<script>
-  window.addEventListener('message', function (event) {
-    if (event.data.type === 'resize-iframe') {
-      const iframe = document.querySelector('#amazon-ads iframe');
-      if (iframe) {
-        iframe.style.height = event.data.height + 'px';
-      }
-    }
-  });
-</script>
 
 <div class="fishing-tagline">
   <p style="text-align: center; margin-top: 2rem;">
