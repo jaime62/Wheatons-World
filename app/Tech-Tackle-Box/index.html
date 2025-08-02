@@ -180,6 +180,7 @@
   .nav {
     gap: 0.3rem;
     padding: 0 0.5rem;
+    flex-wrap: nowrap;
   }
 
   .tooltip-container {
@@ -189,11 +190,13 @@
   }
 
   .nav button {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     padding: 6px 10px;
-    width: 100%;
-    max-width: 70px;
+    min-width: 58px;
+    max-width: 80px;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 
