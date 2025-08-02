@@ -261,6 +261,28 @@
   border-radius: 5px;
   background-color: transparent;
 }
+.tab-folder {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 -0.5rem;
+  gap: 1rem;
+}
+
+.tab-folder button {
+  padding: 10px 20px;
+  border: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #1a237e;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tab-folder button.active {
+  color: yellow;
+  background-color: #0d1333;
+}
 
 </style>
 
@@ -340,13 +362,20 @@
  <!-- STORE EMBED -->
 <div id="amazon-ads" style="text-align: center;">
   <h2>Shop Fishing Gear</h2>
+<div class="tab-folder">
+  <button class="active" data-src="products.html">Gear</button>
+  <button data-src="guides.html">Guides</button>
+</div>
+
 <iframe
+  id="product-iframe"
   src="products.html"
   title="Fishing Products"
   loading="lazy"
   allowtransparency="true"
-  style="background-color: transparent;"
+  style="background-color: transparent; width: 100%; height: 800px; border: none;"
 ></iframe>
+
 
 </div>
 <!-- STORE END -->
@@ -379,6 +408,20 @@
   <i>Tech Tackle Box™ is a proud part of <a href="https://wheatonsworld.com" target="_blank" style="color: #1a237e; text-decoration: none;"><b>Wheaton’s World™</b></a>&nbsp;&nbsp;-&nbsp;&nbsp;All rights reserved.</i>
 </p>
   </footer>
+
+  <script>
+  const tabButtons = document.querySelectorAll(".tab-folder button");
+  const productFrame = document.getElementById("product-iframe");
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      productFrame.src = btn.dataset.src;
+    });
+  });
+</script>
+
 </body>
 
 </html>
