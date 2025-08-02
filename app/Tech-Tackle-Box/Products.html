@@ -226,8 +226,22 @@
   </div>
 
 <script>
+  // Function to post current height to parent
+  function postUpdatedHeight() {
+    const height = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
+  }
+
+  // Debounced version avoids rapid reflows
+  let resizeTimeout;
+  function postHeightDebounced(delay = 100) {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(postUpdatedHeight, delay);
+  }
+
   function toggle(element) {
     const all = document.querySelectorAll('.subcategory');
+
     all.forEach(sub => {
       if (sub !== element.nextElementSibling) {
         sub.style.display = 'none';
@@ -237,21 +251,17 @@
     const next = element.nextElementSibling;
     const isVisible = next.style.display === 'block';
     next.style.display = isVisible ? 'none' : 'block';
+
+    // Debounce height update
+    postHeightDebounced(150);  // Slight delay allows layout to stabilize
   }
 
-  function sendHeightToParent() {
-    const height = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-  }
+  // Ensure initial resize
+  window.addEventListener('load', () => postHeightDebounced(300));
+  window.addEventListener('resize', () => postHeightDebounced(200));
 
-  window.addEventListener('load', sendHeightToParent);
-  window.addEventListener('resize', sendHeightToParent);
-
-  // ResizeObserver to detect DOM changes like expanding/collapsing
-  const resizeObserver = new ResizeObserver(() => {
-    sendHeightToParent();
-  });
-
+  // ResizeObserver to catch layout shifts
+  const resizeObserver = new ResizeObserver(() => postHeightDebounced(150));
   resizeObserver.observe(document.body);
 </script>
 
