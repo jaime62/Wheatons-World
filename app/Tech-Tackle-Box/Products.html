@@ -226,51 +226,53 @@
   </div>
 
 <script>
-  // Function to post current height to parent
+  // Send updated height to parent
   function postUpdatedHeight() {
     const height = document.documentElement.scrollHeight;
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
-  // Debounced version avoids rapid reflows
+  // Debounce function to limit resize frequency
   let resizeTimeout;
-  function postHeightDebounced(delay = 100) {
+  function postHeightDebounced(delay = 150) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(postUpdatedHeight, delay);
   }
 
-  // Toggle function to show/hide one category at a time
+  // Toggle only one category open at a time
   function toggle(element) {
     const all = document.querySelectorAll('.subcategory');
 
+    // Collapse all other categories
     all.forEach(sub => {
       if (sub !== element.nextElementSibling) {
         sub.style.display = 'none';
       }
     });
 
+    // Toggle clicked category
     const next = element.nextElementSibling;
     const isVisible = next.style.display === 'block';
     next.style.display = isVisible ? 'none' : 'block';
 
-    // First resize attempt after short delay
-    postHeightDebounced(150);
-
-    // Second delayed check to ensure accurate height after layout settles
-    setTimeout(() => {
-      postUpdatedHeight();
-    }, 600);
+    // Report height change after layout update
+    requestAnimationFrame(() => {
+      postHeightDebounced(50); // Fast update for smoother collapsing
+      setTimeout(postUpdatedHeight, 400); // Ensure final height
+    });
   }
 
-  // Initial height adjustment after load
+  // On initial page load
   window.addEventListener('load', () => {
     postHeightDebounced(300);
   });
 
-  // Adjust if window is resized (e.g., phone rotated)
-  window.addEventListener('resize', () => postHeightDebounced(200));
+  // On window resize
+  window.addEventListener('resize', () => {
+    postHeightDebounced(200);
+  });
 
-  // Adjust if layout shifts dynamically
+  // Observe DOM changes (i.e., category expands/collapses)
   const resizeObserver = new ResizeObserver(() => postHeightDebounced(150));
   resizeObserver.observe(document.body);
 </script>
