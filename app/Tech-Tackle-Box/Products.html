@@ -226,11 +226,13 @@
   </div>
 
 <script>
+  // Function to post current height to parent
   function postUpdatedHeight() {
     const height = document.documentElement.scrollHeight;
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
+  // Debounced version avoids rapid reflows
   let resizeTimeout;
   function postHeightDebounced(delay = 100) {
     clearTimeout(resizeTimeout);
@@ -238,35 +240,45 @@
   }
 
   function toggle(element) {
+    const next = element.nextElementSibling;
+    const isVisible = next.style.display === 'block';
+
+    // Hide all other subcategories
     const all = document.querySelectorAll('.subcategory');
     all.forEach(sub => {
-      if (sub !== element.nextElementSibling) {
+      if (sub !== next) {
         sub.style.display = 'none';
       }
     });
 
-    const next = element.nextElementSibling;
-    const isVisible = next.style.display === 'block';
+    // Toggle the clicked subcategory
     next.style.display = isVisible ? 'none' : 'block';
 
-    // Force reflow
+    // Force reflow (optional, helps layout settle faster)
     void document.body.offsetHeight;
 
-    // Wait for reflow, then post new height
-    requestAnimationFrame(() => {
-      postUpdatedHeight();
-
-      // Double-check a bit later in case of delayed layout shifts
-      setTimeout(postUpdatedHeight, 300);
-    });
+    // Handle height updates based on collapse vs expand
+    if (isVisible) {
+      // COLLAPSING: Measure right after collapse
+      requestAnimationFrame(() => {
+        postUpdatedHeight();
+        setTimeout(postUpdatedHeight, 300); // catch any late shifts
+      });
+    } else {
+      // EXPANDING: Wait a bit to allow rendering
+      setTimeout(postUpdatedHeight, 250);
+    }
   }
 
+  // Initial iframe height set after page loads
   window.addEventListener('load', () => postHeightDebounced(300));
   window.addEventListener('resize', () => postHeightDebounced(200));
 
+  // Watch for dynamic layout changes
   const resizeObserver = new ResizeObserver(() => postHeightDebounced(150));
   resizeObserver.observe(document.body);
 </script>
+
 
 
 </body>
