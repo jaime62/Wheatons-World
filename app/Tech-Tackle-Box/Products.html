@@ -226,58 +226,63 @@
   </div>
 
 <script>
-  // Function to post current height to parent
-  function postUpdatedHeight() {
-    const height = document.documentElement.scrollHeight;
-    window.parent.postMessage({ type: 'resize-iframe', height }, '*');
-  }
-
-  // Debounced version avoids rapid reflows
   let resizeTimeout;
-  function postHeightDebounced(delay = 100) {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(postUpdatedHeight, delay);
-  }
+  let lastSentHeight = 0;
 
-  function toggle(element) {
-    const next = element.nextElementSibling;
-    const isVisible = next.style.display === 'block';
-
-    // Hide all other subcategories
-    const all = document.querySelectorAll('.subcategory');
-    all.forEach(sub => {
-      if (sub !== next) {
-        sub.style.display = 'none';
-      }
-    });
-
-    // Toggle the clicked subcategory
-    next.style.display = isVisible ? 'none' : 'block';
-
-    // Force reflow (optional, helps layout settle faster)
-    void document.body.offsetHeight;
-
-    // Handle height updates based on collapse vs expand
-    if (isVisible) {
-      // COLLAPSING: Measure right after collapse
-      requestAnimationFrame(() => {
-        postUpdatedHeight();
-        setTimeout(postUpdatedHeight, 300); // catch any late shifts
-      });
-    } else {
-      // EXPANDING: Wait a bit to allow rendering
-      setTimeout(postUpdatedHeight, 250);
+  function sendHeightToParent() {
+    const currentHeight = document.documentElement.scrollHeight;
+    if (currentHeight !== lastSentHeight) {
+      window.parent.postMessage({ type: 'resize-iframe', height: currentHeight }, '*');
+      lastSentHeight = currentHeight;
     }
   }
 
-  // Initial iframe height set after page loads
-  window.addEventListener('load', () => postHeightDebounced(300));
-  window.addEventListener('resize', () => postHeightDebounced(200));
+  function debouncedResize(delay = 150) {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(sendHeightToParent, delay);
+  }
 
-  // Watch for dynamic layout changes
-  const resizeObserver = new ResizeObserver(() => postHeightDebounced(150));
+  // ResizeObserver to watch layout shifts
+  const resizeObserver = new ResizeObserver(() => debouncedResize(150));
   resizeObserver.observe(document.body);
+
+  // MutationObserver to catch changes from collapsing/expanding
+  const mutationObserver = new MutationObserver(() => debouncedResize(200));
+  mutationObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    characterData: true
+  });
+
+  // Click handler for toggling categories
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggles = document.querySelectorAll('.category');
+
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const next = toggle.nextElementSibling;
+        const isVisible = next.style.display === 'block';
+
+        // Hide all other subcategories
+        document.querySelectorAll('.subcategory').forEach(sub => {
+          if (sub !== next) sub.style.display = 'none';
+        });
+
+        // Toggle visibility of the clicked category
+        next.style.display = isVisible ? 'none' : 'block';
+
+        // Debounced resize after the layout change
+        debouncedResize(200);
+      });
+    });
+  });
+
+  // Initial resize on load
+  window.addEventListener('load', () => debouncedResize(300));
+  window.addEventListener('resize', () => debouncedResize(200));
 </script>
+
 
 
 
