@@ -232,6 +232,7 @@
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
+  // Toggle logic: only one category expanded at a time
   function toggle(element) {
     const all = document.querySelectorAll('.subcategory');
 
@@ -245,30 +246,30 @@
     const isVisible = next.style.display === 'block';
     next.style.display = isVisible ? 'none' : 'block';
 
-    // Immediately update iframe height
-    postUpdatedHeight();
-
-    // Delay and recheck height again after layout settles
-    setTimeout(postUpdatedHeight, 250);
+    // Use two nested timeouts to ensure layout settles before height is measured
+    setTimeout(() => {
+      setTimeout(() => {
+        postUpdatedHeight();
+      }, 150); // inner delay to wait for DOM reflow
+    }, 50); // outer delay for toggle execution
   }
 
-  // Initial resize on load
+  // Resize on load
   window.addEventListener('load', () => {
     setTimeout(postUpdatedHeight, 200);
   });
 
-  // Resize again on window resize
+  // Resize on window size changes
   window.addEventListener('resize', () => {
     setTimeout(postUpdatedHeight, 150);
   });
 
-  // Use ResizeObserver to detect changes in body size
+  // Resize on layout shifts using ResizeObserver
   const resizeObserver = new ResizeObserver(() => {
     setTimeout(postUpdatedHeight, 150);
   });
   resizeObserver.observe(document.body);
 </script>
-
 
 
 </body>
