@@ -166,6 +166,27 @@
       background-color: #0074e8;
       color: white;
     }
+
+    .icon-row {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.small-bingo-ball {
+  width: 90px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
   </style>
 </head>
 <body>
@@ -210,14 +231,22 @@
   <div style="margin-top: 4rem;">
     <span class="rest-text-norm">Here's what we've done so far...</span><br><br>
 
-    <img class="small-bingo-ball" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png"><br>
+ <div class="icon-row">
+  <div class="icon-item">
+    <img class="small-bingo-ball" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png" alt="Bingo Ball">
     <div class="link-nav-wrapper">
       <a class="link-nav" href="https://www.wheatonsworld.com/app/BingoPayCalc/" target="_blank">Bingo Payout Calculator</a>
     </div>
-     <img class="small-bingo-ball" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true"><br>
+  </div>
+
+  <div class="icon-item">
+    <img class="small-bingo-ball" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true" alt="Tackle Box">
     <div class="link-nav-wrapper">
       <a class="link-nav" href="https://www.wheatonsworld.com/app/Tech-Tackle-Box/" target="_blank">Tech Tackle Box</a>
     </div>
+  </div>
+</div>
+
   </div>
 
   <!-- Footer -->
