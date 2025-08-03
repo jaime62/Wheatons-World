@@ -226,16 +226,19 @@
   </div>
 
 <script>
-  // Function to post current height to parent
   function postUpdatedHeight() {
     const height = document.documentElement.scrollHeight;
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
-  // Toggle logic: only one category expanded at a time
+  let resizeTimeout;
+  function postHeightDebounced(delay = 100) {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(postUpdatedHeight, delay);
+  }
+
   function toggle(element) {
     const all = document.querySelectorAll('.subcategory');
-
     all.forEach(sub => {
       if (sub !== element.nextElementSibling) {
         sub.style.display = 'none';
@@ -246,28 +249,22 @@
     const isVisible = next.style.display === 'block';
     next.style.display = isVisible ? 'none' : 'block';
 
-    // Use two nested timeouts to ensure layout settles before height is measured
-    setTimeout(() => {
-      setTimeout(() => {
-        postUpdatedHeight();
-      }, 150); // inner delay to wait for DOM reflow
-    }, 50); // outer delay for toggle execution
+    // Force reflow
+    void document.body.offsetHeight;
+
+    // Wait for reflow, then post new height
+    requestAnimationFrame(() => {
+      postUpdatedHeight();
+
+      // Double-check a bit later in case of delayed layout shifts
+      setTimeout(postUpdatedHeight, 300);
+    });
   }
 
-  // Resize on load
-  window.addEventListener('load', () => {
-    setTimeout(postUpdatedHeight, 200);
-  });
+  window.addEventListener('load', () => postHeightDebounced(300));
+  window.addEventListener('resize', () => postHeightDebounced(200));
 
-  // Resize on window size changes
-  window.addEventListener('resize', () => {
-    setTimeout(postUpdatedHeight, 150);
-  });
-
-  // Resize on layout shifts using ResizeObserver
-  const resizeObserver = new ResizeObserver(() => {
-    setTimeout(postUpdatedHeight, 150);
-  });
+  const resizeObserver = new ResizeObserver(() => postHeightDebounced(150));
   resizeObserver.observe(document.body);
 </script>
 
