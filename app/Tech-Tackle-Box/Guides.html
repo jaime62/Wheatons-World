@@ -120,45 +120,49 @@
   }
 
   // ResizeObserver to watch layout shifts
-  const resizeObserver = new ResizeObserver(() => debouncedResize(150));
+  const resizeObserver = new ResizeObserver(() => debouncedResize(100));
   resizeObserver.observe(document.body);
 
-  // MutationObserver to catch changes from collapsing/expanding
+  // MutationObserver to catch attribute changes or added/removed nodes
   const mutationObserver = new MutationObserver(() => debouncedResize(200));
   mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
     attributes: true,
-    characterData: true
+    childList: true,
+    subtree: true
   });
 
-  // Click handler for toggling categories
+  // Category toggle logic with height fix
   document.addEventListener('DOMContentLoaded', function () {
-    const toggles = document.querySelectorAll('.category');
+    const categories = document.querySelectorAll('.category');
 
-    toggles.forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        const next = toggle.nextElementSibling;
+    categories.forEach(category => {
+      category.addEventListener('click', () => {
+        const next = category.nextElementSibling;
+        if (!next || !next.classList.contains('subcategory')) return;
+
         const isVisible = next.style.display === 'block';
 
-        // Hide all other subcategories
+        // Collapse all other subcategories
         document.querySelectorAll('.subcategory').forEach(sub => {
           if (sub !== next) sub.style.display = 'none';
         });
 
-        // Toggle visibility of the clicked category
+        // Toggle current one
         next.style.display = isVisible ? 'none' : 'block';
 
-        // Debounced resize after the layout change
-        debouncedResize(200);
+        // Resize twice: once immediately, once after layout settles
+        debouncedResize(100);
+        setTimeout(sendHeightToParent, 600); // catch late style changes
       });
     });
+
+    // Initial resize
+    setTimeout(sendHeightToParent, 300);
   });
 
-  // Initial resize on load
-  window.addEventListener('load', () => debouncedResize(300));
   window.addEventListener('resize', () => debouncedResize(200));
 </script>
+
 
 </body>
 </html>
