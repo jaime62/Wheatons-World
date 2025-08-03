@@ -285,19 +285,26 @@
   background-color: gold;
 }
 
-   .about-container {
+  .about-container {
       max-width: 800px;
       margin: 0 auto;
     }
 
- .about-tagline {
-      color: orange;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-shadow: 1px 1px 4px #000;
-      text-align: center;
-      margin: .5rem;
-    }
+.about-tagline {
+  color: gold;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px #000;
+  text-align: center;
+  margin: 0.5rem auto;
+  display: inline-flex;       /* changed from inline-block to inline-flex */
+  align-items: center;        /* vertical alignment */
+  gap: 0.4rem;                /* spacing between text and arrow */
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 
  .about-tagline:hover {
   background-color: gray;
@@ -309,6 +316,7 @@
   font-size: 1.4rem;
   vertical-align: middle;
 }
+
 
     #tackleBoxInfo {
       display: none;
@@ -393,10 +401,13 @@
   </div>
 <!-- OPENING PARAGRAPH START -->
 
-  <div class="about-container">
-    <!-- Clickable Header -->
-<div class="about-tagline" onclick="toggleTackleBox()">
-  About Wheaton's Tech Tackle Box<span id="arrow-icon">▶</span>
+<div class="about-container">
+  <!-- Clickable Header -->
+  <div style="text-align: center;">
+    <div class="about-tagline" onclick="toggleTackleBox()">
+      About Wheaton's Tech Tackle Box<span id="arrow-icon">▶</span>
+    </div>
+  </div>
 </div>
 
 
