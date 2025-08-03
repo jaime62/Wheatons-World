@@ -291,10 +291,10 @@
     }
 
  .about-tagline {
-      color: gold;
-      font-size: 1.8rem;
+      color: orange;
+      font-size: 1.2rem;
       font-weight: bold;
-      text-shadow: 1px 1px 4px #000;
+      text-shadow: 1px 1px 2px #000;
       text-align: center;
       margin: .5rem;
     }
@@ -304,6 +304,11 @@
   border-radius: 8px; /* Or any radius you prefer */
 }
 
+.about-tagline span {
+  margin-left: 8px;
+  font-size: 1.4rem;
+  vertical-align: middle;
+}
 
     #tackleBoxInfo {
       display: none;
@@ -390,9 +395,10 @@
 
   <div class="about-container">
     <!-- Clickable Header -->
-    <div class="about-tagline" onclick="toggleTackleBox()">
-      What is Wheaton's Tech Tackle Box?
-    </div>
+<div class="about-tagline" onclick="toggleTackleBox()">
+  About Wheaton's Tech Tackle Box<span id="arrow-icon">▶</span>
+</div>
+
 
     <!-- Collapsible Info Panel -->
     <div id="tackleBoxInfo">
@@ -472,12 +478,17 @@
   });
 </script>
 
-  <script>
-    function toggleTackleBox() {
-      const info = document.getElementById("tackleBoxInfo");
-      info.style.display = (info.style.display === "none" || info.style.display === "") ? "block" : "none";
-    }
-  </script>
+<script>
+  function toggleTackleBox() {
+    const info = document.getElementById("tackleBoxInfo");
+    const arrow = document.getElementById("arrow-icon");
+    const isHidden = info.style.display === "none" || info.style.display === "";
+
+    info.style.display = isHidden ? "block" : "none";
+    arrow.textContent = isHidden ? "▼" : "▶";
+  }
+</script>
+
 </body>
 
 </html>
