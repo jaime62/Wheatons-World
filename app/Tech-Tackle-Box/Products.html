@@ -239,21 +239,28 @@
     resizeTimeout = setTimeout(postUpdatedHeight, delay);
   }
 
-  function toggle(element) {
-    const all = document.querySelectorAll('.subcategory');
+function toggle(element) {
+  const all = document.querySelectorAll('.subcategory');
 
-    all.forEach(sub => {
-      if (sub !== element.nextElementSibling) {
-        sub.style.display = 'none';
-      }
-    });
+  all.forEach(sub => {
+    if (sub !== element.nextElementSibling) {
+      sub.style.display = 'none';
+    }
+  });
 
-    const next = element.nextElementSibling;
-    const isVisible = next.style.display === 'block';
-    next.style.display = isVisible ? 'none' : 'block';
+  const next = element.nextElementSibling;
+  const isVisible = next.style.display === 'block';
+  next.style.display = isVisible ? 'none' : 'block';
 
-    // Debounce height update
-    postHeightDebounced(150);  // Slight delay allows layout to stabilize
+  // First resize attempt after short delay
+  postHeightDebounced(150);
+
+  // Second delayed check to ensure accurate height after layout settles
+  setTimeout(() => {
+    postUpdatedHeight();
+  }, 600);
+}
+
   }
 
   // Ensure initial resize
