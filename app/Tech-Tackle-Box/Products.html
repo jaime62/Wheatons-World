@@ -226,56 +226,49 @@
   </div>
 
 <script>
-  // Send updated height to parent
+  // Function to post current height to parent
   function postUpdatedHeight() {
     const height = document.documentElement.scrollHeight;
     window.parent.postMessage({ type: 'resize-iframe', height }, '*');
   }
 
-  // Debounce function to limit resize frequency
-  let resizeTimeout;
-  function postHeightDebounced(delay = 150) {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(postUpdatedHeight, delay);
-  }
-
-  // Toggle only one category open at a time
   function toggle(element) {
     const all = document.querySelectorAll('.subcategory');
 
-    // Collapse all other categories
     all.forEach(sub => {
       if (sub !== element.nextElementSibling) {
         sub.style.display = 'none';
       }
     });
 
-    // Toggle clicked category
     const next = element.nextElementSibling;
     const isVisible = next.style.display === 'block';
     next.style.display = isVisible ? 'none' : 'block';
 
-    // Report height change after layout update
-    requestAnimationFrame(() => {
-      postHeightDebounced(50); // Fast update for smoother collapsing
-      setTimeout(postUpdatedHeight, 400); // Ensure final height
-    });
+    // Immediately update iframe height
+    postUpdatedHeight();
+
+    // Delay and recheck height again after layout settles
+    setTimeout(postUpdatedHeight, 250);
   }
 
-  // On initial page load
+  // Initial resize on load
   window.addEventListener('load', () => {
-    postHeightDebounced(300);
+    setTimeout(postUpdatedHeight, 200);
   });
 
-  // On window resize
+  // Resize again on window resize
   window.addEventListener('resize', () => {
-    postHeightDebounced(200);
+    setTimeout(postUpdatedHeight, 150);
   });
 
-  // Observe DOM changes (i.e., category expands/collapses)
-  const resizeObserver = new ResizeObserver(() => postHeightDebounced(150));
+  // Use ResizeObserver to detect changes in body size
+  const resizeObserver = new ResizeObserver(() => {
+    setTimeout(postUpdatedHeight, 150);
+  });
   resizeObserver.observe(document.body);
 </script>
+
 
 
 </body>
