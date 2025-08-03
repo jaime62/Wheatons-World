@@ -239,38 +239,42 @@
     resizeTimeout = setTimeout(postUpdatedHeight, delay);
   }
 
-function toggle(element) {
-  const all = document.querySelectorAll('.subcategory');
+  // Toggle function to show/hide one category at a time
+  function toggle(element) {
+    const all = document.querySelectorAll('.subcategory');
 
-  all.forEach(sub => {
-    if (sub !== element.nextElementSibling) {
-      sub.style.display = 'none';
-    }
-  });
+    all.forEach(sub => {
+      if (sub !== element.nextElementSibling) {
+        sub.style.display = 'none';
+      }
+    });
 
-  const next = element.nextElementSibling;
-  const isVisible = next.style.display === 'block';
-  next.style.display = isVisible ? 'none' : 'block';
+    const next = element.nextElementSibling;
+    const isVisible = next.style.display === 'block';
+    next.style.display = isVisible ? 'none' : 'block';
 
-  // First resize attempt after short delay
-  postHeightDebounced(150);
+    // First resize attempt after short delay
+    postHeightDebounced(150);
 
-  // Second delayed check to ensure accurate height after layout settles
-  setTimeout(() => {
-    postUpdatedHeight();
-  }, 600);
-}
-
+    // Second delayed check to ensure accurate height after layout settles
+    setTimeout(() => {
+      postUpdatedHeight();
+    }, 600);
   }
 
-  // Ensure initial resize
-  window.addEventListener('load', () => postHeightDebounced(300));
+  // Initial height adjustment after load
+  window.addEventListener('load', () => {
+    postHeightDebounced(300);
+  });
+
+  // Adjust if window is resized (e.g., phone rotated)
   window.addEventListener('resize', () => postHeightDebounced(200));
 
-  // ResizeObserver to catch layout shifts
+  // Adjust if layout shifts dynamically
   const resizeObserver = new ResizeObserver(() => postHeightDebounced(150));
   resizeObserver.observe(document.body);
 </script>
+
 
 </body>
 </html>
