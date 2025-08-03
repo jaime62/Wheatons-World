@@ -285,6 +285,45 @@
   background-color: gold;
 }
 
+   .about-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+ .about-tagline {
+      color: gold;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #000;
+      text-align: center;
+      margin: .5rem;
+    }
+
+ .about-tagline:hover {
+  background-color: gray;
+  border-radius: 8px; /* Or any radius you prefer */
+}
+
+
+    #tackleBoxInfo {
+      display: none;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background-color: #f0f8ff;
+      border: 1px solid #2196f3;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.6;
+    }
+
+    #tackleBoxInfo p {
+      margin-bottom: 1rem;
+    }
+
+    #tackleBoxInfo p:last-child {
+      margin-bottom: 0;
+    }
+    
 </style>
 
 
@@ -349,21 +388,25 @@
   </div>
 <!-- OPENING PARAGRAPH START -->
 
-<div style="max-width: 800px; margin: 2rem auto; padding: 1.5rem; background-color: #f0f8ff; border: 1px solid #2196f3; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+  <div class="about-container">
+    <!-- Clickable Header -->
+    <div class="about-tagline" onclick="toggleTackleBox()">
+      What is Wheaton's Tech Tackle Box?
+    </div>
 
+    <!-- Collapsible Info Panel -->
+    <div id="tackleBoxInfo">
+      <p><strong>Wheaton’s Tech Tackle Box</strong> is a mobile-friendly hub of fishing tools and resources for the Port Aransas area. Whether you're fishing the bay or offshore, it puts helpful info right at your fingertips.</p>
 
+      <p>Quickly access bait cams, reef maps, interactive fishing-related maps, weather, tide, and regulation links — all without clutter.</p>
 
-  <p><strong>Wheaton’s Tech Tackle Box</strong> is a mobile-friendly hub of fishing tools and resources for the Port Aransas area. Whether you're fishing the bay or offshore, it puts helpful info right at your fingertips.</p>
+      <p>Built for locals and visitors alike, this site will keep growing with new tools, gear picks, affiliate deals, and time-saving features.</p>
 
-  <p>Quickly access bait cams, reef maps, interactive fishing related maps, weather, tide, and regulation links — all without clutter.</p>
-
-  <p>Built for locals and visitors alike, this site will keep growing with new tools, gear picks, affiliate deals, and time-saving features.</p>
-
-  <p style="font-weight: bold; color: darkblue; margin-top: 1.5rem;">
-    Want to support us so we can keep improving and delivering value without the fluff? Just shop here!
-  </p>
-
-</div>
+      <p style="font-weight: bold; color: darkblue; margin-top: 1.5rem;">
+        Want to support us so we can keep improving and delivering value without the fluff? Just shop here!
+      </p>
+    </div>
+  </div>
 
   
 <!-- OPENING PARAGRAPH END -->
@@ -429,6 +472,12 @@
   });
 </script>
 
+  <script>
+    function toggleTackleBox() {
+      const info = document.getElementById("tackleBoxInfo");
+      info.style.display = (info.style.display === "none" || info.style.display === "") ? "block" : "none";
+    }
+  </script>
 </body>
 
 </html>
