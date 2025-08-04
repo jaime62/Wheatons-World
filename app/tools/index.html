@@ -1,89 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>CSV to HTML Generator</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       padding: 1rem;
+      background: #f9f9f9;
     }
     textarea {
       width: 100%;
       height: 200px;
-      margin-bottom: 1rem;
-    }
-    pre {
-      background: #f4f4f4;
-      padding: 1rem;
-      white-space: pre-wrap;
-      word-wrap: break-word;
+      font-family: monospace;
     }
     button {
-      margin-right: 1rem;
+      margin-top: 0.5rem;
+      margin-right: 0.5rem;
+      padding: 0.5rem 1rem;
+    }
+    pre {
+      background: #fff;
+      padding: 1rem;
+      white-space: pre-wrap;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
   <h2>CSV to HTML Generator</h2>
-  <textarea id="csvInput" placeholder="Paste CSV data here..."></textarea>
-  <br />
-  <button onclick="convertCSV()">Generate HTML</button>
-  <button onclick="clearOutput()">Clear</button>
-  <pre id="htmlOutput"></pre>
+
+  <textarea id="csvInput" placeholder="Paste CSV data here..."></textarea><br>
+  <button onclick="generateHTML()">Generate HTML</button>
+  <button onclick="clearAll()">Clear</button>
+
+  <h3>Generated HTML:</h3>
+  <pre id="output"></pre>
 
   <script>
-    const emojiMap = {
-      "Apparel & Protection": "👕",
-      "Boating Accessories": "⛵️",
-      "Electronics": "📱",
-      "Rods & Reels": "🎣",
-      "Storage": "📂",
-      "Tackle": "🔍",
-      "Tools": "🔧"
-    };
+    function generateHTML() {
+      const csv = document.getElementById('csvInput').value.trim();
+      const lines = csv.split('\n');
+      const htmlBlocks = [];
 
-    function convertCSV() {
-      const input = document.getElementById("csvInput").value.trim();
-      const lines = input.split("\n");
+      let currentCategory = '';
+      let currentSubcategory = '';
+      let subcatBuffer = '';
 
-      const data = lines.slice(1).map(line => line.split(",").map(cell => cell.replace(/^"|"$/g, "").trim()));
-      const categories = {};
+      // Skip header row (start from index 1)
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
 
-      for (const [cat, sub, subsub, liHTML] of data) {
-        if (!cat || !sub || !liHTML) continue;
-        if (!categories[cat]) categories[cat] = {};
-        if (!categories[cat][sub]) categories[cat][sub] = [];
-        categories[cat][sub].push(liHTML);
-      }
+        // Split by comma but handle potential quotes
+        const columns = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(col => col.replace(/^"|"$/g, '').trim());
 
-      let html = "";
+        const category = columns[0];
+        const subcategory = columns[1];
+        const itemHTML = columns[3];
 
-      for (const [cat, subcats] of Object.entries(categories)) {
-        const emoji = emojiMap[cat] || "🐟"; // fallback fish emoji
-        html += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${cat}</div>\n`;
-        html += `<div class="subcategory">\n`;
+        if (!itemHTML || itemHTML === 'LI-CODE') continue;
 
-        for (const [sub, items] of Object.entries(subcats)) {
-          html += `  <div class="sub-subcategory">\n`;
-          html += `    <h4>${sub}</h4>\n`;
-          html += `    <ul>\n`;
-          for (const item of items) {
-            html += `      ${item}\n`;
+        // New category
+        if (category !== currentCategory) {
+          if (subcatBuffer) {
+            htmlBlocks.push(subcatBuffer + '</ul></div>'); // Close previous subcategory
+            subcatBuffer = '';
           }
-          html += `    </ul>\n`;
-          html += `  </div>\n`;
+          htmlBlocks.push(`<div class="category" onclick="toggle(this)"><span class="emoji">🐟</span> ${category}</div>`);
+          currentCategory = category;
+          currentSubcategory = '';
         }
 
-        html += `</div>\n`;
+        // New subcategory
+        if (subcategory !== currentSubcategory) {
+          if (subcatBuffer) {
+            htmlBlocks.push(subcatBuffer + '</ul></div>'); // Close previous subcategory
+          }
+          subcatBuffer = `<div class="subcategory"><div class="sub-subcategory"><h4>${subcategory}</h4><ul>`;
+          currentSubcategory = subcategory;
+        }
+
+        // Add item
+        subcatBuffer += itemHTML;
       }
 
-      document.getElementById("htmlOutput").textContent = html;
+      if (subcatBuffer) {
+        htmlBlocks.push(subcatBuffer + '</ul></div>'); // Final subcategory
+      }
+
+      document.getElementById('output').textContent = htmlBlocks.join('\n');
     }
 
-    function clearOutput() {
-      document.getElementById("csvInput").value = '';
-      document.getElementById("htmlOutput").textContent = '';
+    function clearAll() {
+      document.getElementById('csvInput').value = '';
+      document.getElementById('output').textContent = '';
     }
   </script>
 </body>
