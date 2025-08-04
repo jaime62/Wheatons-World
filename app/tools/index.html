@@ -4,71 +4,92 @@
   <meta charset="UTF-8">
   <title>CSV to HTML Generator</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    textarea { width: 100%; height: 200px; }
-    pre { background: #f4f4f4; padding: 1rem; border-radius: 8px; white-space: pre-wrap; }
-    button { padding: 0.5rem 1rem; margin-top: 1rem; }
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 1rem;
+    }
+    button {
+      margin-right: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+    #output {
+      white-space: pre-wrap;
+      background-color: #f0f0f0;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
 
-<h2>Paste your TSV data below:</h2>
-<textarea id="csvInput" placeholder="Paste CATEGORY, SUBCATEGORY, SUB-SUBCATEGORY, LI-CODE tab-separated values here..."></textarea>
-<br>
-<button onclick="generateHTML()">Generate HTML</button>
-<button onclick="clearFields()">Clear</button>
+  <h1>CSV to HTML Generator</h1>
 
-<h3>Generated HTML:</h3>
-<pre id="output"></pre>
+  <textarea id="csvInput" placeholder="Paste your CSV data here..."></textarea><br>
+  <button onclick="generateHTML()">Generate HTML</button>
+  <button onclick="clearFields()">Clear</button>
 
-<script>
-function generateHTML() {
-  const input = document.getElementById("csvInput").value.trim();
-  const lines = input.split(/\r?\n/);
-  const output = document.getElementById("output");
-  let currentCategory = "";
-  let currentSubcategory = "";
-  let currentHTML = "";
-  const emoji = "🐟";
+  <pre id="output"></pre>
 
-  function clearFields() {
-  document.getElementById("csvInput").value = "";
-  document.getElementById("output").textContent = "";
-}
+  <script>
+    function generateHTML() {
+      const input = document.getElementById("csvInput").value.trim();
+      if (!input) {
+        document.getElementById("output").textContent = "Please paste some CSV data.";
+        return;
+      }
 
-  
-  lines.forEach(line => {
-    const [cat, subcat, subsub, liCode] = line.split("\t").map(cell => cell?.trim() || "");
-    if (!cat || !subcat || !subsub || !liCode) return;
+      const rows = input.split(/\r?\n/).map(row => row.split('\t'));
+      let html = '';
+      const grouped = {};
 
-    // New category
-    if (cat !== currentCategory) {
-      if (currentHTML) currentHTML += '</div>'; // Close previous subcategory block
-      currentHTML += `\n<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${cat}</div>\n<div class="subcategory">`;
-      currentCategory = cat;
-      currentSubcategory = "";
+      for (const [category, subcategory, subSubcategory, liCode] of rows) {
+        if (!grouped[category]) grouped[category] = {};
+        if (!grouped[category][subcategory]) grouped[category][subcategory] = {};
+        if (!grouped[category][subcategory][subSubcategory]) grouped[category][subcategory][subSubcategory] = [];
+        grouped[category][subcategory][subSubcategory].push(liCode);
+      }
+
+      for (const category in grouped) {
+        html += `<div class="category" onclick="toggle(this)"><span class="emoji">🐟</span> ${category}</div>\n`;
+        html += `<div class="subcategory">\n`;
+        for (const subcategory in grouped[category]) {
+          for (const subSubcategory in grouped[category][subcategory]) {
+            html += `  <div class="sub-subcategory">\n`;
+            html += `    <h4>${subSubcategory}</h4>\n`;
+            html += `    <ul>\n`;
+            for (const li of grouped[category][subcategory][subSubcategory]) {
+              html += `      ${li}\n`;
+            }
+            html += `    </ul>\n`;
+            html += `  </div>\n`;
+          }
+        }
+        html += `</div>\n`;
+      }
+
+      document.getElementById("output").textContent = html;
     }
 
-    // New subcategory
-    if (subcat !== currentSubcategory) {
-      currentHTML += `\n  <div class="sub-subcategory">\n    <h4>${subcat}</h4>\n    <ul>`;
-      currentSubcategory = subcat;
+    function clearFields() {
+      document.getElementById("csvInput").value = "";
+      document.getElementById("output").textContent = "";
     }
 
-    // Add product item
-    currentHTML += `\n      ${liCode}`;
-    
-    // Check if next line will start new subcategory or category
-    const next = lines[lines.indexOf(line) + 1];
-    if (!next || next.split("\t")[1]?.trim() !== subcat) {
-      currentHTML += "\n    </ul>\n  </div>"; // Close sub-subcategory
+    // Optional: toggle() function for expand/collapse behavior
+    function toggle(el) {
+      const next = el.nextElementSibling;
+      if (next && next.classList.contains("subcategory")) {
+        next.style.display = next.style.display === "none" ? "block" : "none";
+      }
     }
-  });
-
-  currentHTML += "\n</div>"; // Final close for subcategory
-  output.textContent = currentHTML;
-}
-</script>
+  </script>
 
 </body>
 </html>
