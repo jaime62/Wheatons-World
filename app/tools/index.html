@@ -28,7 +28,6 @@
       margin-top: 1rem;
       border-radius: 5px;
       font-weight: bold;
-      cursor: pointer;
     }
     .subcategory {
       padding-left: 1rem;
@@ -66,21 +65,12 @@
       return str.replace(/^"+|"+$/g, '').trim();
     }
 
-    const emojiMap = {
-      "Apparel & Protection": "🩳",
-      "Boating Accessories": "⚓",
-      "Electronics": "📱",
-      "Rods & Reels": "🎣",
-      "Tackle & Storage": "🧰",
-      "Tools & Maintenance": "🔧"
-    };
-
     function convertCSV() {
       const csv = document.getElementById("csvInput").value.trim();
       const lines = csv.split("\n").slice(1); // Skip header
       let output = "";
       let preview = "";
-      let currentCategory = "", currentSubcategory = "";
+      let currentCategory = "", currentSubcategory = "", currentSubSubcategory = "";
 
       for (const line of lines) {
         const [catRaw, subcatRaw, subsubRaw, liCodeRaw] = line.split(",").map(sanitize);
@@ -88,48 +78,23 @@
 
         if (catRaw !== currentCategory) {
           if (currentCategory !== "") {
-            output += "</ul></div></div></div>\n";
-            preview += "</ul></div></div></div>";
+            output += "</ul>\n</div>\n</div>\n";
+            preview += "</ul></div></div>";
           }
-
-          const emoji = emojiMap[catRaw] || "🐟";
-          output += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${catRaw}</div>\n<div class="subcategory">\n`;
-          preview += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${catRaw}</div><div class="subcategory">`;
-
+          output += `<div class="category">🐟 ${catRaw}</div>\n<div class="subcategory">\n`;
+          preview += `<div class="category">🐟 ${catRaw}</div><div class="subcategory">`;
           currentCategory = catRaw;
           currentSubcategory = "";
         }
 
         if (subcatRaw !== currentSubcategory) {
           if (currentSubcategory !== "") {
-            output += "</ul></div>\n";
+            output += "</ul>\n</div>\n";
             preview += "</ul></div>";
           }
           output += `<div class="sub-subcategory">\n<h4>${subcatRaw}</h4>\n<ul>\n`;
           preview += `<div class="sub-subcategory"><h4>${subcatRaw}</h4><ul>`;
           currentSubcategory = subcatRaw;
         }
-        const item = liCodeRaw.replace(/""+/g, '"');
-        output += `${item}\n`;
-        preview += `${item}`;
-      }
 
-      if (output) {
-        output += "</ul></div></div></div>\n";
-        preview += "</ul></div></div></div>";
-      }
-
-      document.getElementById("htmlOutput").value = output;
-      document.getElementById("livePreview").innerHTML = preview;
-    }
-
-    function copyToClipboard() {
-      const htmlText = document.getElementById("htmlOutput");
-      htmlText.select();
-      htmlText.setSelectionRange(0, 99999);
-      document.execCommand("copy");
-      alert("HTML copied to clipboard!");
-    }
-  </script>
-</body>
-</html>
+        cons
