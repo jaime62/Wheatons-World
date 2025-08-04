@@ -16,6 +16,7 @@
 <textarea id="csvInput" placeholder="Paste CATEGORY, SUBCATEGORY, SUB-SUBCATEGORY, LI-CODE tab-separated values here..."></textarea>
 <br>
 <button onclick="generateHTML()">Generate HTML</button>
+<button onclick="clearFields()">Clear</button>
 
 <h3>Generated HTML:</h3>
 <pre id="output"></pre>
@@ -30,6 +31,12 @@ function generateHTML() {
   let currentHTML = "";
   const emoji = "🐟";
 
+  function clearFields() {
+  document.getElementById("csvInput").value = "";
+  document.getElementById("output").textContent = "";
+}
+
+  
   lines.forEach(line => {
     const [cat, subcat, subsub, liCode] = line.split("\t").map(cell => cell?.trim() || "");
     if (!cat || !subcat || !subsub || !liCode) return;
