@@ -29,6 +29,10 @@
       border-radius: 5px;
       font-weight: bold;
     }
+    .subcategory {
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+    }
     .sub-subcategory h4 {
       margin: 0.5rem 0 0.25rem;
     }
@@ -63,34 +67,36 @@
 
     function convertCSV() {
       const csv = document.getElementById("csvInput").value.trim();
-      const lines = csv.split("\n").slice(1); // Skip header row
+      const lines = csv.split("\n").slice(1); // Skip header
       let output = "";
       let preview = "";
-      let currentCategory = "", currentSubcategory = "";
+      let currentCategory = "", currentSubcategory = "", currentSubSubcategory = "";
 
       for (const line of lines) {
-        const [catRaw, subRaw, subsubRaw, liCodeRaw] = line.split(",").map(sanitize);
-        if (!catRaw || !subRaw || !liCodeRaw) continue;
+        const [catRaw, subcatRaw, subsubRaw, liCodeRaw] = line.split(",").map(sanitize);
+        if (!catRaw || !subcatRaw || !subsubRaw || !liCodeRaw) continue;
 
         if (catRaw !== currentCategory) {
           if (currentCategory !== "") {
-            output += "</ul>\n</div>\n";
-            preview += "</ul></div>";
+            output += "</ul></div></div></div>\n";
+            preview += "</ul></div></div></div>";
           }
-          output += `<div class="category" onclick="toggle(this)">🐟 ${catRaw}</div>\n`;
-          preview += `<div class="category onclick="toggle(this)"">🐟 ${catRaw}</div>`;
+          output += `<div class="category" onclick="toggle(this)">🐟 ${catRaw}</div>\n<div class="subcategory">\n`;
+          preview += `<div class="category" onclick="toggle(this)">🐟 ${catRaw}</div><div class="subcategory">`;
           currentCategory = catRaw;
           currentSubcategory = "";
+          currentSubSubcategory = "";
         }
 
-        if (subRaw !== currentSubcategory) {
+        if (subcatRaw !== currentSubcategory) {
           if (currentSubcategory !== "") {
-            output += "</ul>\n</div>\n";
+            output += "</ul></div>\n";
             preview += "</ul></div>";
           }
-          output += `<div class="sub-subcategory">\n<h4>${subRaw}</h4>\n<ul>\n`;
-          preview += `<div class="sub-subcategory"><h4>${subRaw}</h4><ul>`;
-          currentSubcategory = subRaw;
+          output += `<div class="sub-subcategory">\n<h4>${subcatRaw}</h4>\n<ul>\n`;
+          preview += `<div class="sub-subcategory"><h4>${subcatRaw}</h4><ul>`;
+          currentSubcategory = subcatRaw;
+          currentSubSubcategory = "";
         }
 
         const item = liCodeRaw.replace(/""/g, '"');
@@ -99,8 +105,8 @@
       }
 
       if (output) {
-        output += "</ul>\n</div>\n";
-        preview += "</ul></div>";
+        output += "</ul></div></div></div>\n";
+        preview += "</ul></div></div></div>";
       }
 
       document.getElementById("htmlOutput").value = output;
@@ -110,7 +116,7 @@
     function copyToClipboard() {
       const htmlText = document.getElementById("htmlOutput");
       htmlText.select();
-      htmlText.setSelectionRange(0, 99999); // for mobile
+      htmlText.setSelectionRange(0, 99999);
       document.execCommand("copy");
       alert("HTML copied to clipboard!");
     }
