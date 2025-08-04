@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>CSV to HTML Generator</title>
   <style>
     body {
@@ -13,83 +13,78 @@
       height: 200px;
       margin-bottom: 1rem;
     }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
     button {
       margin-right: 1rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-    }
-    #output {
-      white-space: pre-wrap;
-      background-color: #f0f0f0;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-
-  <h1>CSV to HTML Generator</h1>
-
-  <textarea id="csvInput" placeholder="Paste your CSV data here..."></textarea><br>
-  <button onclick="generateHTML()">Generate HTML</button>
-  <button onclick="clearFields()">Clear</button>
-
-  <pre id="output"></pre>
+  <h2>CSV to HTML Generator</h2>
+  <textarea id="csvInput" placeholder="Paste CSV data here..."></textarea>
+  <br />
+  <button onclick="convertCSV()">Generate HTML</button>
+  <button onclick="clearOutput()">Clear</button>
+  <pre id="htmlOutput"></pre>
 
   <script>
-    function generateHTML() {
+    const emojiMap = {
+      "Apparel & Protection": "👕",
+      "Boating Accessories": "⛵️",
+      "Electronics": "📱",
+      "Rods & Reels": "🎣",
+      "Storage": "📂",
+      "Tackle": "🔍",
+      "Tools": "🔧"
+    };
+
+    function convertCSV() {
       const input = document.getElementById("csvInput").value.trim();
-      if (!input) {
-        document.getElementById("output").textContent = "Please paste some CSV data.";
-        return;
+      const lines = input.split("\n");
+
+      const data = lines.slice(1).map(line => line.split(",").map(cell => cell.replace(/^"|"$/g, "").trim()));
+      const categories = {};
+
+      for (const [cat, sub, subsub, liHTML] of data) {
+        if (!cat || !sub || !liHTML) continue;
+        if (!categories[cat]) categories[cat] = {};
+        if (!categories[cat][sub]) categories[cat][sub] = [];
+        categories[cat][sub].push(liHTML);
       }
 
-      const rows = input.split(/\r?\n/).map(row => row.split('\t'));
-      let html = '';
-      const grouped = {};
+      let html = "";
 
-      for (const [category, subcategory, subSubcategory, liCode] of rows) {
-        if (!grouped[category]) grouped[category] = {};
-        if (!grouped[category][subcategory]) grouped[category][subcategory] = {};
-        if (!grouped[category][subcategory][subSubcategory]) grouped[category][subcategory][subSubcategory] = [];
-        grouped[category][subcategory][subSubcategory].push(liCode);
-      }
-
-      for (const category in grouped) {
-        html += `<div class="category" onclick="toggle(this)"><span class="emoji">🐟</span> ${category}</div>\n`;
+      for (const [cat, subcats] of Object.entries(categories)) {
+        const emoji = emojiMap[cat] || "🐟"; // fallback fish emoji
+        html += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${cat}</div>\n`;
         html += `<div class="subcategory">\n`;
-        for (const subcategory in grouped[category]) {
-          for (const subSubcategory in grouped[category][subcategory]) {
-            html += `  <div class="sub-subcategory">\n`;
-            html += `    <h4>${subSubcategory}</h4>\n`;
-            html += `    <ul>\n`;
-            for (const li of grouped[category][subcategory][subSubcategory]) {
-              html += `      ${li}\n`;
-            }
-            html += `    </ul>\n`;
-            html += `  </div>\n`;
+
+        for (const [sub, items] of Object.entries(subcats)) {
+          html += `  <div class="sub-subcategory">\n`;
+          html += `    <h4>${sub}</h4>\n`;
+          html += `    <ul>\n`;
+          for (const item of items) {
+            html += `      ${item}\n`;
           }
+          html += `    </ul>\n`;
+          html += `  </div>\n`;
         }
+
         html += `</div>\n`;
       }
 
-      document.getElementById("output").textContent = html;
+      document.getElementById("htmlOutput").textContent = html;
     }
 
-    function clearFields() {
-      document.getElementById("csvInput").value = "";
-      document.getElementById("output").textContent = "";
-    }
-
-    // Optional: toggle() function for expand/collapse behavior
-    function toggle(el) {
-      const next = el.nextElementSibling;
-      if (next && next.classList.contains("subcategory")) {
-        next.style.display = next.style.display === "none" ? "block" : "none";
-      }
+    function clearOutput() {
+      document.getElementById("csvInput").value = '';
+      document.getElementById("htmlOutput").textContent = '';
     }
   </script>
-
 </body>
 </html>
