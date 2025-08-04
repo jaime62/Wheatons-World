@@ -6,69 +6,69 @@
   <title>Fishing Gear by Category</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f8ff;
-      margin: 0;
-      padding: 1rem;
-      background-color: transparent;
-    }
+  body {
+  font-family: Arial, sans-serif;
+  background: #f0f8ff;
+  margin: 0;
+  padding: 1rem;
+  background-color: transparent;
+}
 
-    .category {
-      background: #92D6B5; <!-- replaced #3b9c9c; -->
-      color: white;
-      padding: .5rem;
-      margin-bottom: 0.5rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
+.category {
+  background: #92D6B5;
+  color: white;
+  padding: .5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
 
-    }
+.subcategory {
+  display: none;
+  background: #e6fafa;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-left: 4px solid #3b9c9c;
+}
 
-    .subcategory {
-      display: none;
-      background: #e6fafa;
-      padding: 0.5rem 1rem;
-      margin-bottom: 0.5rem;
-      border-left: 4px solid #3b9c9c;
-    }
+.sub-subcategory {
+  margin-left: 1rem;
+  padding: 0.25rem 0;
+}
 
-    .sub-subcategory {
-      margin-left: 1rem;
-      padding: 0.25rem 0;
-    }
+.sub-subcategory h4 {
+  margin: 0.5rem 0 0.25rem;
+  color: #006666;
+}
 
-    .sub-subcategory h4 {
-      margin: 0.5rem 0 0.25rem;
-      color: #006666;
-    }
+.sub-subcategory ul {
+  padding-left: 1rem;
+  margin: 0;
+}
 
-    .sub-subcategory ul {
-      padding-left: 1rem;
-      margin: 0;
-    }
+.sub-subcategory li {
+  margin: 0.25rem 0;
+}
 
-    .sub-subcategory li {
-      margin: 0.25rem 0;
-    }
+.sub-subcategory a {
+  color: #003333;
+  text-decoration: none;
+}
 
-    .sub-subcategory a {
-      color: #003333;
-      text-decoration: none;
-    }
+.sub-subcategory a:hover {
+  text-decoration: underline;
+}
 
-    .sub-subcategory a:hover {
-      text-decoration: underline;
-    }
+@media (min-width: 600px) {
+  body {
+    max-width: 600px;
+    margin: auto;
+  }
+}
 
-    @media (min-width: 600px) {
-      body {
-        max-width: 600px;
-        margin: auto;
-      }
-    }
 .emoji {
-  font-size: 2rem; /* Adjust as desired */
+  font-size: 2rem;
   margin-right: 0.5rem;
   vertical-align: middle;
 }
@@ -228,61 +228,54 @@
 
   
 <script>
-  let resizeTimeout;
-  let lastSentHeight = 0;
+let resizeTimeout;
+let lastSentHeight = 0;
 
-  function sendHeightToParent() {
-    const currentHeight = document.documentElement.scrollHeight;
-    if (currentHeight !== lastSentHeight) {
-      window.parent.postMessage({ type: 'resize-iframe', height: currentHeight }, '*');
-      lastSentHeight = currentHeight;
-    }
+function sendHeightToParent() {
+  const currentHeight = document.documentElement.scrollHeight;
+  if (currentHeight !== lastSentHeight) {
+    window.parent.postMessage({ type: 'resize-iframe', height: currentHeight }, '*');
+    lastSentHeight = currentHeight;
   }
+}
 
-  function debouncedResize(delay = 150) {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(sendHeightToParent, delay);
-  }
+function debouncedResize(delay = 150) {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(sendHeightToParent, delay);
+}
 
-  // ResizeObserver to watch layout shifts
-  const resizeObserver = new ResizeObserver(() => debouncedResize(150));
-  resizeObserver.observe(document.body);
+// ResizeObserver to watch layout shifts
+const resizeObserver = new ResizeObserver(() => debouncedResize(150));
+resizeObserver.observe(document.body);
 
-  // MutationObserver to catch changes from collapsing/expanding
-  const mutationObserver = new MutationObserver(() => debouncedResize(200));
-  mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    characterData: true
+// MutationObserver to catch DOM changes
+const mutationObserver = new MutationObserver(() => debouncedResize(200));
+mutationObserver.observe(document.body, {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  characterData: true
+});
+
+// Toggle handler
+function toggle(element) {
+  const next = element.nextElementSibling;
+  const isVisible = next.style.display === 'block';
+
+  // Hide all other subcategories
+  document.querySelectorAll('.subcategory').forEach(sub => {
+    if (sub !== next) sub.style.display = 'none';
   });
 
-  // Click handler for toggling categories
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggles = document.querySelectorAll('.category');
+  // Toggle current one
+  next.style.display = isVisible ? 'none' : 'block';
+  debouncedResize(200);
+}
 
-    toggles.forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        const next = toggle.nextElementSibling;
-        const isVisible = next.style.display === 'block';
+// Initial resize events
+window.addEventListener('load', () => debouncedResize(300));
+window.addEventListener('resize', () => debouncedResize(200));
 
-        // Hide all other subcategories
-        document.querySelectorAll('.subcategory').forEach(sub => {
-          if (sub !== next) sub.style.display = 'none';
-        });
-
-        // Toggle visibility of the clicked category
-        next.style.display = isVisible ? 'none' : 'block';
-
-        // Debounced resize after the layout change
-        debouncedResize(200);
-      });
-    });
-  });
-
-  // Initial resize on load
-  window.addEventListener('load', () => debouncedResize(300));
-  window.addEventListener('resize', () => debouncedResize(200));
 </script>
 
 
