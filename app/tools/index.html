@@ -77,8 +77,8 @@
             output += "</ul>\n</div>\n";
             preview += "</ul></div>";
           }
-          output += `<div class="category">🐟 ${catRaw}</div>\n`;
-          preview += `<div class="category">🐟 ${catRaw}</div>`;
+          output += `<div class="category" onclick="toggle(this)">🐟 ${catRaw}</div>\n`;
+          preview += `<div class="category onclick="toggle(this)"">🐟 ${catRaw}</div>`;
           currentCategory = catRaw;
           currentSubcategory = "";
         }
