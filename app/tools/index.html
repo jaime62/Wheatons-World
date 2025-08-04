@@ -50,9 +50,9 @@
 </head>
 <body>
   <h2>CSV to HTML Converter</h2>
-  <p>Paste your CSV data here (Category, Subcategory, Sub-Subcategory, &lt;li&gt;Item Link&lt;/li&gt;):</p>
+  <p>Paste your CSV data here (Category, Subcategory, Sub-subcategory, &lt;li&gt;Item Link&lt;/li&gt;):</p>
   <textarea id="csvInput" placeholder="Category,Subcategory,Sub-subcategory,&lt;li&gt;Item Link&lt;/li&gt;"></textarea>
-  <button onclick="convertCSV()">Convert</button>
+  <button id="convertBtn">Convert</button>
 
   <h3>Generated HTML Code:</h3>
   <textarea id="htmlOutput" readonly></textarea>
@@ -77,55 +77,54 @@
 
     function convertCSV() {
       const csv = document.getElementById("csvInput").value.trim();
-      const lines = csv.split("\n").slice(1); // Skip header
+      const lines = csv.split("\n").filter(line => line.trim().length > 0);
+      if (lines.length <= 1) return;
 
-      let output = "";
+      const data = lines.slice(1); // skip header
+      let html = "";
       let preview = "";
-      let currentCategory = "", currentSubcategory = "", currentSubSubcategory = "";
+      let currentCategory = "", currentSubcategory = "";
 
-      for (const line of lines) {
-        const parts = line.split(",");
+      for (const line of data) {
+        const parts = line.split(",").map(sanitize);
         if (parts.length < 4) continue;
 
-        const catRaw = sanitize(parts[0]);
-        const subcatRaw = sanitize(parts[1]);
-        const subsubRaw = sanitize(parts[2]);
-        const liCodeRaw = sanitize(parts.slice(3).join(","));
+        const [category, subcategory, subsub, liItem] = parts;
+        const emoji = emojiMap[category] || "🐟";
 
-        const emoji = emojiMap[catRaw] || "🐟";
-
-        if (catRaw !== currentCategory) {
-          if (currentCategory !== "") {
-            output += "</ul></div></div></div>\n";
+        // New Category
+        if (category !== currentCategory) {
+          if (currentCategory) {
+            html += "</ul></div></div></div>\n";
             preview += "</ul></div></div></div>";
           }
-          output += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${catRaw}</div>\n<div class="subcategory">\n`;
-          preview += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${catRaw}</div><div class="subcategory">`;
-          currentCategory = catRaw;
+          html += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div>\n<div class="subcategory">\n`;
+          preview += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div><div class="subcategory">`;
+          currentCategory = category;
           currentSubcategory = "";
         }
 
-        if (subsubRaw !== currentSubSubcategory || subcatRaw !== currentSubcategory) {
-          if (currentSubSubcategory !== "") {
-            output += "</ul></div>\n";
+        // New Sub-subcategory
+        if (subsub !== currentSubcategory) {
+          if (currentSubcategory !== "") {
+            html += "</ul></div>\n";
             preview += "</ul></div>";
           }
-          output += `<div class="sub-subcategory">\n<h4>${subsubRaw}</h4>\n<ul>\n`;
-          preview += `<div class="sub-subcategory"><h4>${subsubRaw}</h4><ul>`;
-          currentSubSubcategory = subsubRaw;
-          currentSubcategory = subcatRaw;
+          html += `<div class="sub-subcategory">\n<h4>${subsub}</h4>\n<ul>\n`;
+          preview += `<div class="sub-subcategory"><h4>${subsub}</h4><ul>`;
+          currentSubcategory = subsub;
         }
 
-        output += `${liCodeRaw}\n`;
-        preview += `${liCodeRaw}`;
+        html += `${liItem}\n`;
+        preview += `${liItem}`;
       }
 
-      if (output) {
-        output += "</ul></div></div></div>\n";
+      if (html) {
+        html += "</ul></div></div></div>\n";
         preview += "</ul></div></div></div>";
       }
 
-      document.getElementById("htmlOutput").value = output;
+      document.getElementById("htmlOutput").value = html;
       document.getElementById("livePreview").innerHTML = preview;
     }
 
@@ -136,6 +135,9 @@
       document.execCommand("copy");
       alert("HTML copied to clipboard!");
     }
+
+    // Ensure button is attached
+    document.getElementById("convertBtn").addEventListener("click", convertCSV);
   </script>
 </body>
 </html>
