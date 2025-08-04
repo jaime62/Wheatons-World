@@ -52,8 +52,8 @@
   <h2>CSV to HTML Converter</h2>
   <p>Paste your CSV data here (Category, Subcategory, Sub-subcategory, &lt;li&gt;Item Link&lt;/li&gt;):</p>
   <textarea id="csvInput" placeholder="Category,Subcategory,Sub-subcategory,&lt;li&gt;Item Link&lt;/li&gt;"></textarea>
-  <button id="convertBtn">Convert</button>
-  <button onclick="resetFields()">Clear ALL</button>
+  <button id="convertBtn" style="background-color: green; color: white; font-weight: bold;">Convert</button>
+  <button onclick="resetFields()"style="background-color: red; color: white; font-weight: bold;">Clear ALL</button>
 
   <h3>Generated HTML Code:</h3>
   <textarea id="htmlOutput" readonly></textarea>
