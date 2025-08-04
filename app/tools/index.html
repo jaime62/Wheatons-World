@@ -1,61 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Generate Product HTML</title>
+  <meta charset="UTF-8">
+  <title>CSV to HTML Generator</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    textarea { width: 100%; height: 200px; }
+    pre { background: #f4f4f4; padding: 1rem; border-radius: 8px; white-space: pre-wrap; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; }
+  </style>
 </head>
 <body>
-  <h2>Paste CSV Data</h2>
-  <textarea id="csvInput" rows="20" cols="100"></textarea><br>
-  <button onclick="processCSV()">Generate HTML</button>
 
-  <h3>Output HTML:</h3>
-  <pre id="output"></pre>
+<h2>Paste your TSV data below:</h2>
+<textarea id="csvInput" placeholder="Paste CATEGORY, SUBCATEGORY, SUB-SUBCATEGORY, LI-CODE tab-separated values here..."></textarea>
+<br>
+<button onclick="generateHTML()">Generate HTML</button>
 
-  <script>
-    function processCSV() {
-      const input = document.getElementById('csvInput').value.trim();
-      const rows = input.split('\n').map(r => r.split('\t'));
+<h3>Generated HTML:</h3>
+<pre id="output"></pre>
 
-      const header = rows[0];
-      const data = rows.slice(1);
+<script>
+function generateHTML() {
+  const input = document.getElementById("csvInput").value.trim();
+  const lines = input.split(/\r?\n/);
+  const output = document.getElementById("output");
+  let currentCategory = "";
+  let currentSubcategory = "";
+  let currentHTML = "";
+  const emoji = "🐟";
 
-      const result = [];
-      const emoji = '&#128031;'; // You can change per category if needed
+  lines.forEach(line => {
+    const [cat, subcat, subsub, liCode] = line.split("\t").map(cell => cell?.trim() || "");
+    if (!cat || !subcat || !subsub || !liCode) return;
 
-      let currentCategory = '', currentSub = '', currentBlock = '', currentUl = '';
-
-      for (let i = 0; i < data.length; i++) {
-        const [category, subcategory, subsubcategory, li] = data[i];
-
-        // Start new category
-        if (category !== currentCategory) {
-          if (currentCategory) {
-            if (currentUl) currentBlock += `      </ul>\n    </div>\n`; // close last sub-subcategory
-            result.push(currentBlock + `  </div>\n`);
-          }
-          currentBlock = `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div>\n<div class="subcategory">\n`;
-          currentCategory = category;
-          currentSub = '';
-        }
-
-        // Start new sub-subcategory
-        if (subcategory !== currentSub) {
-          if (currentSub) currentBlock += `      </ul>\n    </div>\n`; // close previous sub-subcategory
-          currentBlock += `    <div class="sub-subcategory">\n      <h4>${subcategory}</h4>\n      <ul>\n`;
-          currentSub = subcategory;
-        }
-
-        // Add the <li> item
-        currentBlock += `        ${li}\n`;
-      }
-
-      // Close last items
-      if (currentUl) currentBlock += `      </ul>\n    </div>\n`;
-      result.push(currentBlock + `  </div>\n`);
-
-      document.getElementById('output').textContent = result.join('\n');
+    // New category
+    if (cat !== currentCategory) {
+      if (currentHTML) currentHTML += '</div>'; // Close previous subcategory block
+      currentHTML += `\n<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${cat}</div>\n<div class="subcategory">`;
+      currentCategory = cat;
+      currentSubcategory = "";
     }
-  </script>
+
+    // New subcategory
+    if (subcat !== currentSubcategory) {
+      currentHTML += `\n  <div class="sub-subcategory">\n    <h4>${subcat}</h4>\n    <ul>`;
+      currentSubcategory = subcat;
+    }
+
+    // Add product item
+    currentHTML += `\n      ${liCode}`;
+    
+    // Check if next line will start new subcategory or category
+    const next = lines[lines.indexOf(line) + 1];
+    if (!next || next.split("\t")[1]?.trim() !== subcat) {
+      currentHTML += "\n    </ul>\n  </div>"; // Close sub-subcategory
+    }
+  });
+
+  currentHTML += "\n</div>"; // Final close for subcategory
+  output.textContent = currentHTML;
+}
+</script>
+
 </body>
 </html>
-
