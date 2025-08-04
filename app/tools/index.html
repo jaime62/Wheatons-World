@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Product HTML</title>
+</head>
+<body>
+  <h2>Paste CSV Data</h2>
+  <textarea id="csvInput" rows="20" cols="100"></textarea><br>
+  <button onclick="processCSV()">Generate HTML</button>
+
+  <h3>Output HTML:</h3>
+  <pre id="output"></pre>
+
+  <script>
+    function processCSV() {
+      const input = document.getElementById('csvInput').value.trim();
+      const rows = input.split('\n').map(r => r.split('\t'));
+
+      const header = rows[0];
+      const data = rows.slice(1);
+
+      const result = [];
+      const emoji = '&#128031;'; // You can change per category if needed
+
+      let currentCategory = '', currentSub = '', currentBlock = '', currentUl = '';
+
+      for (let i = 0; i < data.length; i++) {
+        const [category, subcategory, subsubcategory, li] = data[i];
+
+        // Start new category
+        if (category !== currentCategory) {
+          if (currentCategory) {
+            if (currentUl) currentBlock += `      </ul>\n    </div>\n`; // close last sub-subcategory
+            result.push(currentBlock + `  </div>\n`);
+          }
+          currentBlock = `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div>\n<div class="subcategory">\n`;
+          currentCategory = category;
+          currentSub = '';
+        }
+
+        // Start new sub-subcategory
+        if (subcategory !== currentSub) {
+          if (currentSub) currentBlock += `      </ul>\n    </div>\n`; // close previous sub-subcategory
+          currentBlock += `    <div class="sub-subcategory">\n      <h4>${subcategory}</h4>\n      <ul>\n`;
+          currentSub = subcategory;
+        }
+
+        // Add the <li> item
+        currentBlock += `        ${li}\n`;
+      }
+
+      // Close last items
+      if (currentUl) currentBlock += `      </ul>\n    </div>\n`;
+      result.push(currentBlock + `  </div>\n`);
+
+      document.getElementById('output').textContent = result.join('\n');
+    }
+  </script>
+</body>
+</html>
 
