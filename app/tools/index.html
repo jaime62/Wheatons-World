@@ -2,80 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CSV to Fishing Gear HTML</title>
+  <title>CSV to HTML Converter</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 2rem;
+      padding: 1rem;
+      background: #f0f8ff;
     }
     textarea {
       width: 100%;
-      height: 200px;
+      min-height: 150px;
+      padding: 0.5rem;
       margin-bottom: 1rem;
+      font-family: monospace;
+    }
+    .output-preview {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      background: #fff;
+    }
+    .category {
+      background: #92D6B5;
+      color: white;
+      padding: .5rem;
+      margin-top: 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .sub-subcategory h4 {
+      margin: 0.5rem 0 0.25rem;
+    }
+    ul {
+      margin: 0 0 1rem 1rem;
     }
     button {
-      margin-right: 10px;
+      margin-bottom: 1rem;
       padding: 0.5rem 1rem;
       font-size: 1rem;
       cursor: pointer;
     }
-    #output {
-      margin-top: 2rem;
-      white-space: pre-wrap;
-      background: #f4f4f4;
-      padding: 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
   </style>
 </head>
 <body>
-  <h1>CSV to Fishing Gear HTML</h1>
-  <textarea id="csvInput" placeholder="Paste your CSV data here..."></textarea>
-  <br />
-  <button onclick="convertCSV()">Generate HTML</button>
-  <button onclick="clearFields()">Clear</button>
-  <div id="output"></div>
+  <h2>CSV to HTML Converter</h2>
+  <p>Paste your CSV data here (category, subcategory, sub-subcategory, li-code):</p>
+  <textarea id="csvInput" placeholder="Category,Subcategory,Sub-subcategory,&lt;li&gt;Item Link&lt;/li&gt;"></textarea>
+  <button onclick="convertCSV()">Convert</button>
+
+  <h3>Generated HTML Code:</h3>
+  <textarea id="htmlOutput" readonly></textarea>
+  <button onclick="copyToClipboard()">Copy HTML to Clipboard</button>
+
+  <h3>Live Preview:</h3>
+  <div id="livePreview" class="output-preview"></div>
 
   <script>
+    function sanitize(str) {
+      return str.replace(/^"+|"+$/g, '').trim();
+    }
+
     function convertCSV() {
-      const input = document.getElementById("csvInput").value.trim();
-      const lines = input.split(/\r?\n/);
-      const output = [];
-      let currentCategory = "";
-      let currentSubcategory = "";
+      const csv = document.getElementById("csvInput").value.trim();
+      const lines = csv.split("\n").slice(1); // Skip header row
+      let output = "";
+      let preview = "";
+      let currentCategory = "", currentSubcategory = "";
 
-      for (let i = 1; i < lines.length; i++) {
-        const [categoryRaw, subcategoryRaw, itemNameRaw, itemLinkRaw] = lines[i].split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+      for (const line of lines) {
+        const [catRaw, subRaw, subsubRaw, liCodeRaw] = line.split(",").map(sanitize);
+        if (!catRaw || !subRaw || !liCodeRaw) continue;
 
-        const category = categoryRaw?.replace(/"/g, '').trim();
-        const subcategory = subcategoryRaw?.replace(/"/g, '').trim();
-        const itemName = itemNameRaw?.replace(/"/g, '').trim();
-        const itemLink = itemLinkRaw?.replace(/"/g, '').trim();
-
-        if (!category || !subcategory || !itemName || !itemLink) continue;
-
-        if (category !== currentCategory) {
-          output.push(`\n🐟 ${category}`);
-          currentCategory = category;
+        if (catRaw !== currentCategory) {
+          if (currentCategory !== "") {
+            output += "</ul>\n</div>\n";
+            preview += "</ul></div>";
+          }
+          output += `<div class="category">🐟 ${catRaw}</div>\n`;
+          preview += `<div class="category">🐟 ${catRaw}</div>`;
+          currentCategory = catRaw;
           currentSubcategory = "";
         }
 
-        if (subcategory !== currentSubcategory) {
-          output.push(`\n<strong>${subcategory}</strong>`);
-          currentSubcategory = subcategory;
+        if (subRaw !== currentSubcategory) {
+          if (currentSubcategory !== "") {
+            output += "</ul>\n</div>\n";
+            preview += "</ul></div>";
+          }
+          output += `<div class="sub-subcategory">\n<h4>${subRaw}</h4>\n<ul>\n`;
+          preview += `<div class="sub-subcategory"><h4>${subRaw}</h4><ul>`;
+          currentSubcategory = subRaw;
         }
 
-        output.push(`<li><a href="${itemLink}" target="_blank" rel="sponsored nofollow">${itemName}</a></li>`);
+        const item = liCodeRaw.replace(/""/g, '"');
+        output += `${item}\n`;
+        preview += `${item}`;
       }
 
-      document.getElementById("output").innerHTML = output.join("\n");
+      if (output) {
+        output += "</ul>\n</div>\n";
+        preview += "</ul></div>";
+      }
+
+      document.getElementById("htmlOutput").value = output;
+      document.getElementById("livePreview").innerHTML = preview;
     }
 
-    function clearFields() {
-      document.getElementById("csvInput").value = "";
-      document.getElementById("output").innerHTML = "";
+    function copyToClipboard() {
+      const htmlText = document.getElementById("htmlOutput");
+      htmlText.select();
+      htmlText.setSelectionRange(0, 99999); // for mobile
+      document.execCommand("copy");
+      alert("HTML copied to clipboard!");
     }
   </script>
 </body>
