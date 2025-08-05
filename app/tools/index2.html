@@ -116,23 +116,23 @@
       return str.replace(/^"+|"+$/g, '').replace(/""/g, '"').trim();
     }
 
-    const emojiMap = {
-      "Apparel & Protection": "🩳",
-      "Boating Accessories": "⚓",
-      "Electronics": "📱",
-      "Rods & Reels": "🎣",
-      "Storage": "🧰",
-      "Tackle": "🪝", // fallback emoji, will be replaced with image below
-      "Tools": "🔧"
-    };
+const emojiMap = {
+  "Apparel & Protection": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-swimsuit.png?raw=true",
+  "Boating Accessories": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-anchor-rope.png?raw=true",
+  "Electronics": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-fish-finder.png?raw=true",
+  "Rods & Reels": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-rod-reel.png?raw=true",
+  "Storage": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-tackle-box.png?raw=true",
+  "Tackle": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-lure.png?raw=true",
+  "Tools": "🔧"
+};
 
 function getCategoryIcon(category) {
-  if (category === "Tackle") {
-    return `<img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/emoji-tackle-32x32.png?raw=true" alt="Tackle Emoji" class="emoji" style="width: 30px; height: 30px;">`;
-
+  const icon = emojiMap[category];
+  if (!icon) return `<span class="emoji">🐟</span>`;
+  if (icon.startsWith("http")) {
+    return `<img src="${icon}" alt="${category} Emoji" class="emoji" style="width: 30px; height: 30px;">`;
   }
-  return `<span class="emoji">${emojiMap[category] || "🐟"}</span>`;
-
+  return `<span class="emoji">${icon}</span>`;
 }
 
 
