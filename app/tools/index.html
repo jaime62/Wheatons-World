@@ -90,4 +90,104 @@
   <!-- Output -->
   <h3>Generated HTML Code:</h3>
   <textarea id="htmlOutput" readonly></textarea>
-  <button onclick="copyToClipboard()" style="backgrou
+  <button onclick="copyToClipboard()" style="background-color: blue; color: white; font-weight: bold;">Copy HTML to Clipboard</button>
+
+  <!-- Preview -->
+  <h3>Live Preview:</h3>
+  <div id="livePreview" class="output-preview"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p style="text-align: center; font-size: 0.95rem; color: #333; margin-top: 2rem;">
+      <i>CSV to HTML Converter™ is a proud part of <a href="https://wheatonsworld.com" target="_blank" style="color: #1a237e; text-decoration: none;"><b>Wheaton’s World™</b></a>&nbsp;&nbsp;-&nbsp;&nbsp;All rights reserved.</i>
+    </p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    function sanitize(str) {
+      return str.replace(/^"+|"+$/g, '').replace(/""/g, '"').trim();
+    }
+
+    const emojiMap = {
+      "Apparel & Protection": "🩳",
+      "Boating Accessories": "⚓",
+      "Electronics": "📱",
+      "Rods & Reels": "🎣",
+      "Tackle & Storage": "🧰",
+      "Tools & Maintenance": "🔧"
+    };
+
+    function convertCSV() {
+      const csv = document.getElementById("csvInput").value.trim();
+      const lines = csv.split("\n").filter(line => line.trim().length > 0);
+      if (lines.length <= 1) return;
+
+      const data = lines.slice(1); // skip header
+      let html = "";
+      let preview = "";
+      let currentCategory = "", currentSubcategory = "";
+
+      for (const line of data) {
+        const parts = line.split(",").map(sanitize);
+        if (parts.length < 4) continue;
+
+        const [category, subcategory, subsub, liItem] = parts;
+        const emoji = emojiMap[category] || "🐟";
+
+        // New Category
+        if (category !== currentCategory) {
+          if (currentCategory) {
+            html += "</ul></div></div></div>\n";
+            preview += "</ul></div></div></div>";
+          }
+          html += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div>\n<div class="subcategory">\n`;
+          preview += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div><div class="subcategory">`;
+          currentCategory = category;
+          currentSubcategory = "";
+        }
+
+        // New Sub-subcategory
+        if (subsub !== currentSubcategory) {
+          if (currentSubcategory !== "") {
+            html += "</ul></div>\n";
+            preview += "</ul></div>";
+          }
+          html += `<div class="sub-subcategory">\n<h4>${subsub}</h4>\n<ul>\n`;
+          preview += `<div class="sub-subcategory"><h4>${subsub}</h4><ul>`;
+          currentSubcategory = subsub;
+        }
+
+        html += `${liItem}\n`;
+        preview += `${liItem}`;
+      }
+
+      if (html) {
+        html += "</ul></div></div></div>\n";
+        preview += "</ul></div></div></div>";
+      }
+
+      document.getElementById("htmlOutput").value = html;
+      document.getElementById("livePreview").innerHTML = preview;
+    }
+
+    function copyToClipboard() {
+      const htmlText = document.getElementById("htmlOutput");
+      htmlText.select();
+      htmlText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("HTML copied to clipboard!");
+    }
+
+    function resetFields() {
+      document.getElementById("csvInput").value = "";
+      document.getElementById("htmlOutput").value = "";
+      document.getElementById("livePreview").innerHTML = "";
+    }
+
+    // Hook up convert button
+    document.getElementById("convertBtn").addEventListener("click", convertCSV);
+  </script>
+
+</body>
+</html>
