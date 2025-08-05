@@ -139,12 +139,12 @@
     categories.forEach(category => {
       category.addEventListener('click', () => {
         const next = category.nextElementSibling;
-        if (!next || !next.classList.contains('subcategory')) return;
+        if (!next || !next.classList.contains('sub-subcategory')) return;
 
         const isVisible = next.style.display === 'block';
 
         // Collapse all other subcategories
-        document.querySelectorAll('.subcategory').forEach(sub => {
+        document.querySelectorAll('.sub-subcategory').forEach(sub => {
           if (sub !== next) sub.style.display = 'none';
         });
 
