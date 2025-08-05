@@ -154,7 +154,7 @@ if (/category|subcategory|sub-subcategory/i.test(lines[0])) {
       let currentCategory = "", currentSubcategory = "";
 
       for (const line of data) {
-        const parts = line.split(",").map(sanitize);
+const parts = line.split(",").slice(0, 4).map(sanitize);
         if (parts.length < 4) continue;
 
         const [category, subcategory, subsub, liItem] = parts;
