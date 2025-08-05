@@ -64,6 +64,12 @@
       color: #0000EE;
       text-decoration: underline;
     }
+
+    .emoji {
+  font-size: 1.5em; /* 50% larger */
+  vertical-align: middle;
+}
+
   </style>
 </head>
 <body>
@@ -119,12 +125,13 @@
       "Tools": "🔧"
     };
 
-    function getCategoryIcon(category) {
-      if (category === "Tackle") {
-        return `<img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/emoji-tackle-32x32.png?raw=true" alt="Tackle Emoji" style="width: 20px; height: 20px; vertical-align: middle;">`;
-      }
-      return `<span class="emoji">${emojiMap[category] || "🐟"}</span>`;
-    }
+function getCategoryIcon(category) {
+  if (category === "Tackle") {
+    return `<img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/emoji-tackle-32x32.png?raw=true" alt="Tackle Emoji" class="emoji" style="width: 30px; height: 30px;">`;
+  }
+  return `<span class="emoji">${emojiMap[category] || "🐟"}</span>`;
+}
+
 
     function convertCSV() {
       const csv = document.getElementById("csvInput").value.trim();
