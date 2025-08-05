@@ -141,7 +141,14 @@ function getCategoryIcon(category) {
       const lines = csv.split("\n").filter(line => line.trim().length > 0);
       if (lines.length <= 1) return;
 
-      const data = lines.slice(1); // skip header
+<!--       const data = lines.slice(1); // skip header -->
+let data = lines;
+
+// Check if first line looks like a header (contains "category" or "subcategory" etc.)
+if (/category|subcategory|sub-subcategory/i.test(lines[0])) {
+  data = lines.slice(1);
+}
+
       let html = "";
       let preview = "";
       let currentCategory = "", currentSubcategory = "";
