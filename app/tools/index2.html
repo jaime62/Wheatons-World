@@ -65,24 +65,10 @@
       text-decoration: underline;
     }
 
-<!--    .emoji {
+    .emoji {
   font-size: 1.5em; /* 50% larger */
   vertical-align: middle;
-} -->
-    .emoji {
-  font-size: 1.5em;               /* Enlarge emoji text */
-  display: inline-block;
-  width: 2em;                     /* Reserve same space for both types */
-  text-align: center;
-  vertical-align: middle;
-  line-height: 1;
-}
-
-.emoji img {
-  height: 1.5em;                  /* Match the text emoji size */
-  width: auto;
-  vertical-align: middle;
-}
+} 
 
 
   </style>
@@ -142,12 +128,10 @@
 
 function getCategoryIcon(category) {
   if (category === "Tackle") {
-<!--    return `<img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/emoji-tackle-32x32.png?raw=true" alt="Tackle Emoji" class="emoji" style="width: 30px; height: 30px;">`; -->
-return `<span class="emoji"><img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/emoji-tackle-32x32.png" alt="Tackle"></span>`;
+    return `<img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/emoji-tackle-32x32.png?raw=true" alt="Tackle Emoji" class="emoji" style="width: 30px; height: 30px;">`;
 
   }
-<!--  return `<span class="emoji">${emojiMap[category] || "🐟"}</span>`; -->
-    return `<span class="emoji">🎣</span>`;
+  return `<span class="emoji">${emojiMap[category] || "🐟"}</span>`;
 
 }
 
