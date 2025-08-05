@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_favicon_64x64.png?raw=true">
   <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_favicon_64x64.png?raw=true">
   <link rel="shortcut icon" href="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_favicon_64x64.png?raw=true">
-  
+
   <meta charset="UTF-8" />
   <title>CSV to HTML Converter</title>
   <style>
@@ -115,9 +115,16 @@
       "Electronics": "📱",
       "Rods & Reels": "🎣",
       "Storage": "🧰",
-      "Tackle": "🍤",
+      "Tackle": "🪝", // fallback emoji, will be replaced with image below
       "Tools": "🔧"
     };
+
+    function getCategoryIcon(category) {
+      if (category === "Tackle") {
+        return `<img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/emoji-tackle-32x32.png?raw=true" alt="Tackle Emoji" style="width: 20px; height: 20px; vertical-align: middle;">`;
+      }
+      return `<span class="emoji">${emojiMap[category] || "🐟"}</span>`;
+    }
 
     function convertCSV() {
       const csv = document.getElementById("csvInput").value.trim();
@@ -127,14 +134,14 @@
       const data = lines.slice(1); // skip header
       let html = "";
       let preview = "";
-      let currentCategory = "", currentSubcategory = "", currentSubSub = "";
+      let currentCategory = "", currentSubcategory = "";
 
       for (const line of data) {
         const parts = line.split(",").map(sanitize);
         if (parts.length < 4) continue;
 
         const [category, subcategory, subsub, liItem] = parts;
-        const emoji = emojiMap[category] || "🐟";
+        const iconHTML = getCategoryIcon(category);
 
         // New Category
         if (category !== currentCategory) {
@@ -142,23 +149,21 @@
             html += "</ul></div></div></div>\n";
             preview += "</ul></div></div></div>";
           }
-          html += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div>\n<div class="subcategory">\n`;
-          preview += `<div class="category" onclick="toggle(this)"><span class="emoji">${emoji}</span> ${category}</div><div class="subcategory">`;
+          html += `<div class="category" onclick="toggle(this)">${iconHTML} ${category}</div>\n<div class="subcategory">\n`;
+          preview += `<div class="category" onclick="toggle(this)">${iconHTML} ${category}</div><div class="subcategory">`;
           currentCategory = category;
           currentSubcategory = "";
-          currentSubSub = "";
         }
 
-        // New Subcategory
-        if (subcategory !== currentSubcategory) {
+        // New Sub-subcategory
+        if (subsub !== currentSubcategory) {
           if (currentSubcategory !== "") {
             html += "</ul></div>\n";
             preview += "</ul></div>";
           }
-          html += `<div class="sub-subcategory">\n<h4>${subcategory}</h4>\n<ul>\n`;
-          preview += `<div class="sub-subcategory"><h4>${subcategory}</h4><ul>`;
-          currentSubcategory = subcategory;
-          currentSubSub = "";
+          html += `<div class="sub-subcategory">\n<h4>${subsub}</h4>\n<ul>\n`;
+          preview += `<div class="sub-subcategory"><h4>${subsub}</h4><ul>`;
+          currentSubcategory = subsub;
         }
 
         html += `${liItem}\n`;
@@ -188,15 +193,6 @@
       document.getElementById("livePreview").innerHTML = "";
     }
 
-function toggle(element) {
-  const nextDiv = element.nextElementSibling;
-  if (nextDiv && nextDiv.style) {
-    nextDiv.style.display = nextDiv.style.display === "none" ? "block" : "none";
-  }
-}
-
-    
-    // Hook up convert button
     document.getElementById("convertBtn").addEventListener("click", convertCSV);
   </script>
 
