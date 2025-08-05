@@ -187,6 +187,14 @@
       document.getElementById("livePreview").innerHTML = "";
     }
 
+function toggle(element) {
+  const nextDiv = element.nextElementSibling;
+  if (nextDiv && nextDiv.style) {
+    nextDiv.style.display = nextDiv.style.display === "none" ? "block" : "none";
+  }
+}
+
+    
     // Hook up convert button
     document.getElementById("convertBtn").addEventListener("click", convertCSV);
   </script>
