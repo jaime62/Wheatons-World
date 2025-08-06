@@ -244,7 +244,7 @@ ${htmlBody}
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".category-content").forEach(category => {
+  document.querySelectorAll(".category").forEach(category => {
     category.addEventListener("click", () => {
       const next = category.nextElementSibling;
       const isVisible = next.style.display === "block";
