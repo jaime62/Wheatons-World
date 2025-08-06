@@ -155,6 +155,10 @@ button {
   margin-right: 0.5rem;
   vertical-align: middle;
 }
+.container {
+  max-width: 600px;
+  margin: auto;
+}
 `;
 
 
@@ -231,13 +235,16 @@ button {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
 ${fullCSS}
+
   </style>
 </head>
 <body>
+ <div class="container">
 ${htmlBody}
+</div>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".category").forEach(category => {
+  document.querySelectorAll(".category-content").forEach(category => {
     category.addEventListener("click", () => {
       const next = category.nextElementSibling;
       const isVisible = next.style.display === "block";
@@ -256,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("htmlOutput").value = fullHTML;
       document.getElementById("livePreview").innerHTML = htmlBody;
 
-      document.querySelectorAll(".category").forEach(category => {
+      document.querySelectorAll(".category-content").forEach(category => {
         category.addEventListener("click", () => {
           const next = category.nextElementSibling;
           const isVisible = next.style.display === "block";
