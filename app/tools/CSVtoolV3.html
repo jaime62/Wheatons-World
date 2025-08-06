@@ -67,6 +67,10 @@
       margin-right: 0.5rem;
       vertical-align: middle;
     }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
   </style>
 </head>
 <body>
@@ -91,8 +95,7 @@
   <div id="livePreview" class="output-preview"></div>
 
   <script>
-
-const fullCSS = `
+    const fullCSS = `
 body { font-family: Arial, sans-serif; background: #f0f8ff; padding: 1rem; }
 textarea {
   width: 100%;
@@ -161,7 +164,6 @@ button {
 }
 `;
 
-
     const emojiMap = {
       "Apparel & Protection": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-swimsuit.png?raw=true",
       "Boating Accessories": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-anchor-rope.png?raw=true",
@@ -204,7 +206,7 @@ button {
             htmlBody += '</div>\n'; // close previous category-content
           }
           htmlBody += `<div class="category">${getCategoryIcon(category)} ${category}</div>\n`;
-          htmlBody += `<div class="category-content">\n`; // start new collapsible section
+          htmlBody += `<div class="category-content">\n`;
           currentCategory = category;
           currentSubcategory = '';
         }
@@ -235,11 +237,10 @@ button {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
 ${fullCSS}
-
   </style>
 </head>
 <body>
- <div class="container">
+<div class="container">
 ${htmlBody}
 </div>
 <script>
@@ -249,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const next = category.nextElementSibling;
       const isVisible = next.style.display === "block";
       document.querySelectorAll(".category-content").forEach(content => {
-        content.style.display = "none";
+        if (content !== next) content.style.display = "none";
       });
       next.style.display = isVisible ? "none" : "block";
     });
@@ -261,14 +262,14 @@ document.addEventListener("DOMContentLoaded", function () {
 `.trim();
 
       document.getElementById("htmlOutput").value = fullHTML;
-      document.getElementById("livePreview").innerHTML = htmlBody;
+      document.getElementById("livePreview").innerHTML = `<div class="container">${htmlBody}</div>`;
 
-      document.querySelectorAll(".category-content").forEach(category => {
+      document.querySelectorAll(".category").forEach(category => {
         category.addEventListener("click", () => {
           const next = category.nextElementSibling;
           const isVisible = next.style.display === "block";
-          document.querySelectorAll(".category").forEach(content => {
-            content.style.display = "none";
+          document.querySelectorAll(".category-content").forEach(content => {
+            if (content !== next) content.style.display = "none";
           });
           next.style.display = isVisible ? "none" : "block";
         });
