@@ -1,21 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Favicon links -->
-  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_favicon_64x64.png?raw=true">
-  <link rel="icon" type="image/png" sizes="192x192" href="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_favicon_64x64.png?raw=true">
-  <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_favicon_64x64.png?raw=true">
-  <link rel="shortcut icon" href="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_favicon_64x64.png?raw=true">
-
   <meta charset="UTF-8" />
-  <title>CSV to HTML Converter</title>
+  <title>CSV List Conversion Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 1rem;
-      background: #f0f8ff;
-      position: relative;
-    }
+    body { font-family: Arial, sans-serif; background: #f0f8ff; padding: 1rem; }
     textarea {
       width: 100%;
       min-height: 150px;
@@ -28,172 +18,203 @@
       padding: 1rem;
       background: #fff;
     }
-    .category {
-      background: #92D6B5;
-      color: white;
-      padding: .5rem;
-      margin-top: 1rem;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .subcategory {
-      padding-left: 1rem;
-      margin-top: 0.5rem;
-    }
-    .sub-subcategory h4 {
-      margin: 0.5rem 0 0.25rem;
-    }
-    ul {
-      margin: 0 0 1rem 1rem;
-    }
     button {
       margin-bottom: 1rem;
       padding: 0.5rem 1rem;
       font-size: 1rem;
       cursor: pointer;
     }
-    .top-right-link {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 13px;
+    .category {
+      background: #92D6B5;
+      color: #1a237e;
+      padding: .5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
       font-weight: bold;
     }
-    .top-right-link a {
-      color: #0000EE;
+    .category-content {
+      display: none;
+      margin-bottom: 1rem;
+    }
+    .subcategory {
+      background: #e6fafa;
+      padding: 0.25rem 1rem;
+      font-style: italic;
+      font-weight: bold;
+      color: #333;
+    }
+    .sub-subcategory {
+      margin-left: 1rem;
+      padding: 0.25rem 0;
+    }
+    .sub-subcategory ul {
+      padding-left: 1.5rem;
+      margin: 0;
+    }
+    .sub-subcategory li {
+      margin: 0.25rem 0;
+    }
+    .sub-subcategory a {
+      color: #003333;
+      text-decoration: none;
+    }
+    .sub-subcategory a:hover {
       text-decoration: underline;
     }
-
     .emoji {
-  font-size: 1.5em; /* 50% larger */
-  vertical-align: middle;
-} 
-
-
+      height: 36px;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Download link in top right -->
-  <div class="top-right-link">
-    <a href="https://github.com/jaime62/Wheatons-World/raw/refs/heads/main/app/tools/Store%20Item%20URL%20Conversion.xlsm" download>
-      Download the macro-enabled export template
-    </a>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_medium.png?raw=true"
+         alt="Toolbox Icon" style="height: 48px;">
+    <h2 style="margin: 0;">CSV List Conversion Tool</h2>
   </div>
 
-  <!-- Header -->
-  <div style="display: flex; align-items: center; margin-top: 2.5rem;">
-    <img src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_medium.png?raw=true" style="width: 50%; height: auto; max-width: 100px; margin-right: 10px;">
-    <h2 style="margin: 0;">CSV to HTML Converter</h2>
-  </div>
-
-  <!-- Input area -->
-  <p>Paste your CSV data here (Category, Subcategory, Sub-subcategory, &lt;li&gt;Item Link&lt;/li&gt;):</p>
+  <p>Paste your CSV data below (Category, Subcategory, Sub-subcategory [ignored], &lt;li&gt;Item Link&lt;/li&gt;):</p>
   <textarea id="csvInput" placeholder="Category,Subcategory,Sub-subcategory,&lt;li&gt;Item Link&lt;/li&gt;"></textarea>
-  <button id="convertBtn" style="background-color: green; color: white; font-weight: bold;">Convert</button>
-  <button onclick="resetFields()" style="background-color: red; color: white; font-weight: bold;">Clear ALL</button>
+  <button onclick="convertCSV()" style="background-color: green; color: white;">Convert</button>
+  <button onclick="resetFields()" style="background-color: red; color: white;">Clear ALL</button>
 
-  <!-- Output -->
   <h3>Generated HTML Code:</h3>
   <textarea id="htmlOutput" readonly></textarea>
-  <button onclick="copyToClipboard()" style="background-color: blue; color: white; font-weight: bold;">Copy HTML to Clipboard</button>
+  <button onclick="copyToClipboard()" style="background-color: blue; color: white;">Copy HTML to Clipboard</button>
+  <button onclick="saveAsHTML()" style="background-color: orange; color: black;">Save as HTML</button>
 
-  <!-- Preview -->
   <h3>Live Preview:</h3>
   <div id="livePreview" class="output-preview"></div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p style="text-align: center; font-size: 0.95rem; color: #333; margin-top: 2rem;">
-      <i>CSV to HTML Converter™ is a proud part of <a href="https://wheatonsworld.com" target="_blank" style="color: #1a237e; text-decoration: none;"><b>Wheaton’s World™</b></a>&nbsp;&nbsp;-&nbsp;&nbsp;All rights reserved.</i>
-    </p>
-  </footer>
-
-  <!-- Script -->
   <script>
+    const emojiMap = {
+      "Apparel & Protection": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-swimsuit.png?raw=true",
+      "Boating Accessories": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-anchor-rope.png?raw=true",
+      "Electronics": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-fish-finder.png?raw=true",
+      "Rods & Reels": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-rod-reel.png?raw=true",
+      "Storage": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-tackle-box.png?raw=true",
+      "Tackle": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-lure.png?raw=true",
+      "Tools": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-plier-gaff.png?raw=true"
+    };
+
+    function getCategoryIcon(category) {
+      const icon = emojiMap[category];
+      return icon ? `<img class="emoji" src="${icon}" alt="${category} Emoji">` : `<span class="emoji">🐟</span>`;
+    }
+
     function sanitize(str) {
       return str.replace(/^"+|"+$/g, '').replace(/""/g, '"').trim();
     }
 
-const emojiMap = {
-  "Apparel & Protection": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-swimsuit.png?raw=true",
-  "Boating Accessories": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-anchor-rope.png?raw=true",
-  "Electronics": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-fish-finder.png?raw=true",
-  "Rods & Reels": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-rod-reel.png?raw=true",
-  "Storage": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-tackle-box.png?raw=true",
-  "Tackle": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-lure.png?raw=true",
-  "Tools": "https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/images/emoji-plier-gaff.png?raw=true"
-};
-
-function getCategoryIcon(category) {
-  const icon = emojiMap[category];
-  if (!icon) return `<span class="emoji">🐟</span>`;
-  if (icon.startsWith("http")) {
-    return `<img src="${icon}" alt="${category} Emoji" class="emoji" style="width: 50px; height: 50px;">`;
-  }
-  return `<span class="emoji">${icon}</span>`;
-}
-
-
     function convertCSV() {
       const csv = document.getElementById("csvInput").value.trim();
-      const lines = csv.split("\n").filter(line => line.trim().length > 0);
-      if (lines.length <= 1) return;
+      const lines = csv.split("\n").filter(line => line.trim());
+      if (lines.length < 2) return;
 
-<!--       const data = lines.slice(1); // skip header -->
-let data = lines;
-
-// Check if first line looks like a header (contains "category" or "subcategory" etc.)
-if (/category|subcategory|sub-subcategory/i.test(lines[0])) {
-  data = lines.slice(1);
-}
-
-      let html = "";
-      let preview = "";
-      let currentCategory = "", currentSubcategory = "";
+      const data = lines.slice(1); // skip header
+      let htmlBody = '';
+      let currentCategory = '', currentSubcategory = '';
+      let subSubcategoryOpen = false;
 
       for (const line of data) {
-const parts = line.split(",").slice(0, 4).map(sanitize);
-        if (parts.length < 4) continue;
+        const [category, subcategory, _ignored, liItem] = line.split(",").map(sanitize);
+        if (!category || !subcategory || !liItem) continue;
 
-        const [category, subcategory, subsub, liItem] = parts;
-        const iconHTML = getCategoryIcon(category);
-
-        // New Category
         if (category !== currentCategory) {
-          if (currentCategory) {
-            html += "</ul></div></div></div>\n";
-            preview += "</ul></div></div></div>";
+          if (subSubcategoryOpen) {
+            htmlBody += '</ul></div>\n';
+            subSubcategoryOpen = false;
           }
-          html += `<div class="category" onclick="toggle(this)">${iconHTML} ${category}</div>\n<div class="subcategory">\n`;
-          preview += `<div class="category" onclick="toggle(this)">${iconHTML} ${category}</div><div class="subcategory">`;
+          if (currentCategory !== '') {
+            htmlBody += '</div>\n'; // close category-content
+          }
+          htmlBody += `<div class="category">${getCategoryIcon(category)} ${category}</div>\n`;
+          htmlBody += `<div class="category-content">\n`;
           currentCategory = category;
-          currentSubcategory = "";
+          currentSubcategory = '';
         }
 
-        // New Sub-subcategory
-        if (subsub !== currentSubcategory) {
-          if (currentSubcategory !== "") {
-            html += "</ul></div>\n";
-            preview += "</ul></div>";
+        if (subcategory !== currentSubcategory) {
+          if (subSubcategoryOpen) {
+            htmlBody += '</ul></div>\n';
+            subSubcategoryOpen = false;
           }
-          html += `<div class="sub-subcategory">\n<h4>${subsub}</h4>\n<ul>\n`;
-          preview += `<div class="sub-subcategory"><h4>${subsub}</h4><ul>`;
-          currentSubcategory = subsub;
+          htmlBody += `<div class="subcategory">${subcategory}</div>\n`;
+          htmlBody += `<div class="sub-subcategory"><ul>\n`;
+          subSubcategoryOpen = true;
+          currentSubcategory = subcategory;
         }
 
-        html += `${liItem}\n`;
-        preview += `${liItem}`;
+        htmlBody += `${liItem}\n`;
       }
 
-      if (html) {
-        html += "</ul></div></div></div>\n";
-        preview += "</ul></div></div></div>";
-      }
+      if (subSubcategoryOpen) htmlBody += '</ul></div>\n';
+      if (currentCategory !== '') htmlBody += '</div>\n';
 
-      document.getElementById("htmlOutput").value = html;
-      document.getElementById("livePreview").innerHTML = preview;
+      // Wrap in .container
+      htmlBody = `<div class="container">\n${htmlBody}</div>\n`;
+
+      const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fishing Gear by Category</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+${document.querySelector("style").innerHTML}
+  </style>
+</head>
+<body>
+${htmlBody}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".category").forEach(category => {
+    category.addEventListener("click", () => {
+      const next = category.nextElementSibling;
+      const isVisible = next.style.display === "block";
+
+      // Collapse all other category-content divs
+      document.querySelectorAll(".category-content").forEach(sub => {
+        if (sub !== next) sub.style.display = "none";
+      });
+
+      // Toggle the clicked one
+      next.style.display = isVisible ? "none" : "block";
+    });
+  });
+});
+<\/script>
+</body>
+</html>`.trim();
+
+      document.getElementById("htmlOutput").value = fullHTML;
+      document.getElementById("livePreview").innerHTML = htmlBody;
+
+      document.querySelectorAll(".category").forEach(category => {
+        category.addEventListener("click", () => {
+          const next = category.nextElementSibling;
+          const isVisible = next.style.display === "block";
+          document.querySelectorAll(".category-content").forEach(sub => {
+            if (sub !== next) sub.style.display = "none";
+          });
+          next.style.display = isVisible ? "none" : "block";
+        });
+      });
+    }
+
+    function resetFields() {
+      document.getElementById("csvInput").value = "";
+      document.getElementById("htmlOutput").value = "";
+      document.getElementById("livePreview").innerHTML = "";
     }
 
     function copyToClipboard() {
@@ -204,14 +225,22 @@ const parts = line.split(",").slice(0, 4).map(sanitize);
       alert("HTML copied to clipboard!");
     }
 
-    function resetFields() {
-      document.getElementById("csvInput").value = "";
-      document.getElementById("htmlOutput").value = "";
-      document.getElementById("livePreview").innerHTML = "";
+    function saveAsHTML() {
+      const htmlContent = document.getElementById("htmlOutput").value;
+      if (!htmlContent.trim()) {
+        alert("No HTML content to save!");
+        return;
+      }
+      const filename = prompt("Enter a filename:", "FishingGear.html");
+      if (!filename) return;
+
+      const blob = new Blob([htmlContent], { type: "text/html" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
     }
-
-    document.getElementById("convertBtn").addEventListener("click", convertCSV);
   </script>
-
 </body>
 </html>
