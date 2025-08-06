@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
         category.addEventListener("click", () => {
           const next = category.nextElementSibling;
           const isVisible = next.style.display === "block";
-          document.querySelectorAll(".category-content").forEach(content => {
+          document.querySelectorAll(".category").forEach(content => {
             content.style.display = "none";
           });
           next.style.display = isVisible ? "none" : "block";
