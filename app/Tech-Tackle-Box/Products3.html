@@ -195,20 +195,54 @@ button {
 <li><a href=https://amzn.to/3JhOCPa target=_blank rel=sponsored nofollow>Fishing Plyers</a></li>
 </ul></div>
 </div>
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".category").forEach(category => {
-    category.addEventListener("click", () => {
-      const next = category.nextElementSibling;
-      const isVisible = next.style.display === "block";
-      document.querySelectorAll(".category-content").forEach(content => {
-        content.style.display = "none";
+  let resizeTimeout;
+  let lastSentHeight = 0;
+
+  function sendHeightToParent() {
+    const currentHeight = document.documentElement.scrollHeight;
+    if (currentHeight !== lastSentHeight) {
+      window.parent.postMessage({ type: 'resize-iframe', height: currentHeight }, '*');
+      lastSentHeight = currentHeight;
+    }
+  }
+
+  function debouncedResize(delay = 150) {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(sendHeightToParent, delay);
+  }
+
+  const resizeObserver = new ResizeObserver(() => debouncedResize(150));
+  resizeObserver.observe(document.body);
+
+  const mutationObserver = new MutationObserver(() => debouncedResize(200));
+  mutationObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    characterData: true
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggles = document.querySelectorAll('.category');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const next = toggle.nextElementSibling;
+        const isVisible = next.style.display === 'block';
+
+        document.querySelectorAll('.subcategory').forEach(sub => {
+          if (sub !== next) sub.style.display = 'none';
+        });
+
+        next.style.display = isVisible ? 'none' : 'block';
+        debouncedResize(200);
       });
-      next.style.display = isVisible ? "none" : "block";
     });
   });
-});
+
+  window.addEventListener('load', () => debouncedResize(300));
+  window.addEventListener('resize', () => debouncedResize(200));
 </script>
+
 </body>
 </html>
