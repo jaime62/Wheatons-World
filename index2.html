@@ -3,56 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Wheaton's World!</title>
+  <title>Wheaton's World</title>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_favicon.png">
-  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_favicon.png">
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Libre+Baskerville&display=swap" rel="stylesheet">
 
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      text-align: center;
       font-family: 'Libre Baskerville', serif;
       background-color: #f9f9f9;
-    }
-
-    .top-nav {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 1rem;
-    }
-
-    .top-nav a {
-      text-decoration: none;
-      color: #0074e8;
-      font-weight: bold;
-      border: 1px solid transparent;
-      padding: 6px 12px;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-
-    .top-nav a:hover {
-      background-color: #0074e8;
-      color: white;
+      text-align: center;
     }
 
     .center-logo {
       display: flex;
       justify-content: center;
-      margin-top: 1rem;
+      margin-top: 2rem;
     }
 
     .logo-img {
       width: 300px;
-      height: auto;
-      margin-top: 2rem;
     }
 
     .rest-text-norm {
@@ -91,20 +63,18 @@
     .tooltip-text {
       visibility: hidden;
       opacity: 0;
-      width: max-content;
       max-width: 200px;
-      background-color: #333;
+      background: #333;
       color: #fff;
-      text-align: center;
       padding: 6px 10px;
       border-radius: 6px;
       position: absolute;
       bottom: 110%;
       left: 50%;
       transform: translateX(-50%);
-      transition: opacity 0.3s ease, transform 0.3s ease;
       font-size: 0.85rem;
       z-index: 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       pointer-events: none;
     }
 
@@ -120,40 +90,49 @@
       align-items: center;
       text-decoration: none;
       color: #0074e8;
-      font-weight: bold;
+      font-weight: normal;
       margin-top: 1rem;
-      border: none;
-      padding: 0;
     }
 
     .link-nav:hover {
-      background-color: transparent;
-      color: inherit;
-      font-weight: 700;
-
+      font-weight: bold;
     }
 
     .small-bingo-ball {
       width: 120px;
       height: auto;
       margin-bottom: 0.5rem;
-      transition: transform 0.3s ease;
+      animation-name: gelatine;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
     }
 
-    /* ✅ Gelatine bounce only on icon image */
-    .link-nav:hover .small-bingo-ball {
-      animation: gelatine 0.7s ease;
+    /* Staggered animation delays */
+    .icon-item:nth-child(1) .small-bingo-ball {
+      animation-delay: 0s;
     }
 
-    .site-footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      padding: 1rem;
-      margin-top: 4rem;
-      border-top: 1px solid #ddd;
+    .icon-item:nth-child(2) .small-bingo-ball {
+      animation-delay: 1s;
     }
 
+    .icon-item:nth-child(3) .small-bingo-ball {
+      animation-delay: 2s;
+    }
+
+    /* Spin animation */
+    @keyframes spinFastSlow {
+      0% { transform: rotate(0deg); }
+      30% { transform: rotate(180deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .spinning {
+      animation: spinFastSlow 0.8s ease-out;
+    }
+
+    /* Gelatine Animation */
     @keyframes gelatine {
       0%   { transform: scale(1, 1); }
       25%  { transform: scale(0.9, 1.1); }
@@ -162,6 +141,7 @@
       100% { transform: scale(1, 1); }
     }
 
+    /* Responsive */
     @media screen and (max-width: 600px) {
       .icon-row {
         flex-direction: column;
@@ -190,25 +170,17 @@
 
 <body>
 
-  <!-- Top-right Contact Link -->
-  <div class="top-nav">
-    <a href="https://www.wheatonsworld.com/ww-contactform.html">Contact</a>
-  </div>
-
-  <!-- Logo -->
   <div class="center-logo">
     <img class="logo-img" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_blue_Ws_trans.png" alt="Wheaton's World Logo">
   </div>
 
-  <!-- Intro -->
   <div class="rest-text-norm">Here's what we've done so far...</div>
 
-  <!-- Icons Section -->
   <div class="icon-row">
     <div class="icon-item">
       <a class="link-nav" href="https://www.wheatonsworld.com/app/BingoPayCalc/" target="_blank">
         <div class="tooltip-wrapper">
-          <img class="small-bingo-ball" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png" alt="Bingo Ball Icon">
+          <img class="small-bingo-ball" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png" alt="Bingo Ball" data-id="1">
           <div class="tooltip-text">Calculate Bingo payouts instantly!</div>
         </div>
         <div>Bingo Payout Calculator</div>
@@ -218,8 +190,8 @@
     <div class="icon-item">
       <a class="link-nav" href="https://www.wheatonsworld.com/app/Tech-Tackle-Box/" target="_blank">
         <div class="tooltip-wrapper">
-          <img class="small-bingo-ball" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true" alt="Tackle Box Icon">
-          <div class="tooltip-text">Find handy Port A fishing information and explore gear and great local guides!</div>
+          <img class="small-bingo-ball" src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true" alt="Tackle Box" data-id="2">
+          <div class="tooltip-text">Find handy Port A fishing info and gear!</div>
         </div>
         <div>Tech Tackle Box</div>
       </a>
@@ -228,20 +200,19 @@
     <div class="icon-item">
       <a class="link-nav" href="https://www.wheatonsworld.com/app/tools/" target="_blank">
         <div class="tooltip-wrapper">
-          <img class="small-bingo-ball" src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_icon.png?raw=true" alt="Coding Tools Icon">
-          <div class="tooltip-text">Convert CSV to structured HTML ready to pop into your page code!</div>
+          <img class="small-bingo-ball" src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_icon.png?raw=true" alt="Coding Tools" data-id="3">
+          <div class="tooltip-text">Convert CSV to clean HTML!</div>
         </div>
         <div>CSV to HTML Converter</div>
       </a>
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <p><i>Wheaton's World&#8482;&nbsp;&nbsp;&#124;&nbsp;&nbsp;All rights reserved.</i></p>
   </footer>
 
-  <!-- Intersection Observer for Scroll Animation -->
+  <!-- Scroll Trigger -->
   <script>
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -249,13 +220,29 @@
           entry.target.classList.add('visible');
         }
       });
-    }, {
-      threshold: 0.3
-    });
+    }, { threshold: 0.3 });
 
-    document.querySelectorAll('.icon-item').forEach(item => {
-      observer.observe(item);
-    });
+    document.querySelectorAll('.icon-item').forEach(item => observer.observe(item));
   </script>
-</body>
-</html>
+
+  <!-- Spin and pause/resume gelatine -->
+  <script>
+    const icons = document.querySelectorAll('.small-bingo-ball');
+
+    icons.forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        icon.classList.remove('gelatine');
+        icon.style.animation = 'none';
+
+        icon.classList.add('spinning');
+
+        // Remove spin after it finishes
+        setTimeout(() => {
+          icon.classList.remove('spinning');
+        }, 800); // match spin duration
+      });
+
+      icon.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          icon.style.animation = 'gelatine 3s ease-in-out infinite';
+        }, 3000); // 3 second dela
