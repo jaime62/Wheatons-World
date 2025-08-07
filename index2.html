@@ -242,7 +242,7 @@
       <img class="icon-img" data-type="spin"
            src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png"
            alt="Bingo Icon"
-           onclick="launchConfetti(); window.open('https://www.wheatonsworld.com/app/BingoPayCalc/', '_blank');" />
+           onclick="handleConfettiClick('https://www.wheatonsworld.com/app/BingoPayCalc/')" />
       <a class="icon-link" href="https://www.wheatonsworld.com/app/BingoPayCalc/" target="_blank">Bingo Payout Calculator</a>
     </div>
 
@@ -251,7 +251,7 @@
       <img class="icon-img" data-type="tilt"
            src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true"
            alt="Tackle Box"
-           onclick="launchConfetti(); window.open('https://www.wheatonsworld.com/app/Tech-Tackle-Box/', '_blank');" />
+           onclick="handleConfettiClick('https://www.wheatonsworld.com/app/Tech-Tackle-Box/')" />
       <a class="icon-link" href="https://www.wheatonsworld.com/app/Tech-Tackle-Box/" target="_blank">Tech Tackle Box</a>
     </div>
 
@@ -260,7 +260,7 @@
       <img class="icon-img" data-type="spin"
            src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_icon.png?raw=true"
            alt="Coding Tools"
-           onclick="launchConfetti(); window.open('https://www.wheatonsworld.com/app/tools/', '_blank');" />
+           onclick="handleConfettiClick('https://www.wheatonsworld.com/app/tools/')" />
       <a class="icon-link" href="https://www.wheatonsworld.com/app/tools/" target="_blank">CSV to HTML Converter</a>
     </div>
   </div>
@@ -306,14 +306,20 @@
 
     function launchConfetti() {
       confetti({
-        particleCount: 60,
+        particleCount: 80,
         spread: 70,
         origin: { y: 0.6 }
       });
     }
 
+    function handleConfettiClick(url) {
+      launchConfetti();
+      setTimeout(() => {
+        window.open(url, '_blank');
+      }, 2500); // Delay opening to let confetti finish
+    }
+
     startRandomBounce();
   </script>
-
 </body>
 </html>
