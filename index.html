@@ -7,7 +7,6 @@
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_favicon.png">
   <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Libre+Baskerville&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     html, body {
@@ -161,27 +160,18 @@
       100% { transform: rotate(1440deg) scale(1); }
     }
 
-@keyframes tilt {
-  0%   { transform: rotate(0deg); }
-  20%  { transform: rotate(-10deg); }
-  40%  { transform: rotate(10deg); }
-  60%  { transform: rotate(-8deg); }
-  80%  { transform: rotate(8deg); }
-  100% { transform: rotate(0deg); }
-}
-
-    .gelatine {
-      animation: gelatine 0.8s ease;
+    @keyframes tilt {
+      0%   { transform: rotate(0deg); }
+      20%  { transform: rotate(-10deg); }
+      40%  { transform: rotate(10deg); }
+      60%  { transform: rotate(-8deg); }
+      80%  { transform: rotate(8deg); }
+      100% { transform: rotate(0deg); }
     }
 
-    .spinning {
-      animation: spinToStop 4s ease-out forwards;
-    }
-
-    .tilting {
-        animation: tilt 0.25s ease-in-out 10; /* 0.25s per cycle × 10 cycles = 2.5s total */
-
-    }
+    .gelatine { animation: gelatine 0.8s ease; }
+    .spinning { animation: spinToStop 4s ease-out forwards; }
+    .tilting  { animation: tilt 0.25s ease-in-out 10; } /* 2.5s total */
 
     .site-footer {
       text-align: center;
@@ -193,21 +183,10 @@
     }
 
     @media (max-width: 600px) {
-      .icon-row {
-        flex-direction: column;
-      }
-
-      .icon-item {
-        margin-bottom: 2rem;
-      }
-
-      .icon-img {
-        width: 80px;
-      }
-
-      .tooltip-text {
-        font-size: 0.75rem;
-      }
+      .icon-row { flex-direction: column; }
+      .icon-item { margin-bottom: 2rem; }
+      .icon-img { width: 80px; }
+      .tooltip-text { font-size: 0.75rem; }
     }
   </style>
 </head>
@@ -238,44 +217,43 @@
 
   <div class="rest-text-norm">Here's what we've done so far...</div>
 
-<div class="icon-row">
-  <div class="icon-item">
-    <div class="tooltip-text">Calculate Bingo payouts instantly!</div>
-    <img class="icon-img" data-type="spin"
-         src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png"
-         alt="Bingo Icon"
-         onclick="handleConfettiClick('https://www.wheatonsworld.com/app/BingoPayCalc/')" />
-    <a href="#" class="icon-link" onclick="openBingoPayout(); return false;">
-      Bingo Payout Calculator
-    </a>
+  <div class="icon-row">
+    <div class="icon-item">
+      <div class="tooltip-text">Calculate Bingo payouts instantly!</div>
+      <img class="icon-img" data-type="spin"
+           src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png"
+           alt="Bingo Icon"
+           onclick="handleConfettiClick('https://www.wheatonsworld.com/app/BingoPayCalc/', 'BingoPayout')" />
+      <a href="https://www.wheatonsworld.com/app/BingoPayCalc/" class="icon-link" data-win="BingoPayout">
+        Bingo Payout Calculator
+      </a>
+    </div>
+
+    <div class="icon-item">
+      <div class="tooltip-text">Port A gear, guides, and tackle tips!</div>
+      <img class="icon-img" data-type="tilt"
+           src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true"
+           alt="Tackle Box"
+           onclick="handleConfettiClick('https://hookedonporta.com', 'HookedOnPortA')" />
+      <a href="https://hookedonporta.com" class="icon-link" data-win="HookedOnPortA">
+        Tech Tackle Box
+      </a>
+    </div>
+
+    <div class="icon-item">
+      <div class="tooltip-text">Convert CSV to clean HTML in seconds!</div>
+      <img class="icon-img" data-type="spin"
+           src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_icon.png?raw=true"
+           alt="Coding Tools"
+           onclick="handleConfettiClick('https://www.wheatonsworld.com/app/tools/', 'CSV2HTML')" />
+      <a href="https://www.wheatonsworld.com/app/tools/" class="icon-link" data-win="CSV2HTML">
+        CSV to HTML Converter
+      </a>
+    </div>
   </div>
 
-  <div class="icon-item">
-    <div class="tooltip-text">Port A gear, guides, and tackle tips!</div>
-    <img class="icon-img" data-type="tilt"
-         src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true"
-         alt="Tackle Box"
-         onclick="handleConfettiClick('https://hookedonporta.com')" />
-    <a href="#" class="icon-link" onclick="openHookedOnPortA(); return false;">
-      Tech Tackle Box
-    </a>
-  </div>
+  <hr style="width:100%; border: none; height: 1px; background-color: lightgray;">
 
-  <div class="icon-item">
-    <div class="tooltip-text">Convert CSV to clean HTML in seconds!</div>
-    <img class="icon-img" data-type="spin"
-         src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_icon.png?raw=true"
-         alt="Coding Tools"
-         onclick="handleConfettiClick('https://www.wheatonsworld.com/app/tools/')" />
-    <a href="#" class="icon-link" onclick="CSV2HTML(); return false;">
-      CSV to HTML Converter
-    </a>
-  </div>
-
-</div>
-
-</
-<hr style="width:100%; border: none; height: 1px; background-color: lightgray;">
   <footer class="site-footer">
     <p><i>Wheaton's World&#8482; &nbsp;&nbsp;|&nbsp;&nbsp; All rights reserved.</i></p>
   </footer>
@@ -357,25 +335,41 @@
       icon.addEventListener('click', () => stopAllSounds());
     });
 
-    function launchConfetti() {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    }
+    // === Popup opener (no confetti) ===
+    function handleConfettiClick(url, name = 'WWPopup', w = 900, h = 700, delay = 50) {
+      // Center it
+      const openerW = window.innerWidth, openerH = window.innerHeight;
+      const left = (window.screenX || window.screenLeft) + (openerW - w) / 2;
+      const top  = (window.screenY || window.screenTop) + (openerH - h) / 2;
+      const features = `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`;
 
-    function handleConfettiClick(url) {
-      launchConfetti();
-      stopAllSounds();
+      // Open now (user gesture), keep a handle
+      const win = window.open('about:blank', name, features);
+
+      // If blocked, just navigate this tab as a fallback
+      if (!win) {
+        setTimeout(() => (window.location.href = url), delay);
+        return;
+      }
+
+      // Optional placeholder content
+      try {
+        win.document.write(`<!doctype html><title>Loading…</title>
+          <style>html,body{height:100%}body{margin:0;display:grid;place-items:center;font:16px system-ui}</style>
+          <div>Launching…</div>`);
+      } catch {}
+
+      // Refocus this page so hover state/sounds finish cleanly if needed
+      try { win.blur(); window.focus(); } catch {}
+
+      // Then navigate popup & focus it
       setTimeout(() => {
-        window.open(url, '_blank');
-      }, 0050);
+        try { win.location.replace(url); } catch { win.location.href = url; }
+        try { win.focus(); } catch {}
+      }, delay);
     }
 
-    startRandomBounce();
-
-    /* ========= Make TEXT links behave like their ICONS (incl. sounds) ========= */
+    // ========= Make TEXT links behave like their ICONS (incl. sounds) =========
     document.querySelectorAll('.icon-item').forEach(item => {
       const img  = item.querySelector('.icon-img');
       const link = item.querySelector('.icon-link');
@@ -399,131 +393,20 @@
       link.addEventListener('focus', startHover);
       link.addEventListener('blur', endHover);
 
+      // IMPORTANT: use the real href and the window name from data-win
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        handleConfettiClick(link.href);
+        handleConfettiClick(link.href, link.dataset.win);
       });
 
       link.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          link.click();
+          handleConfettiClick(link.href, link.dataset.win);
         }
       });
     });
     /* ======================================================================== */
   </script>
-    <script>
-function openBingoPayout() {
-  const popupWidth = 900;
-  const popupHeight = 700;
-
-  // Get the opener window's dimensions and position
-  const openerWidth = window.innerWidth;
-  const openerHeight = window.innerHeight;
-  const openerLeft = window.screenX || window.screenLeft;
-  const openerTop = window.screenY || window.screenTop;
-
-  // Calculate centered position
-  const left = openerLeft + (openerWidth - popupWidth) / 2;
-  const top = openerTop + (openerHeight - popupHeight) / 2;
-
-  // Open centered popup
-  window.open(
-    'https://www.wheatonsworld.com/app/BingoPayCalc/',
-    'BingoPayout',
-    `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
-  );
-}
-
-</script>
-
-  <script>
-function openHookedOnPortA() {
-  const popupWidth = 900;
-  const popupHeight = 700;
-
-  // Get the opener window's dimensions and position
-  const openerWidth = window.innerWidth;
-  const openerHeight = window.innerHeight;
-  const openerLeft = window.screenX || window.screenLeft;
-  const openerTop = window.screenY || window.screenTop;
-
-  // Calculate centered position
-  const left = openerLeft + (openerWidth - popupWidth) / 2;
-  const top = openerTop + (openerHeight - popupHeight) / 2;
-
-  // Open centered popup
-  window.open(
-    'Https://hookedonporta.com',
-    'HookedOnPortA',
-    `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
-  );
-}
-
-</script>
-
-
-  <script>
-function CSV2HTML() {
-  const popupWidth = 900;
-  const popupHeight = 700;
-
-  // Get the opener window's dimensions and position
-  const openerWidth = window.innerWidth;
-  const openerHeight = window.innerHeight;
-  const openerLeft = window.screenX || window.screenLeft;
-  const openerTop = window.screenY || window.screenTop;
-
-  // Calculate centered position
-  const left = openerLeft + (openerWidth - popupWidth) / 2;
-  const top = openerTop + (openerHeight - popupHeight) / 2;
-
-  // Open centered popup
-  window.open(
-    'https://www.wheatonsworld.com/app/tools/',
-    'CSV2HTML',
-    `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
-  );
-}
-
-</script>
-<script>
-function handleConfettiClick(url, name = 'WWPopup', w = 900, h = 700, delay = 0050) {
-  // Center it
-  const openerW = window.innerWidth, openerH = window.innerHeight;
-  const left = (window.screenX || window.screenLeft) + (openerW - w) / 2;
-  const top  = (window.screenY || window.screenTop) + (openerH - h) / 2;
-  const features = `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`;
-
-  // 1) Open now (user gesture), keep a handle
-  const win = window.open('about:blank', name, features);
-
-  // If blocked, just do confetti then navigate current tab as a fallback
-  if (!win) {
-    launchConfetti();
-    setTimeout(() => (window.location.href = url), delay);
-    return;
-  }
-
-  // Optional placeholder content
-  try {
-    win.document.write(`<!doctype html><title>Loading…</title>
-      <style>html,body{height:100%}body{margin:0;display:grid;place-items:center;font:16px system-ui}</style>
-      <div>Launching… 🎉</div>`);
-  } catch {}
-
-  // 2) Immediately refocus this page so confetti is fully visible
-  try { win.blur(); window.focus(); } catch {}
-
-  // 3) Confetti now, then navigate popup & focus it
-  launchConfetti();
-  setTimeout(() => {
-    try { win.location.replace(url); } catch { win.location.href = url; }
-    try { win.focus(); } catch {}
-  }, delay);
-}
-</script>
-
 </body>
 </html>
