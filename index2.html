@@ -316,7 +316,522 @@
       } else {
         wheelAudio.play().catch(() => {});
       }
+      
     }
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Wheaton's World!</title>
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_favicon.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: 'Libre Baskerville', serif;
+      background-color: #f9f9f9;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+    }
+
+    .top-nav a {
+      text-decoration: none;
+      color: #0074e8;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .top-nav a:hover {
+      background-color: #0074e8;
+      color: white;
+    }
+
+    .center-logo {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .logo-img {
+      width: 300px;
+      margin-top: 2rem;
+    }
+
+    .slogan-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .slogan {
+      position: relative;
+      font-size: 1.25rem;
+      color: #0070C0;
+    }
+
+    .popup {
+      display: none;
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 1rem;
+      z-index: 1;
+    }
+
+    .slogan:hover .popup {
+      display: block;
+    }
+
+    .icon-row {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      width: max-content;
+      max-width: 220px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 6px 10px;
+      border-radius: 6px;
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      font-size: 0.85rem;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .icon-item:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(-6px);
+    }
+
+    .icon-img {
+      width: 120px;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .icon-img:hover {
+      transform: scale(1.15);
+    }
+
+    .icon-link {
+      text-decoration: none;
+      color: #0074e8;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: font-weight 0.2s ease;
+    }
+
+    .icon-link:hover {
+      font-weight: 700;
+    }
+
+    @keyframes gelatine {
+      0% { transform: scale(1,1); }
+      25% { transform: scale(0.9,1.1); }
+      50% { transform: scale(1.1,0.9); }
+      75% { transform: scale(0.95,1.05); }
+      100% { transform: scale(1,1); }
+    }
+
+    @keyframes spinToStop {
+      0%   { transform: rotate(0deg) scale(1); }
+      20%  { transform: rotate(720deg) scale(1.1); }
+      60%  { transform: rotate(1080deg) scale(1.05); }
+      100% { transform: rotate(1440deg) scale(1); }
+    }
+
+    @keyframes tilt {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(-10deg); }
+      50%  { transform: rotate(10deg); }
+      75%  { transform: rotate(-6deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .gelatine {
+      animation: gelatine 0.8s ease;
+    }
+
+    .spinning {
+      animation: spinToStop 4s ease-out forwards;
+    }
+
+    .tilting {
+      animation: tilt 4s ease-out forwards;
+    }
+
+    .site-footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      padding: 1rem;
+      margin-top: 5rem;
+      border-top: 2px solid #ddd;
+    }
+
+    @media (max-width: 600px) {
+      .icon-row {
+        flex-direction: column;
+      }
+
+      .icon-item {
+        margin-bottom: 2rem;
+      }
+
+      .icon-img {
+        width: 80px;
+      }
+
+      .tooltip-text {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-nav">
+    <a href="https://www.wheatonsworld.com/ww-contactform.html">Contact</a>
+  </div>
+
+  <div class="center-logo">
+    <img class="logo-img" src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/WheatonsWorld_blue_Ws_trans.png" alt="Logo">
+  </div>
+
+  <div class="slogan-row">
+    <div class="slogan">
+      Inspire
+      <div class="popup">We chase the “what ifs,” the “why nots,” and occasionally the “wait, can we even do that?”</div>
+    </div>
+    <div class="slogan">
+      Respect
+      <div class="popup">We build with heart — honoring users, ideas, and teammates (even the one who still uses dark mode).</div>
+    </div>
+    <div class="slogan">
+      Create
+      <div class="popup">We roll up our sleeves and make cool stuff. For fun. For friends. For filling weird little gaps.</div>
+    </div>
+  </div>
+
+  <div class="rest-text-norm">Here's what we've done so far...</div>
+
+<div class="icon-row">
+  <div class="icon-item">
+    <div class="tooltip-text">Calculate Bingo payouts instantly!</div>
+    <img class="icon-img" data-type="spin"
+         src="https://raw.githubusercontent.com/jaime62/GulfWaters-BINGO/main/app/BingoPayCalc/BINGO%20Ball.png"
+         alt="Bingo Icon"
+         onclick="handleConfettiClick('https://www.wheatonsworld.com/app/BingoPayCalc/')" />
+    <a href="#" class="icon-link" onclick="openBingoPayout(); return false;">
+      Bingo Payout Calculator
+    </a>
+  </div>
+
+  <div class="icon-item">
+    <div class="tooltip-text">Port A gear, guides, and tackle tips!</div>
+    <img class="icon-img" data-type="tilt"
+         src="https://github.com/jaime62/Wheatons-World/blob/main/app/Tech-Tackle-Box/blue-tackle-box_192x192.png?raw=true"
+         alt="Tackle Box"
+         onclick="handleConfettiClick('https://hookedonporta.com')" />
+    <a href="#" class="icon-link" onclick="openHookedOnPortA(); return false;">
+      Tech Tackle Box
+    </a>
+  </div>
+
+  <div class="icon-item">
+    <div class="tooltip-text">Convert CSV to clean HTML in seconds!</div>
+    <img class="icon-img" data-type="spin"
+         src="https://github.com/jaime62/Wheatons-World/blob/main/app/tools/WW_tools_icon.png?raw=true"
+         alt="Coding Tools"
+         onclick="handleConfettiClick('https://www.wheatonsworld.com/app/tools/')" />
+    <a href="#" class="icon-link" onclick="CSV2HTML(); return false;">
+      CSV to HTML Converter
+    </a>
+  </div>
+</div>
+
+</
+  <hr style="width:100%; border: none; height: 1px; background-color: lightgray;">
+  <footer class="site-footer">
+    <p><i>Wheaton's World&#8482; &nbsp;&nbsp;|&nbsp;&nbsp; All rights reserved.</i></p>
+  </footer>
+
+  <script>
+    const icons = document.querySelectorAll('.icon-img');
+    let bounceInterval;
+
+    /* ====== AUDIO SETUP (hosted on GitHub) ====== */
+    const wheelAudio = new Audio("https://raw.githubusercontent.com/jaime62/Wheatons-World/6fe49893873644d6370699dbba09a7868277fdd4/media/wheel-spin-click-slow-down-101152.mp3");
+    const rattleAudio = new Audio("https://raw.githubusercontent.com/jaime62/Wheatons-World/6fe49893873644d6370699dbba09a7868277fdd4/media/rattling-of-cans-94708.mp3");
+    wheelAudio.preload = "auto";
+    rattleAudio.preload = "auto";
+    wheelAudio.volume = 0.6;
+    rattleAudio.volume = 0.6;
+
+    function fadeOutAudio(audio, duration = 300) {
+      if (audio.paused) return;
+      const step = audio.volume / (duration / 50);
+      const fade = setInterval(() => {
+        if (audio.volume - step > 0) {
+          audio.volume = Math.max(0, audio.volume - step);
+        } else {
+          clearInterval(fade);
+          audio.pause();
+          audio.currentTime = 0;
+          audio.volume = 0.6;
+        }
+      }, 50);
+    }
+
+    function stopAllSounds() {
+      fadeOutAudio(wheelAudio);
+      fadeOutAudio(rattleAudio);
+    }
+
+    function playSoundFor(img) {
+      stopAllSounds();
+      if (img.dataset.type === 'tilt') {
+        rattleAudio.play().catch(() => {});
+      } else {
+        wheelAudio.play().catch(() => {});
+      }
+  function unlockSoundsOnce() {
+    const tryPlayPause = (el) =>
+      el.play().then(() => { el.pause(); el.currentTime = 0; }).catch(() => {});
+
+    // Attempt to "prime" both sounds
+    tryPlayPause(wheelAudio);
+    tryPlayPause(rattleAudio);
+
+    // If you ever use WebAudio, resume() here:
+    // if (window.audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+
+    // Remove unlock listeners after first successful gesture
+    ['pointerdown','keydown','touchstart'].forEach(evt =>
+      window.removeEventListener(evt, unlockSoundsOnce, { passive: true })
+    );
+  }
+
+  // Add listeners early (before you need sounds)
+  ['pointerdown','keydown','touchstart'].forEach(evt =>
+    window.addEventListener(evt, unlockSoundsOnce, { passive: true })
+  );
+      
+    }
+    
+    /* ============================================ */
+
+    function triggerBounce(icon) {
+      icon.classList.remove('gelatine');
+      void icon.offsetWidth;
+      icon.classList.add('gelatine');
+    }
+
+    function startRandomBounce() {
+      bounceInterval = setInterval(() => {
+        const icon = icons[Math.floor(Math.random() * icons.length)];
+        triggerBounce(icon);
+      }, 5000);
+    }
+
+    function stopBounceTemp() {
+      clearInterval(bounceInterval);
+      setTimeout(() => startRandomBounce(), 3000);
+    }
+
+    icons.forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        icon.classList.remove('gelatine', 'spinning', 'tilting');
+        void icon.offsetWidth;
+        icon.classList.add(icon.dataset.type === 'tilt' ? 'tilting' : 'spinning');
+        playSoundFor(icon);
+        stopBounceTemp();
+      });
+
+      icon.addEventListener('mouseleave', () => {
+        icon.classList.remove('spinning', 'tilting');
+        stopAllSounds();
+      });
+
+      icon.addEventListener('click', () => stopAllSounds());
+    });
+
+    function launchConfetti() {
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function handleConfettiClick(url) {
+      launchConfetti();
+      stopAllSounds();
+      setTimeout(() => {
+        window.open(url, '_blank');
+      }, 2750);
+    }
+
+    startRandomBounce();
+
+    /* ========= Make TEXT links behave like their ICONS (incl. sounds) ========= */
+    document.querySelectorAll('.icon-item').forEach(item => {
+      const img  = item.querySelector('.icon-img');
+      const link = item.querySelector('.icon-link');
+      if (!img || !link) return;
+
+      const startHover = () => {
+        img.classList.remove('gelatine', 'spinning', 'tilting');
+        void img.offsetWidth;
+        img.classList.add(img.dataset.type === 'tilt' ? 'tilting' : 'spinning');
+        playSoundFor(img);
+        stopBounceTemp();
+      };
+
+      const endHover = () => {
+        img.classList.remove('spinning', 'tilting');
+        stopAllSounds();
+      };
+
+      link.addEventListener('mouseenter', startHover);
+      link.addEventListener('mouseleave', endHover);
+      link.addEventListener('focus', startHover);
+      link.addEventListener('blur', endHover);
+
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleConfettiClick(link.href);
+      });
+
+      link.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          link.click();
+        }
+      });
+    });
+    /* ======================================================================== */
+  </script>
+    <script>
+function openBingoPayout() {
+  const popupWidth = 900;
+  const popupHeight = 700;
+
+  // Get the opener window's dimensions and position
+  const openerWidth = window.innerWidth;
+  const openerHeight = window.innerHeight;
+  const openerLeft = window.screenX || window.screenLeft;
+  const openerTop = window.screenY || window.screenTop;
+
+  // Calculate centered position
+  const left = openerLeft + (openerWidth - popupWidth) / 2;
+  const top = openerTop + (openerHeight - popupHeight) / 2;
+
+  // Open centered popup
+  window.open(
+    'https://www.wheatonsworld.com/app/BingoPayCalc/',
+    'BingoPayout',
+    `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
+  );
+}
+
+</script>
+
+  <script>
+function openHookedOnPortA() {
+  const popupWidth = 900;
+  const popupHeight = 700;
+
+  // Get the opener window's dimensions and position
+  const openerWidth = window.innerWidth;
+  const openerHeight = window.innerHeight;
+  const openerLeft = window.screenX || window.screenLeft;
+  const openerTop = window.screenY || window.screenTop;
+
+  // Calculate centered position
+  const left = openerLeft + (openerWidth - popupWidth) / 2;
+  const top = openerTop + (openerHeight - popupHeight) / 2;
+
+  // Open centered popup
+  window.open(
+    'Https://hookedonporta.com',
+    'HookedOnPortA',
+    `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
+  );
+}
+
+</script>
+
+
+  <script>
+function CSV2HTML() {
+  const popupWidth = 900;
+  const popupHeight = 700;
+
+  // Get the opener window's dimensions and position
+  const openerWidth = window.innerWidth;
+  const openerHeight = window.innerHeight;
+  const openerLeft = window.screenX || window.screenLeft;
+  const openerTop = window.screenY || window.screenTop;
+
+  // Calculate centered position
+  const left = openerLeft + (openerWidth - popupWidth) / 2;
+  const top = openerTop + (openerHeight - popupHeight) / 2;
+
+  // Open centered popup
+  window.open(
+    'https://www.wheatonsworld.com/app/tools/',
+    'CSV2HTML',
+    `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
+  );
+}
+
+</script>
+</body>
+</html>
+
+    
     /* ============================================ */
 
     function triggerBounce(icon) {
