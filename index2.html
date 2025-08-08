@@ -360,22 +360,23 @@
       setTimeout(() => startRandomBounce(), 3000);
     }
 
-    icons.forEach(icon => {
-      icon.addEventListener('mouseenter', () => {
-        icon.classList.remove('gelatine', 'spinning', 'tilting');
-        void icon.offsetWidth;
-        icon.classList.add(icon.dataset.type === 'tilt' ? 'tilting' : 'spinning');
-        playSoundFor(icon);
-        stopBounceTemp();
-      });
+icons.forEach(icon => {
+  icon.addEventListener('pointerenter', () => {
+    icon.classList.remove('gelatine', 'spinning', 'tilting');
+    void icon.offsetWidth;
+    icon.classList.add(icon.dataset.type === 'tilt' ? 'tilting' : 'spinning');
+    playSoundFor(icon);
+    stopBounceTemp();
+  });
 
-      icon.addEventListener('mouseleave', () => {
-        icon.classList.remove('spinning', 'tilting');
-        stopAllSounds();
-      });
+  icon.addEventListener('pointerleave', () => {
+    icon.classList.remove('spinning', 'tilting');
+    stopAllSounds();
+  });
 
-      icon.addEventListener('click', () => stopAllSounds());
-    });
+  icon.addEventListener('click', () => stopAllSounds());
+});
+
 
     function launchConfetti() {
       confetti({
