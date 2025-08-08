@@ -370,7 +370,7 @@
       stopAllSounds();
       setTimeout(() => {
         window.open(url, '_blank');
-      }, 2750);
+      }, 0050);
     }
 
     startRandomBounce();
@@ -488,5 +488,42 @@ function CSV2HTML() {
 }
 
 </script>
+<script>
+function handleConfettiClick(url, name = 'WWPopup', w = 900, h = 700, delay = 0050) {
+  // Center it
+  const openerW = window.innerWidth, openerH = window.innerHeight;
+  const left = (window.screenX || window.screenLeft) + (openerW - w) / 2;
+  const top  = (window.screenY || window.screenTop) + (openerH - h) / 2;
+  const features = `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`;
+
+  // 1) Open now (user gesture), keep a handle
+  const win = window.open('about:blank', name, features);
+
+  // If blocked, just do confetti then navigate current tab as a fallback
+  if (!win) {
+    launchConfetti();
+    setTimeout(() => (window.location.href = url), delay);
+    return;
+  }
+
+  // Optional placeholder content
+  try {
+    win.document.write(`<!doctype html><title>Loading…</title>
+      <style>html,body{height:100%}body{margin:0;display:grid;place-items:center;font:16px system-ui}</style>
+      <div>Launching… 🎉</div>`);
+  } catch {}
+
+  // 2) Immediately refocus this page so confetti is fully visible
+  try { win.blur(); window.focus(); } catch {}
+
+  // 3) Confetti now, then navigate popup & focus it
+  launchConfetti();
+  setTimeout(() => {
+    try { win.location.replace(url); } catch { win.location.href = url; }
+    try { win.focus(); } catch {}
+  }, delay);
+}
+</script>
+
 </body>
 </html>
