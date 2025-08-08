@@ -161,13 +161,14 @@
       100% { transform: rotate(1440deg) scale(1); }
     }
 
-    @keyframes tilt {
-      0%   { transform: rotate(0deg); }
-      25%  { transform: rotate(-10deg); }
-      50%  { transform: rotate(10deg); }
-      75%  { transform: rotate(-6deg); }
-      100% { transform: rotate(0deg); }
-    }
+@keyframes tilt {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-10deg); }
+  40%  { transform: rotate(10deg); }
+  60%  { transform: rotate(-8deg); }
+  80%  { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
 
     .gelatine {
       animation: gelatine 0.8s ease;
@@ -178,7 +179,8 @@
     }
 
     .tilting {
-      animation: tilt 4s ease-out forwards;
+        animation: tilt 0.25s ease-in-out 10; /* 0.25s per cycle × 10 cycles = 2.5s total */
+
     }
 
     .site-footer {
@@ -186,7 +188,7 @@
       font-size: 0.9rem;
       color: #666;
       padding: 1rem;
-      margin-top: 5rem;
+      margin-top: 6rem;
       border-top: 2px solid #ddd;
     }
 
@@ -269,10 +271,11 @@
       CSV to HTML Converter
     </a>
   </div>
+
 </div>
 
 </
-  <hr style="width:100%; border: none; height: 1px; background-color: lightgray;">
+<hr style="width:100%; border: none; height: 1px; background-color: lightgray;">
   <footer class="site-footer">
     <p><i>Wheaton's World&#8482; &nbsp;&nbsp;|&nbsp;&nbsp; All rights reserved.</i></p>
   </footer>
@@ -316,30 +319,7 @@
       } else {
         wheelAudio.play().catch(() => {});
       }
-  function unlockSoundsOnce() {
-    const tryPlayPause = (el) =>
-      el.play().then(() => { el.pause(); el.currentTime = 0; }).catch(() => {});
-
-    // Attempt to "prime" both sounds
-    tryPlayPause(wheelAudio);
-    tryPlayPause(rattleAudio);
-
-    // If you ever use WebAudio, resume() here:
-    // if (window.audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-
-    // Remove unlock listeners after first successful gesture
-    ['pointerdown','keydown','touchstart'].forEach(evt =>
-      window.removeEventListener(evt, unlockSoundsOnce, { passive: true })
-    );
-  }
-
-  // Add listeners early (before you need sounds)
-  ['pointerdown','keydown','touchstart'].forEach(evt =>
-    window.addEventListener(evt, unlockSoundsOnce, { passive: true })
-  );
-      
     }
-    
     /* ============================================ */
 
     function triggerBounce(icon) {
@@ -360,23 +340,22 @@
       setTimeout(() => startRandomBounce(), 3000);
     }
 
-icons.forEach(icon => {
-  icon.addEventListener('pointerenter', () => {
-    icon.classList.remove('gelatine', 'spinning', 'tilting');
-    void icon.offsetWidth;
-    icon.classList.add(icon.dataset.type === 'tilt' ? 'tilting' : 'spinning');
-    playSoundFor(icon);
-    stopBounceTemp();
-  });
+    icons.forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        icon.classList.remove('gelatine', 'spinning', 'tilting');
+        void icon.offsetWidth;
+        icon.classList.add(icon.dataset.type === 'tilt' ? 'tilting' : 'spinning');
+        playSoundFor(icon);
+        stopBounceTemp();
+      });
 
-  icon.addEventListener('pointerleave', () => {
-    icon.classList.remove('spinning', 'tilting');
-    stopAllSounds();
-  });
+      icon.addEventListener('mouseleave', () => {
+        icon.classList.remove('spinning', 'tilting');
+        stopAllSounds();
+      });
 
-  icon.addEventListener('click', () => stopAllSounds());
-});
-
+      icon.addEventListener('click', () => stopAllSounds());
+    });
 
     function launchConfetti() {
       confetti({
