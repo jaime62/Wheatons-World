@@ -161,13 +161,14 @@
       100% { transform: rotate(1440deg) scale(1); }
     }
 
-    @keyframes tilt {
-      0%   { transform: rotate(0deg); }
-      25%  { transform: rotate(-10deg); }
-      50%  { transform: rotate(10deg); }
-      75%  { transform: rotate(-6deg); }
-      100% { transform: rotate(0deg); }
-    }
+@keyframes tilt {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-10deg); }
+  40%  { transform: rotate(10deg); }
+  60%  { transform: rotate(-8deg); }
+  80%  { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
 
     .gelatine {
       animation: gelatine 0.8s ease;
@@ -178,7 +179,8 @@
     }
 
     .tilting {
-      animation: tilt .4s ease-out forwards;
+        animation: tilt 0.25s ease-in-out 10; /* 0.25s per cycle × 10 cycles = 2.5s total */
+
     }
 
     .site-footer {
