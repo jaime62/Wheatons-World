@@ -252,7 +252,6 @@
     </div>
   </div>
 
-  <hr style="width:100%; border: none; height: 1px; background-color: lightgray;">
 
   <footer class="site-footer">
     <p><i>Wheaton's World&#8482; &nbsp;&nbsp;|&nbsp;&nbsp; All rights reserved.</i></p>
@@ -262,43 +261,7 @@
     const icons = document.querySelectorAll('.icon-img');
     let bounceInterval;
 
-    /* ====== AUDIO SETUP (hosted on GitHub) ====== */
-    const wheelAudio = new Audio("https://raw.githubusercontent.com/jaime62/Wheatons-World/6fe49893873644d6370699dbba09a7868277fdd4/media/wheel-spin-click-slow-down-101152.mp3");
-    const rattleAudio = new Audio("https://raw.githubusercontent.com/jaime62/Wheatons-World/6fe49893873644d6370699dbba09a7868277fdd4/media/rattling-of-cans-94708.mp3");
-    wheelAudio.preload = "auto";
-    rattleAudio.preload = "auto";
-    wheelAudio.volume = 0.6;
-    rattleAudio.volume = 0.6;
 
-    function fadeOutAudio(audio, duration = 300) {
-      if (audio.paused) return;
-      const step = audio.volume / (duration / 50);
-      const fade = setInterval(() => {
-        if (audio.volume - step > 0) {
-          audio.volume = Math.max(0, audio.volume - step);
-        } else {
-          clearInterval(fade);
-          audio.pause();
-          audio.currentTime = 0;
-          audio.volume = 0.6;
-        }
-      }, 50);
-    }
-
-    function stopAllSounds() {
-      fadeOutAudio(wheelAudio);
-      fadeOutAudio(rattleAudio);
-    }
-
-    function playSoundFor(img) {
-      stopAllSounds();
-      if (img.dataset.type === 'tilt') {
-        rattleAudio.play().catch(() => {});
-      } else {
-        wheelAudio.play().catch(() => {});
-      }
-    }
-    /* ============================================ */
 
     function triggerBounce(icon) {
       icon.classList.remove('gelatine');
@@ -323,16 +286,13 @@
         icon.classList.remove('gelatine', 'spinning', 'tilting');
         void icon.offsetWidth;
         icon.classList.add(icon.dataset.type === 'tilt' ? 'tilting' : 'spinning');
-        playSoundFor(icon);
         stopBounceTemp();
       });
 
       icon.addEventListener('mouseleave', () => {
         icon.classList.remove('spinning', 'tilting');
-        stopAllSounds();
       });
 
-      icon.addEventListener('click', () => stopAllSounds());
     });
 
     // === Popup opener (no confetti) ===
@@ -379,13 +339,11 @@
         img.classList.remove('gelatine', 'spinning', 'tilting');
         void img.offsetWidth;
         img.classList.add(img.dataset.type === 'tilt' ? 'tilting' : 'spinning');
-        playSoundFor(img);
         stopBounceTemp();
       };
 
       const endHover = () => {
         img.classList.remove('spinning', 'tilting');
-        stopAllSounds();
       };
 
       link.addEventListener('mouseenter', startHover);
